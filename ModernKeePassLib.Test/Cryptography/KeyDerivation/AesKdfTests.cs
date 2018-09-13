@@ -1,15 +1,14 @@
 ﻿using System;
-using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
 using ModernKeePassLib.Cryptography;
 using ModernKeePassLib.Cryptography.KeyDerivation;
 using ModernKeePassLib.Utility;
+using Xunit;
 
 namespace ModernKeePassLib.Test.Cryptography.KeyDerivation
 {
-    [TestClass]
     public class AesKdfTests
     {
-        [TestMethod]
+        [Fact]
         public void TestAesKdf()
         {
             // Up to KeePass 2.34, the OtpKeyProv plugin used the public
@@ -27,7 +26,7 @@ namespace ModernKeePassLib.Test.Cryptography.KeyDerivation
 
             var pbMan = new byte[pbKey.Length];
             Array.Copy(pbKey, pbMan, pbKey.Length);
-            Assert.IsTrue(AesKdf.TransformKeyManaged(pbMan, pbSeed, uRounds));
+            Assert.True(AesKdf.TransformKeyManaged(pbMan, pbSeed, uRounds));
             pbMan = CryptoUtil.HashSha256(pbMan);
 
             var kdf = new AesKdf();
@@ -36,7 +35,7 @@ namespace ModernKeePassLib.Test.Cryptography.KeyDerivation
             p.SetByteArray(AesKdf.ParamSeed, pbSeed);
             var pbKdf = kdf.Transform(pbKey, p);
 
-            Assert.IsTrue(MemUtil.ArraysEqual(pbMan, pbKdf));
+            Assert.True(MemUtil.ArraysEqual(pbMan, pbKdf));
         }
     }
 }

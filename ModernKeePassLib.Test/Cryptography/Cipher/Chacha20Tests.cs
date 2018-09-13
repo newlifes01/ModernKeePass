@@ -1,17 +1,16 @@
 ﻿using System;
 using System.Diagnostics;
 using System.IO;
-using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
 using ModernKeePassLib.Cryptography;
 using ModernKeePassLib.Cryptography.Cipher;
 using ModernKeePassLib.Utility;
+using Xunit;
 
 namespace ModernKeePassLib.Test.Cryptography.Cipher
 {
-    [TestClass]
     public class Chacha20Tests
     {
-        [TestMethod]
+        [Fact]
         public void TestChacha20()
         {
             // ======================================================
@@ -42,7 +41,7 @@ namespace ModernKeePassLib.Test.Cryptography.Cipher
                 c.Seek(64, SeekOrigin.Begin); // Skip first block
                 c.Encrypt(pb, 0, pb.Length);
 
-                Assert.IsTrue(MemUtil.ArraysEqual(pb, pbExpc));
+                Assert.True(MemUtil.ArraysEqual(pb, pbExpc));
             }
 
 #if DEBUG
@@ -80,7 +79,7 @@ namespace ModernKeePassLib.Test.Cryptography.Cipher
                 c.Encrypt(pb64, 0, pb64.Length); // Skip first block
                 c.Encrypt(pb, 0, pb.Length);
 
-                Assert.IsTrue(MemUtil.ArraysEqual(pb, pbExpc));
+                Assert.True(MemUtil.ArraysEqual(pb, pbExpc));
             }
 
             // ======================================================
@@ -135,7 +134,7 @@ namespace ModernKeePassLib.Test.Cryptography.Cipher
 
                 byte[] pbEnc0 = msEnc.ToArray();
                 byte[] pbEnc = MemUtil.Mid(pbEnc0, 64, pbEnc0.Length - 64);
-                Assert.IsTrue(MemUtil.ArraysEqual(pbEnc, pbExpc));
+                Assert.True(MemUtil.ArraysEqual(pbEnc, pbExpc));
 
                 using (MemoryStream msCT = new MemoryStream(pbEnc0, false))
                 {
@@ -144,9 +143,9 @@ namespace ModernKeePassLib.Test.Cryptography.Cipher
                     {
                         byte[] pbPT = MemUtil.Read(cDec, pbEnc0.Length);
 
-                        Assert.IsTrue(cDec.ReadByte() < 0);
-                        Assert.IsTrue(MemUtil.ArraysEqual(MemUtil.Mid(pbPT, 0, 64), pb64));
-                        Assert.IsTrue(MemUtil.ArraysEqual(MemUtil.Mid(pbPT, 64, pbEnc.Length), pb));
+                        Assert.True(cDec.ReadByte() < 0);
+                        Assert.True(MemUtil.ArraysEqual(MemUtil.Mid(pbPT, 0, 64), pb64));
+                        Assert.True(MemUtil.ArraysEqual(MemUtil.Mid(pbPT, 64, pbEnc.Length), pb));
                     }
                 }
             }
@@ -196,7 +195,7 @@ namespace ModernKeePassLib.Test.Cryptography.Cipher
             {
                 c.Decrypt(pb, 0, pb.Length);
 
-                Assert.IsTrue(MemUtil.ArraysEqual(pb, pbExpc));
+                Assert.True(MemUtil.ArraysEqual(pb, pbExpc));
             }
 #endif
         }

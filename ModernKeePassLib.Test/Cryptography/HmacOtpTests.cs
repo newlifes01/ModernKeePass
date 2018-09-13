@@ -1,10 +1,9 @@
 ﻿using System.Text;
-using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
 using ModernKeePassLib.Cryptography;
+using Xunit;
 
 namespace ModernKeePassLib.Test.Cryptography
 {
-    [TestClass()]
     public class HmacOtpTests
     {
         // Using the test case from Appendix D of RFC 4226
@@ -17,7 +16,7 @@ namespace ModernKeePassLib.Test.Cryptography
             "254676", "287922", "162583", "399871", "520489"
         };
 
-        [TestMethod]
+        [Fact]
         public void TestGenerate()
         {
             var secretBytes = Encoding.UTF8.GetBytes(secret);
@@ -25,7 +24,7 @@ namespace ModernKeePassLib.Test.Cryptography
             for (ulong i = 0; i < 10; i++)
             {
                 var hotp = HmacOtp.Generate(secretBytes, i, 6, false, -1);
-                Assert.AreEqual(hotp, expectedHOTP[i]);
+                Assert.Equal(hotp, expectedHOTP[i]);
             }
         }
     }

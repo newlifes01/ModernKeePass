@@ -420,7 +420,7 @@
                             </interactivity:Interaction.Behaviors>
                         </local:TextBoxWithButton>
                         <TextBlock x:Uid="EntryPassword" />
-                        <PasswordBox HorizontalAlignment="Left" Password="{Binding Password, Mode=TwoWay}" Width="350" Height="32" IsPasswordRevealButtonEnabled="True" Visibility="{Binding IsRevealPassword, Converter={StaticResource InverseBooleanToVisibilityConverter}}" Style="{StaticResource PasswordBoxWithButtonStyle}" IsEnabled="{Binding IsSelected}" />
+                        <PasswordBox HorizontalAlignment="Left" Password="{Binding Password, Mode=TwoWay}" Width="350" Height="32" PasswordRevealMode="Peek" Visibility="{Binding IsRevealPassword, Converter={StaticResource InverseBooleanToVisibilityConverter}}" Style="{StaticResource PasswordBoxWithButtonStyle}" IsEnabled="{Binding IsSelected}" />
                         <local:TextBoxWithButton x:Uid="PasswordTextBox" Text="{Binding Password, Mode=TwoWay}" Visibility="{Binding IsRevealPassword, Converter={StaticResource BooleanToVisibilityConverter}}" Style="{StaticResource EntryTextBoxWithButtonStyle}" ButtonSymbol="&#xE16F;" IsEnabled="{Binding IsSelected}">
                             <interactivity:Interaction.Behaviors>
                                 <core:EventTriggerBehavior EventName="ButtonClick">

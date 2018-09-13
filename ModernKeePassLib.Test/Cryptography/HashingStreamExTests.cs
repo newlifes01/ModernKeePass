@@ -1,12 +1,10 @@
 ﻿using System.IO;
-using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
-
 using ModernKeePassLib.Cryptography;
 using ModernKeePassLib.Utility;
+using Xunit;
 
 namespace ModernKeePassLib.Test.Cryptography
 {
-    [TestClass()]
     public class HashingStreamExTests
     {
         const string data = "test";
@@ -20,7 +18,7 @@ namespace ModernKeePassLib.Test.Cryptography
             0x22, 0xda, 0x52, 0xe6, 0xcc, 0xc2, 0x6f, 0xd2
         };
 
-        [TestMethod]
+        [Fact]
         public void TestRead()
         {
             // if we use larger size, StreamReader will read past newline and cause bad hash
@@ -41,16 +39,16 @@ namespace ModernKeePassLib.Test.Cryptography
                     using (var sr = new StreamReader(hs))
                     {
                         var read = sr.ReadLine();
-                        Assert.AreEqual(read, data);
+                        Assert.Equal(read, data);
                     }
                     // When the StreamReader is disposed, it calls Dispose on the
                     //HasingStreamEx, which computes the hash.
-                    Assert.IsTrue(MemUtil.ArraysEqual(hs.Hash, sha256HashOfData));
+                    Assert.True(MemUtil.ArraysEqual(hs.Hash, sha256HashOfData));
                 }
             }
         }
 
-        [TestMethod]
+        [Fact]
         public void TestWrite()
         {
             var bytes = new byte[16];
@@ -66,7 +64,7 @@ namespace ModernKeePassLib.Test.Cryptography
                     }
                     // When the StreamWriter is disposed, it calls Dispose on the
                     //HasingStreamEx, which computes the hash.
-                    Assert.IsTrue(MemUtil.ArraysEqual(hs.Hash, sha256HashOfData));
+                    Assert.True(MemUtil.ArraysEqual(hs.Hash, sha256HashOfData));
                 }
             }
             using (var ms = new MemoryStream(bytes))
@@ -74,7 +72,7 @@ namespace ModernKeePassLib.Test.Cryptography
                 using (var sr = new StreamReader(ms))
                 {
                     var read = sr.ReadLine();
-                    Assert.AreEqual(read, data);
+                    Assert.Equal(read, data);
                 }
             }
         }

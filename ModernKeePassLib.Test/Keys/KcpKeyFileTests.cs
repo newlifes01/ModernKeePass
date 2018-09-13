@@ -1,13 +1,12 @@
 ﻿using System;
 using System.IO;
-using Windows.Storage;
-using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
 using ModernKeePassLib.Keys;
 using ModernKeePassLib.Utility;
+using Windows.Storage;
+using Xunit;
 
 namespace ModernKeePassLib.Test.Keys
 {
-    [TestClass]
     public class KcpKeyFileTests
     {
         private const string TestCreateFile = "TestCreate.xml";
@@ -25,10 +24,10 @@ namespace ModernKeePassLib.Test.Keys
         private const string ExpectedFileEnd = "\t</Key>\r\n" +
                                        "</KeyFile>";
 
-        [TestMethod]
+        [Fact]
         public void TestConstruct()
         {
-            var expectedKeyData = new byte[32]
+            var expectedKeyData = new byte[]
             {
                 0xC1, 0xB1, 0x12, 0x77, 0x23, 0xB8, 0x99, 0xB8,
                 0xB9, 0x3B, 0x1B, 0xFF, 0x6C, 0xBE, 0xA1, 0x5B,
@@ -36,8 +35,8 @@ namespace ModernKeePassLib.Test.Keys
                 0x31, 0xAA, 0x14, 0x3D, 0x95, 0xBF, 0x63, 0xFF
             };
 
-            //var fullPath = Path.Combine(ApplicationData.Current.TemporaryFolder.Path, TestCreateFile);
-            var file = ApplicationData.Current.TemporaryFolder.CreateFileAsync(TestCreateFile).GetAwaiter().GetResult();
+            var folder = StorageFolder.GetFolderFromPathAsync(Path.GetTempPath()).GetAwaiter().GetResult();
+            var file =  folder.CreateFileAsync(TestCreateFile).GetAwaiter().GetResult();
             using (var fs = file.OpenStreamForWriteAsync().GetAwaiter().GetResult())
             {
                 using (var sw = new StreamWriter(fs))
@@ -52,7 +51,7 @@ namespace ModernKeePassLib.Test.Keys
             {
                 var keyFile = new KcpKeyFile(file);
                 var keyData = keyFile.KeyData.ReadData();
-                Assert.IsTrue(MemUtil.ArraysEqual(keyData, expectedKeyData));
+                Assert.True(MemUtil.ArraysEqual(keyData, expectedKeyData));
             }
             finally
             {
@@ -60,19 +59,19 @@ namespace ModernKeePassLib.Test.Keys
             }
         }
 
-        [TestMethod]
+        [Fact]
         public void TestCreate()
         {
-            //var fullPath = Path.Combine(ApplicationData.Current.TemporaryFolder.Path, TestCreateFile);
-            var file = ApplicationData.Current.TemporaryFolder.CreateFileAsync(TestCreateFile).GetAwaiter().GetResult();
+            var folder = StorageFolder.GetFolderFromPathAsync(Path.GetTempPath()).GetAwaiter().GetResult();
+            var file = folder.CreateFileAsync(TestCreateFile).GetAwaiter().GetResult();
             KcpKeyFile.Create(file, null);
             try
             {
                 var fileContents = FileIO.ReadTextAsync(file).GetAwaiter().GetResult();
 
-                Assert.AreEqual(185, fileContents.Length);
-                Assert.IsTrue(fileContents.StartsWith(ExpectedFileStart));
-                Assert.IsTrue(fileContents.EndsWith(ExpectedFileEnd));
+                Assert.Equal(185, fileContents.Length);
+                Assert.StartsWith(ExpectedFileStart, fileContents);
+                Assert.EndsWith(ExpectedFileEnd, fileContents);
             }
             finally
             {

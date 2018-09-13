@@ -1,30 +1,28 @@
-﻿using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
-
-using ModernKeePassLib.Cryptography;
+﻿using ModernKeePassLib.Cryptography;
 using ModernKeePassLib.Utility;
+using Xunit;
 
 namespace ModernKeePassLib.Test.Cryptography
 {
-    [TestClass]
     public class CryptoRandomStreamTests
     {
         private void TestGetRandomBytes(CryptoRandomStream stream)
         {
             const uint length = 16;
             var bytes1 = stream.GetRandomBytes(length);
-            Assert.AreEqual(bytes1.Length, (int)length);
+            Assert.Equal(bytes1.Length, (int)length);
             var bytes2 = stream.GetRandomBytes(length);
-            Assert.IsFalse(MemUtil.ArraysEqual(bytes2, bytes1));
+            Assert.False(MemUtil.ArraysEqual(bytes2, bytes1));
         }
 
-        [TestMethod]
+        [Fact]
         public void TestGetRandomBytesCrsAlgorithmSalsa20()
         {
             var stream = new CryptoRandomStream(CrsAlgorithm.Salsa20, new byte[16]);
             TestGetRandomBytes(stream);
         }
 
-        [TestMethod]
+        [Fact]
         public void TestGetRandomBytesCrsAlgorithmArcFourVariant()
         {
             var stream = new CryptoRandomStream(CrsAlgorithm.ArcFourVariant, new byte[16]);
@@ -35,17 +33,17 @@ namespace ModernKeePassLib.Test.Cryptography
         {
             var value1 = stream.GetRandomUInt64();
             var value2 = stream.GetRandomUInt64();
-            Assert.AreNotEqual(value2, value1);
+            Assert.NotEqual(value2, value1);
         }
 
-        [TestMethod]
+        [Fact]
         public void TestGetRandomInt64AlgorithmSalsa20()
         {
             var stream = new CryptoRandomStream(CrsAlgorithm.Salsa20, new byte[16]);
             TestGetRandomInt64(stream);
         }
 
-        [TestMethod]
+        [Fact]
         public void TestGetRandomInt64AlgorithmArcFourVariant()
         {
             var stream = new CryptoRandomStream(CrsAlgorithm.ArcFourVariant, new byte[16]);

@@ -1,16 +1,15 @@
 ﻿using System;
 using System.Text;
-using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
 using ModernKeePassLib.Cryptography;
 using ModernKeePassLib.Cryptography.Hash;
 using ModernKeePassLib.Utility;
+using Xunit;
 
 namespace ModernKeePassLib.Test.Cryptography.Hash
 {
-    [TestClass]
     public class Blake2bTests
     {
-        [TestMethod]
+        [Fact]
         public void TestBlake2bUtf8()
         {
             Blake2b h = new Blake2b();
@@ -32,10 +31,10 @@ namespace ModernKeePassLib.Test.Cryptography.Hash
             };
 
             byte[] pbC = h.ComputeHash(pbData);
-            Assert.IsTrue(MemUtil.ArraysEqual(pbC, pbExpc));
+            Assert.True(MemUtil.ArraysEqual(pbC, pbExpc));
         }
 
-        [TestMethod]
+        [Fact]
         public void TestBlake2bEmpty()
         {
             // ======================================================
@@ -55,10 +54,10 @@ namespace ModernKeePassLib.Test.Cryptography.Hash
             };
 
             var pbC = h.ComputeHash(new byte[0]);
-            Assert.IsTrue(MemUtil.ArraysEqual(pbC, pbExpc));
+            Assert.True(MemUtil.ArraysEqual(pbC, pbExpc));
         }
 
-        [TestMethod]
+        [Fact]
         public void TestBlake2bString()
         { 
         // ======================================================
@@ -89,11 +88,11 @@ namespace ModernKeePassLib.Test.Cryptography.Hash
                 h.TransformBlock(pbData, p, cb, pbData, p);
                 p += cb;
             }
-            Assert.AreEqual(p, pbData.Length);
+            Assert.Equal(p, pbData.Length);
 
             h.TransformFinalBlock(new byte[0], 0, 0);
 
-            Assert.IsTrue(MemUtil.ArraysEqual(h.Hash, pbExpc));
+            Assert.True(MemUtil.ArraysEqual(h.Hash, pbExpc));
 
             h.Clear();
         }

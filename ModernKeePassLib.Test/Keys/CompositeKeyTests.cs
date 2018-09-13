@@ -1,18 +1,17 @@
-﻿using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
-using ModernKeePassLib.Cryptography.KeyDerivation;
+﻿using ModernKeePassLib.Cryptography.KeyDerivation;
 using ModernKeePassLib.Keys;
 using ModernKeePassLib.Utility;
+using Xunit;
 
 namespace ModernKeePassLib.Test.Keys
 {
-    [TestClass()]
     public class CompositeKeyTests
     {
-        [TestMethod]
+        [Fact]
         public void TestGenerateKey32()
         {
             var originalKey = new byte[32];
-            var expectedKey = new byte[32]
+            var expectedKey = new byte[]
             {
                 0xF0, 0xED, 0x57, 0xD5, 0xF0, 0xDA, 0xF3, 0x47,
                 0x90, 0xD0, 0xDB, 0x43, 0x25, 0xC6, 0x81, 0x2C,
@@ -27,9 +26,9 @@ namespace ModernKeePassLib.Test.Keys
             p.SetUInt64(AesKdf.ParamRounds, rounds);
             p.SetByteArray(AesKdf.ParamSeed, originalKey);
             var key = composite.GenerateKey32(p);
-            Assert.IsNotNull(key);
+            Assert.NotNull(key);
             var keyData = key.ReadData();
-            Assert.IsTrue(MemUtil.ArraysEqual(keyData, expectedKey));
+            Assert.True(MemUtil.ArraysEqual(keyData, expectedKey));
         }
     }
 }

@@ -1,11 +1,10 @@
 ﻿using System.IO;
-using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
 using ModernKeePassLib.Serialization;
 using ModernKeePassLib.Utility;
+using Xunit;
 
 namespace ModernKeePassLib.Test.Serialization
 {
-    [TestClass()]
     public class HashedBlockStreamTests
     {
         static readonly byte[] data = new byte[16];
@@ -35,7 +34,7 @@ namespace ModernKeePassLib.Test.Serialization
             0x00, 0x00, 0x00, 0x00
         };
 
-        [TestMethod]
+        [Fact]
         public void TestRead()
         {
             using (var ms = new MemoryStream(hashStreamData))
@@ -45,14 +44,14 @@ namespace ModernKeePassLib.Test.Serialization
                     using (var br = new BinaryReader(hbs))
                     {
                         var bytes = br.ReadBytes(data.Length);
-                        Assert.IsTrue(MemUtil.ArraysEqual(bytes, data));
-                        Assert.ThrowsException<EndOfStreamException>(() => br.ReadByte());
+                        Assert.True(MemUtil.ArraysEqual(bytes, data));
+                        Assert.Throws<EndOfStreamException>(() => br.ReadByte());
                     }
                 }
             }
         }
 
-        [TestMethod]
+        [Fact]
         public void TestWrite()
         {
             var buffer = new byte[hashStreamData.Length];
@@ -65,7 +64,7 @@ namespace ModernKeePassLib.Test.Serialization
                         bw.Write(data);
                     }
                 }
-                Assert.IsTrue(MemUtil.ArraysEqual(buffer, hashStreamData));
+                Assert.True(MemUtil.ArraysEqual(buffer, hashStreamData));
             }
         }
     }

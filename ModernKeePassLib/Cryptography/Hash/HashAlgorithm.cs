@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Security.Cryptography.Core;
-using Validation;
 
 namespace ModernKeePassLib.Cryptography.Hash
 {
@@ -18,8 +17,7 @@ namespace ModernKeePassLib.Cryptography.Hash
         /// <param name="hash">The platform hash.</param>
         internal HashAlgorithm(CryptographicHash hash)
         {
-            Requires.NotNull(hash, "Hash");
-            _hash = hash;
+            _hash = hash ?? throw new ArgumentNullException(nameof(hash));
         }
         
         public bool CanReuseTransform => true;

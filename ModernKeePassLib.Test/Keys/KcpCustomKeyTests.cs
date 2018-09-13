@@ -1,10 +1,9 @@
-﻿using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
-using ModernKeePassLib.Keys;
+﻿using ModernKeePassLib.Keys;
 using ModernKeePassLib.Utility;
+using Xunit;
 
 namespace ModernKeePassLib.Test.Keys
 {
-    [TestClass()]
     public class KcpCustomKeyTests
     {
         static readonly byte[] testData =
@@ -12,7 +11,7 @@ namespace ModernKeePassLib.Test.Keys
             0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
         };
 
-        [TestMethod]
+        [Fact]
         public void TestConstruct()
         {
             var expectedHash = new byte[32]
@@ -25,11 +24,11 @@ namespace ModernKeePassLib.Test.Keys
 
             var key = new KcpCustomKey("test1", testData, false);
             var keyData = key.KeyData.ReadData();
-            Assert.IsTrue(MemUtil.ArraysEqual(keyData, testData));
+            Assert.True(MemUtil.ArraysEqual(keyData, testData));
 
             key = new KcpCustomKey("test2", testData, true);
             keyData = key.KeyData.ReadData();
-            Assert.IsTrue(MemUtil.ArraysEqual(keyData, expectedHash));
+            Assert.True(MemUtil.ArraysEqual(keyData, expectedHash));
         }
     }
 }

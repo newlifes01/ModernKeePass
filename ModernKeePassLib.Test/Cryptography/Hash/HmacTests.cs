@@ -1,14 +1,13 @@
-﻿using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
-using ModernKeePassLib.Cryptography;
+﻿using ModernKeePassLib.Cryptography;
 using ModernKeePassLib.Cryptography.Hash;
 using ModernKeePassLib.Utility;
+using Xunit;
 
 namespace ModernKeePassLib.Test.Cryptography.Hash
 {
-    [TestClass]
     public class HmacTests
     {
-        [TestMethod]
+        [Fact]
         public void TestHmac1()
         {
             // Test vectors from RFC 4231
@@ -26,7 +25,7 @@ namespace ModernKeePassLib.Test.Cryptography.Hash
             HmacEval(pbKey, pbMsg, pbExpc);
         }
 
-        [TestMethod]
+        [Fact]
         public void TestHmac2()
         {
             var pbKey = new byte[131];
@@ -44,7 +43,7 @@ namespace ModernKeePassLib.Test.Cryptography.Hash
             HmacEval(pbKey, pbMsg, pbExpc);
         }
 
-        [TestMethod]
+        [Fact]
         public void TestHmacSha1ComputeHash()
         {
             var expectedHash = "AC2C2E614882CE7158F69B7E3B12114465945D01";
@@ -52,11 +51,11 @@ namespace ModernKeePassLib.Test.Cryptography.Hash
             var key = StrUtil.Utf8.GetBytes("hello");
             using (var result = new HMACSHA1(key))
             {
-                Assert.AreEqual(ByteToString(result.ComputeHash(message)), expectedHash);
+                Assert.Equal(ByteToString(result.ComputeHash(message)), expectedHash);
             }
         }
 
-        [TestMethod]
+        [Fact]
         public void TestHmacSha256ComputeHash()
         {
             var expectedHash = "09C1BD2DE4E5659C0EFAF9E6AE4723E9CF96B69609B4E562F6AFF1745D7BF4E0";
@@ -64,7 +63,7 @@ namespace ModernKeePassLib.Test.Cryptography.Hash
             var key = StrUtil.Utf8.GetBytes("hello");
             using (var result = new HMACSHA256(key))
             {
-                Assert.AreEqual(ByteToString(result.ComputeHash(message)), expectedHash);
+                Assert.Equal(ByteToString(result.ComputeHash(message)), expectedHash);
             }
         }
 
@@ -79,7 +78,7 @@ namespace ModernKeePassLib.Test.Cryptography.Hash
             return (sbinary);
         }
 
-        [TestMethod]
+        [Fact]
         public void TestHmacOtp()
         {
             var pbSecret = StrUtil.Utf8.GetBytes("12345678901234567890");
@@ -89,7 +88,7 @@ namespace ModernKeePassLib.Test.Cryptography.Hash
 
             for (var i = 0; i < vExp.Length; ++i)
             {
-                Assert.AreEqual(HmacOtp.Generate(pbSecret, (ulong)i, 6, false, -1), vExp[i]);
+                Assert.Equal(HmacOtp.Generate(pbSecret, (ulong)i, 6, false, -1), vExp[i]);
             }
         }
 
@@ -102,7 +101,7 @@ namespace ModernKeePassLib.Test.Cryptography.Hash
                 h.TransformFinalBlock(new byte[0], 0, 0);
 
                 byte[] pbHash = h.Hash;
-                Assert.IsTrue(MemUtil.ArraysEqual(pbHash, pbExpc));
+                Assert.True(MemUtil.ArraysEqual(pbHash, pbExpc));
 
                 // Reuse the object
                 h.Initialize();
@@ -110,7 +109,7 @@ namespace ModernKeePassLib.Test.Cryptography.Hash
                 h.TransformFinalBlock(new byte[0], 0, 0);
 
                 pbHash = h.Hash;
-                Assert.IsTrue(MemUtil.ArraysEqual(pbHash, pbExpc));
+                Assert.True(MemUtil.ArraysEqual(pbHash, pbExpc));
             }
         }
     }

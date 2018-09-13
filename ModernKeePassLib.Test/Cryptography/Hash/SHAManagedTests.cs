@@ -1,31 +1,30 @@
-﻿using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
-using ModernKeePassLib.Cryptography.Hash;
+﻿using ModernKeePassLib.Cryptography.Hash;
 using ModernKeePassLib.Utility;
+using Xunit;
 
 namespace ModernKeePassLib.Test.Cryptography.Hash
 {
-    [TestClass]
     public class SHAManagedTests
     {
-        [TestMethod]
+        [Fact]
         public void TestSha256ComputeHash()
         {
             var expectedHash = "B822F1CD2DCFC685B47E83E3980289FD5D8E3FF3A82DEF24D7D1D68BB272EB32";
             var message = StrUtil.Utf8.GetBytes("testing123");
             using (var result = new SHA256Managed())
             {
-                Assert.AreEqual(ByteToString(result.ComputeHash(message)), expectedHash);
+                Assert.Equal(ByteToString(result.ComputeHash(message)), expectedHash);
             }
         }
 
-        [TestMethod]
+        [Fact]
         public void TestSha512ComputeHash()
         {
             var expectedHash = "4120117B3190BA5E24044732B0B09AA9ED50EB1567705ABCBFA78431A4E0A96B1152ED7F4925966B1C82325E186A8100E692E6D2FCB6702572765820D25C7E9E";
             var message = StrUtil.Utf8.GetBytes("testing123");
             using (var result = new SHA512Managed())
             {
-                Assert.AreEqual(ByteToString(result.ComputeHash(message)), expectedHash);
+                Assert.Equal(ByteToString(result.ComputeHash(message)), expectedHash);
             }
         }
         private static string ByteToString(byte[] buff)

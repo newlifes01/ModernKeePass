@@ -6,12 +6,10 @@
     <x:Double x:Key="MenuSize">60</x:Double>
     <GridLength x:Key="MenuGridLength">60</GridLength>
     <!-- Only available for Windows 10 -->
-    <!--<SolidColorBrush x:Key="MainColor" Color="{ThemeResource SystemAccentColor}" />
-    <SolidColorBrush x:Key="TextColor" Color="{ThemeResource SystemColorHighlightTextColor}" />-->
-    <SolidColorBrush x:Key="MainColor" Color="SlateBlue" />
-    <SolidColorBrush x:Key="MainColorLight" Color="MediumSlateBlue" />
-    <SolidColorBrush x:Key="MainColorDark" Color="DarkSlateBlue" />
-    <SolidColorBrush x:Key="TextColor" Color="WhiteSmoke" />
+    <SolidColorBrush x:Key="MainColor" Color="{ThemeResource SystemAccentColor}" />
+    <SolidColorBrush x:Key="TextColor" Color="{ThemeResource SystemColorHighlightTextColor}" />
+    <SolidColorBrush x:Key="MainColorLight" Color="{ThemeResource SystemAccentColorLight2}" />
+    <SolidColorBrush x:Key="MainColorDark" Color="{ThemeResource SystemAccentColorDark2}" />
 
     <Style TargetType="TextBlock" x:Key="TextBlockSettingsHeaderStyle" >
         <Setter Property="FontFamily" Value="Segoe UI" />

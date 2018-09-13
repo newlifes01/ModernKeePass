@@ -1,15 +1,14 @@
 ﻿using System.IO;
 using System.Text;
-using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
 using ModernKeePassLib.Serialization;
 using ModernKeePassLib.Cryptography.Cipher;
 using ModernKeePassLib.Utility;
 using Org.BouncyCastle.Crypto.Engines;
 using Org.BouncyCastle.Crypto.Parameters;
+using Xunit;
 
 namespace ModernKeePassLib.Test.Cryptography.Cipher
 {
-    [TestClass()]
     public class StandardAesEngineTests
     {
         // Test vector (official ECB test vector #356)
@@ -26,7 +25,7 @@ namespace ModernKeePassLib.Test.Cryptography.Cipher
             0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
         };
 
-        [TestMethod]
+        [Fact]
         public void TestEncryptStream()
         {
             using (var outStream = new MemoryStream(new byte[16]))
@@ -35,15 +34,15 @@ namespace ModernKeePassLib.Test.Cryptography.Cipher
                 using (var inStream = aes.EncryptStream(outStream, _pbTestKey, _pbIv))
                 {
                     new BinaryWriter(inStream).Write(_pbTestData);
-                    Assert.AreEqual(16, outStream.Position);
+                    Assert.Equal(16, outStream.Position);
                     outStream.Position = 0;
                     var outBytes = new BinaryReaderEx(outStream, Encoding.UTF8, string.Empty).ReadBytes(16);
-                    Assert.IsTrue(MemUtil.ArraysEqual(outBytes, _pbReferenceCt));
+                    Assert.True(MemUtil.ArraysEqual(outBytes, _pbReferenceCt));
                 }
             }
         }
 
-        [TestMethod]
+        [Fact]
         public void TestDecryptStream()
         {
             // Possible Mono Bug? This only works with size >= 48
@@ -55,20 +54,20 @@ namespace ModernKeePassLib.Test.Cryptography.Cipher
                 using (var outStream = aes.DecryptStream(inStream, _pbTestKey, _pbIv))
                 {
                     var outBytes = new BinaryReaderEx(outStream, Encoding.UTF8, string.Empty).ReadBytes(16);
-                    Assert.IsTrue(MemUtil.ArraysEqual(outBytes, _pbTestData));
+                    Assert.True(MemUtil.ArraysEqual(outBytes, _pbTestData));
                 }
             }
         }
 
-        [TestMethod]
+        [Fact]
         public void TestBouncyCastleAes()
         {
             var aesEngine = new AesEngine();
             //var parametersWithIv = new ParametersWithIV(new KeyParameter(pbTestKey), pbIV);
             aesEngine.Init(true, new KeyParameter(_pbTestKey));
-            Assert.AreEqual(aesEngine.GetBlockSize(), _pbTestData.Length);
+            Assert.Equal(aesEngine.GetBlockSize(), _pbTestData.Length);
             aesEngine.ProcessBlock(_pbTestData, 0, _pbTestData, 0);
-            Assert.IsTrue(MemUtil.ArraysEqual(_pbTestData, _pbReferenceCt));
+            Assert.True(MemUtil.ArraysEqual(_pbTestData, _pbReferenceCt));
         }
     }
 }

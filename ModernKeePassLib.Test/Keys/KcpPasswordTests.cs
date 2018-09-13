@@ -1,15 +1,14 @@
-﻿using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
-using ModernKeePassLib.Keys;
+﻿using ModernKeePassLib.Keys;
 using ModernKeePassLib.Utility;
+using Xunit;
 
 namespace ModernKeePassLib.Test.Keys
 {
-    [TestClass()]
     public class KcpPasswordTests
     {
         const string testPassword = "password";
 
-        [TestMethod]
+        [Fact]
         public void TestConstruct()
         {
             var expectedHash = new byte[32]
@@ -22,7 +21,7 @@ namespace ModernKeePassLib.Test.Keys
 
             var key = new KcpPassword(testPassword);
             var keyData = key.KeyData.ReadData();
-            Assert.IsTrue(MemUtil.ArraysEqual(keyData, expectedHash));
+            Assert.True(MemUtil.ArraysEqual(keyData, expectedHash));
         }
     }
 }
