@@ -3,11 +3,16 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28010.2026
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ModernKeePass.App", "ModernKeePass\ModernKeePass.App.csproj", "{A0CFC681-769B-405A-8482-0CDEE595A91F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ModernKeePassApp", "ModernKeePass\ModernKeePassApp.csproj", "{A0CFC681-769B-405A-8482-0CDEE595A91F}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ModernKeePassLib", "ModernKeePassLib\ModernKeePassLib.csproj", "{ABC2FE7C-BD75-4F2D-B099-18F5A9996116}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ModernKeePassLib.Test", "ModernKeePassLib.Test\ModernKeePassLib.Test.csproj", "{936985B3-0E91-46E6-B064-FF42E9E08F63}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ModernKeePassApp.Test", "ModernKeePassApp.Test\ModernKeePassApp.Test.csproj", "{8523ACE9-4CD4-4142-82A3-3909A508EE8A}"
+	ProjectSection(ProjectDependencies) = postProject
+		{A0CFC681-769B-405A-8482-0CDEE595A91F} = {A0CFC681-769B-405A-8482-0CDEE595A91F}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -77,6 +82,26 @@ Global
 		{936985B3-0E91-46E6-B064-FF42E9E08F63}.Release|x64.Build.0 = Release|Any CPU
 		{936985B3-0E91-46E6-B064-FF42E9E08F63}.Release|x86.ActiveCfg = Release|Any CPU
 		{936985B3-0E91-46E6-B064-FF42E9E08F63}.Release|x86.Build.0 = Release|Any CPU
+		{8523ACE9-4CD4-4142-82A3-3909A508EE8A}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{8523ACE9-4CD4-4142-82A3-3909A508EE8A}.Debug|ARM.ActiveCfg = Debug|ARM
+		{8523ACE9-4CD4-4142-82A3-3909A508EE8A}.Debug|ARM.Build.0 = Debug|ARM
+		{8523ACE9-4CD4-4142-82A3-3909A508EE8A}.Debug|ARM.Deploy.0 = Debug|ARM
+		{8523ACE9-4CD4-4142-82A3-3909A508EE8A}.Debug|x64.ActiveCfg = Debug|x64
+		{8523ACE9-4CD4-4142-82A3-3909A508EE8A}.Debug|x64.Build.0 = Debug|x64
+		{8523ACE9-4CD4-4142-82A3-3909A508EE8A}.Debug|x64.Deploy.0 = Debug|x64
+		{8523ACE9-4CD4-4142-82A3-3909A508EE8A}.Debug|x86.ActiveCfg = Debug|x86
+		{8523ACE9-4CD4-4142-82A3-3909A508EE8A}.Debug|x86.Build.0 = Debug|x86
+		{8523ACE9-4CD4-4142-82A3-3909A508EE8A}.Debug|x86.Deploy.0 = Debug|x86
+		{8523ACE9-4CD4-4142-82A3-3909A508EE8A}.Release|Any CPU.ActiveCfg = Release|x86
+		{8523ACE9-4CD4-4142-82A3-3909A508EE8A}.Release|ARM.ActiveCfg = Release|ARM
+		{8523ACE9-4CD4-4142-82A3-3909A508EE8A}.Release|ARM.Build.0 = Release|ARM
+		{8523ACE9-4CD4-4142-82A3-3909A508EE8A}.Release|ARM.Deploy.0 = Release|ARM
+		{8523ACE9-4CD4-4142-82A3-3909A508EE8A}.Release|x64.ActiveCfg = Release|x64
+		{8523ACE9-4CD4-4142-82A3-3909A508EE8A}.Release|x64.Build.0 = Release|x64
+		{8523ACE9-4CD4-4142-82A3-3909A508EE8A}.Release|x64.Deploy.0 = Release|x64
+		{8523ACE9-4CD4-4142-82A3-3909A508EE8A}.Release|x86.ActiveCfg = Release|x86
+		{8523ACE9-4CD4-4142-82A3-3909A508EE8A}.Release|x86.Build.0 = Release|x86
+		{8523ACE9-4CD4-4142-82A3-3909A508EE8A}.Release|x86.Deploy.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
