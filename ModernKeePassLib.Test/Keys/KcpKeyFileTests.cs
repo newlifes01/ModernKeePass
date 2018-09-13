@@ -24,6 +24,7 @@ namespace ModernKeePassLib.Test.Keys
         private const string ExpectedFileEnd = "\t</Key>\r\n" +
                                        "</KeyFile>";
 
+        // TODO: this should work in .net core 3
         [Fact]
         public void TestConstruct()
         {
@@ -59,6 +60,7 @@ namespace ModernKeePassLib.Test.Keys
             }
         }
 
+        // TODO: this should work in .net core 3
         [Fact]
         public void TestCreate()
         {

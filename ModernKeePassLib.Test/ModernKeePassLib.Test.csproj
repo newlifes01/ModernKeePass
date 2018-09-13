@@ -8,7 +8,7 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.8.0" />
-    <PackageReference Include="ModernKeePassLib" Version="2.39.2" />
+    <PackageReference Include="ModernKeePassLib" Version="2.39.3" />
     <PackageReference Include="Portable.BouncyCastle" Version="1.8.3" />
     <PackageReference Include="System.Runtime.WindowsRuntime" Version="4.3.0" />
     <PackageReference Include="xunit" Version="2.4.0" />
