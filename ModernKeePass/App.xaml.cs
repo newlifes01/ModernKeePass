@@ -14,6 +14,7 @@ using ModernKeePass.Common;
 using ModernKeePass.Exceptions;
 using ModernKeePass.Services;
 using ModernKeePass.Views;
+using UnhandledExceptionEventArgs = Windows.UI.Xaml.UnhandledExceptionEventArgs;
 
 // The Blank Application template is documented at http://go.microsoft.com/fwlink/?LinkId=234227
 
@@ -86,7 +87,6 @@ namespace ModernKeePass
         protected override async void OnLaunched(LaunchActivatedEventArgs args)
         {
             await OnLaunchOrActivated(args);
-            await HockeyClient.Current.SendCrashesAsync(/* sendWithoutAsking: true */);
         }
 
         protected override async void OnActivated(IActivatedEventArgs args)
@@ -128,8 +128,7 @@ namespace ModernKeePass
                 Window.Current.Content = rootFrame;
             }
 
-            var lauchActivatedEventArgs = e as LaunchActivatedEventArgs;
-            if (lauchActivatedEventArgs != null && rootFrame.Content == null)
+            if (e is LaunchActivatedEventArgs lauchActivatedEventArgs && rootFrame.Content == null)
                 rootFrame.Navigate(typeof(MainPage), lauchActivatedEventArgs.Arguments);
 
             // Ensure the current window is active

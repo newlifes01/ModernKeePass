@@ -17,8 +17,8 @@ namespace ModernKeePass.ViewModels
 
         public bool IsSaveSuspend
         {
-            get { return _settings.GetSetting("SaveSuspend", true); }
-            set { _settings.PutSetting("SaveSuspend", value); }
+            get => _settings.GetSetting("SaveSuspend", true);
+            set => _settings.PutSetting("SaveSuspend", value);
         }
     }
 }

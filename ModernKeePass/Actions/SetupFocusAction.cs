@@ -10,8 +10,8 @@ namespace ModernKeePass.Actions
     {
         public Control TargetObject
         {
-            get { return (Control)GetValue(TargetObjectProperty); }
-            set { SetValue(TargetObjectProperty, value); }
+            get => (Control)GetValue(TargetObjectProperty);
+            set => SetValue(TargetObjectProperty, value);
         }
 
         public static readonly DependencyProperty TargetObjectProperty =

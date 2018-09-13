@@ -19,7 +19,7 @@ namespace ModernKeePass.ViewModels
 
         public bool HasRecycleBin
         {
-            get { return _database.RecycleBinEnabled; }
+            get => _database.RecycleBinEnabled;
             set
             {
                 _database.RecycleBinEnabled = value;
@@ -29,7 +29,7 @@ namespace ModernKeePass.ViewModels
 
         public bool IsNewRecycleBin
         {
-            get { return _database.RecycleBin == null; }
+            get => _database.RecycleBin == null;
             set
             {
                 if (value) _database.RecycleBin = null;
@@ -59,21 +59,21 @@ namespace ModernKeePass.ViewModels
                 }
                 return -1;
             }
-            set { _database.DataCipher = CipherPool.GlobalPool[value].CipherUuid; }
+            set => _database.DataCipher = CipherPool.GlobalPool[value].CipherUuid;
         }
 
         public IEnumerable<string> Compressions => Enum.GetNames(typeof(PwCompressionAlgorithm)).Take((int)PwCompressionAlgorithm.Count);
 
         public string CompressionName
         {
-            get { return Enum.GetName(typeof(PwCompressionAlgorithm), _database.CompressionAlgorithm); }
-            set { _database.CompressionAlgorithm = (PwCompressionAlgorithm)Enum.Parse(typeof(PwCompressionAlgorithm), value); }
+            get => Enum.GetName(typeof(PwCompressionAlgorithm), _database.CompressionAlgorithm);
+            set => _database.CompressionAlgorithm = (PwCompressionAlgorithm)Enum.Parse(typeof(PwCompressionAlgorithm), value);
         }
         public IEnumerable<string> KeyDerivations => KdfPool.Engines.Select(e => e.Name);
 
         public string KeyDerivationName
         {
-            get { return KdfPool.Get(_database.KeyDerivation.KdfUuid).Name; }
+            get => KdfPool.Get(_database.KeyDerivation.KdfUuid).Name;
             set { _database.KeyDerivation = KdfPool.Engines.FirstOrDefault(e => e.Name == value)?.GetDefaultParameters(); } 
         }
 

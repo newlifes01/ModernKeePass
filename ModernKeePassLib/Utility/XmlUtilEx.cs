@@ -24,7 +24,7 @@ using System.IO;
 using System.Text;
 using System.Xml;
 using System.Xml.Serialization;
-using Windows.Data.Xml.Dom;
+using XmlDocument = Windows.Data.Xml.Dom.XmlDocument;
 
 namespace ModernKeePassLib.Utility
 {

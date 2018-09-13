@@ -18,16 +18,16 @@ namespace ModernKeePass.ViewModels
 
         public bool IsCreateSample
         {
-            get { return _settings.GetSetting<bool>("Sample"); }
-            set { _settings.PutSetting("Sample", value); }
+            get => _settings.GetSetting<bool>("Sample");
+            set => _settings.PutSetting("Sample", value);
         }
 
         public IEnumerable<string> FileFormats => new []{"2", "4"};
 
         public string FileFormatVersion
         {
-            get { return _settings.GetSetting<string>("DefaultFileFormat"); }
-            set { _settings.PutSetting("DefaultFileFormat", value); }
+            get => _settings.GetSetting<string>("DefaultFileFormat");
+            set => _settings.PutSetting("DefaultFileFormat", value);
         }
     }
 }

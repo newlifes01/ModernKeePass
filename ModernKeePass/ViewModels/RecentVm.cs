@@ -14,13 +14,13 @@ namespace ModernKeePass.ViewModels
 
         public ObservableCollection<IRecentItem> RecentItems
         {
-            get { return _recentItems; }
-            set { SetProperty(ref _recentItems, value); }
+            get => _recentItems;
+            set => SetProperty(ref _recentItems, value);
         }
 
         public ISelectableModel SelectedItem
         {
-            get { return _selectedItem; }
+            get => _selectedItem;
             set
             {
                 if (_selectedItem == value) return;

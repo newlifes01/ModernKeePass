@@ -17,8 +17,8 @@ namespace ModernKeePass.Views.UserControls
 
         public string HeaderLabel
         {
-            get { return (string)GetValue(HeaderLabelProperty); }
-            set { SetValue(HeaderLabelProperty, value); }
+            get => (string)GetValue(HeaderLabelProperty);
+            set => SetValue(HeaderLabelProperty, value);
         }
         public static readonly DependencyProperty HeaderLabelProperty =
             DependencyProperty.Register(
@@ -29,8 +29,8 @@ namespace ModernKeePass.Views.UserControls
 
         public string ButtonLabel
         {
-            get { return (string)GetValue(ButtonLabelProperty); }
-            set { SetValue(ButtonLabelProperty, value); }
+            get => (string)GetValue(ButtonLabelProperty);
+            set => SetValue(ButtonLabelProperty, value);
         }
         public static readonly DependencyProperty ButtonLabelProperty =
             DependencyProperty.Register(
@@ -41,8 +41,8 @@ namespace ModernKeePass.Views.UserControls
 
         public string DisplayMemberPath
         {
-            get { return (string)GetValue(DisplayMemberPathProperty); }
-            set { SetValue(DisplayMemberPathProperty, value); }
+            get => (string)GetValue(DisplayMemberPathProperty);
+            set => SetValue(DisplayMemberPathProperty, value);
         }
         public static readonly DependencyProperty DisplayMemberPathProperty =
             DependencyProperty.Register(
@@ -53,8 +53,8 @@ namespace ModernKeePass.Views.UserControls
 
         public object ResizeTarget
         {
-            get { return GetValue(ResizeTargetProperty); }
-            set { SetValue(ResizeTargetProperty, value); }
+            get => GetValue(ResizeTargetProperty);
+            set => SetValue(ResizeTargetProperty, value);
         }
         public static readonly DependencyProperty ResizeTargetProperty =
             DependencyProperty.Register(
@@ -65,8 +65,8 @@ namespace ModernKeePass.Views.UserControls
 
         public Visibility IsButtonVisible
         {
-            get { return (Visibility)GetValue(IsButtonVisibleProperty); }
-            set { SetValue(IsButtonVisibleProperty, value); }
+            get => (Visibility)GetValue(IsButtonVisibleProperty);
+            set => SetValue(IsButtonVisibleProperty, value);
         }
         public static readonly DependencyProperty IsButtonVisibleProperty =
             DependencyProperty.Register(
@@ -77,8 +77,8 @@ namespace ModernKeePass.Views.UserControls
 
         public IEnumerable<IPwEntity> ItemsSource
         {
-            get { return (IEnumerable<IPwEntity>)GetValue(ItemsSourceProperty); }
-            set { SetValue(ItemsSourceProperty, value); }
+            get => (IEnumerable<IPwEntity>)GetValue(ItemsSourceProperty);
+            set => SetValue(ItemsSourceProperty, value);
         }
 
         public static readonly DependencyProperty ItemsSourceProperty =
@@ -90,8 +90,8 @@ namespace ModernKeePass.Views.UserControls
 
         public object SelectedItem
         {
-            get { return GetValue(SelectedItemProperty); }
-            set { SetValue(SelectedItemProperty, value); }
+            get => GetValue(SelectedItemProperty);
+            set => SetValue(SelectedItemProperty, value);
         }
         public static readonly DependencyProperty SelectedItemProperty =
             DependencyProperty.Register(

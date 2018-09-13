@@ -40,7 +40,7 @@ namespace ModernKeePass.ViewModels
 
         public double PasswordLength
         {
-            get { return _passwordLength; }
+            get => _passwordLength;
             set
             {
                 _passwordLength = value;
@@ -50,20 +50,20 @@ namespace ModernKeePass.ViewModels
 
         public string Name
         {
-            get { return GetEntryValue(PwDefs.TitleField); }
-            set { SetEntryValue(PwDefs.TitleField, new ProtectedString(true, value)); }
+            get => GetEntryValue(PwDefs.TitleField);
+            set => SetEntryValue(PwDefs.TitleField, new ProtectedString(true, value));
         }
 
 
         public string UserName
         {
-            get { return GetEntryValue(PwDefs.UserNameField); }
-            set { SetEntryValue(PwDefs.UserNameField, new ProtectedString(true, value)); }
+            get => GetEntryValue(PwDefs.UserNameField);
+            set => SetEntryValue(PwDefs.UserNameField, new ProtectedString(true, value));
         }
 
         public string Password
         {
-            get { return GetEntryValue(PwDefs.PasswordField); }
+            get => GetEntryValue(PwDefs.PasswordField);
             set
             {
                 SetEntryValue(PwDefs.PasswordField, new ProtectedString(true, value));
@@ -74,14 +74,14 @@ namespace ModernKeePass.ViewModels
         
         public string Url
         {
-            get { return GetEntryValue(PwDefs.UrlField); }
-            set { SetEntryValue(PwDefs.UrlField, new ProtectedString(true, value)); }
+            get => GetEntryValue(PwDefs.UrlField);
+            set => SetEntryValue(PwDefs.UrlField, new ProtectedString(true, value));
         }
 
         public string Notes
         {
-            get { return GetEntryValue(PwDefs.NotesField); }
-            set { SetEntryValue(PwDefs.NotesField, new ProtectedString(true, value)); }
+            get => GetEntryValue(PwDefs.NotesField);
+            set => SetEntryValue(PwDefs.NotesField, new ProtectedString(true, value));
         }
 
         public int IconId
@@ -101,7 +101,7 @@ namespace ModernKeePass.ViewModels
 
         public DateTimeOffset ExpiryDate
         {
-            get { return new DateTimeOffset(_pwEntry.ExpiryTime.Date); }
+            get => new DateTimeOffset(_pwEntry.ExpiryTime.Date);
             set
             {
                 if (!HasExpirationDate) return;
@@ -112,7 +112,7 @@ namespace ModernKeePass.ViewModels
 
         public TimeSpan ExpiryTime
         {
-            get { return _pwEntry.ExpiryTime.TimeOfDay; }
+            get => _pwEntry.ExpiryTime.TimeOfDay;
             set
             {
                 if (!HasExpirationDate) return;
@@ -123,7 +123,7 @@ namespace ModernKeePass.ViewModels
 
         public bool IsEditMode
         {
-            get { return IsSelected && _isEditMode; }
+            get => IsSelected && _isEditMode;
             set
             {
                 _isEditMode = value;
@@ -133,7 +133,7 @@ namespace ModernKeePass.ViewModels
         
         public bool IsVisible
         {
-            get { return _isVisible; }
+            get => _isVisible;
             set
             {
                 _isVisible = value;
@@ -143,7 +143,7 @@ namespace ModernKeePass.ViewModels
         
         public bool IsRevealPassword
         {
-            get { return _isRevealPassword; }
+            get => _isRevealPassword;
             set
             {
                 _isRevealPassword = value;
@@ -152,7 +152,7 @@ namespace ModernKeePass.ViewModels
         }
         public bool HasExpirationDate
         {
-            get { return _pwEntry.Expires; }
+            get => _pwEntry.Expires;
             set
             {
                 _pwEntry.Expires = value;
@@ -178,7 +178,7 @@ namespace ModernKeePass.ViewModels
 
         public Color? BackgroundColor
         {
-            get { return _pwEntry?.BackgroundColor; }
+            get => _pwEntry?.BackgroundColor;
             set
             {
                 if (value != null) _pwEntry.BackgroundColor = (Color) value;
@@ -187,7 +187,7 @@ namespace ModernKeePass.ViewModels
 
         public Color? ForegroundColor
         {
-            get { return _pwEntry?.ForegroundColor; }
+            get => _pwEntry?.ForegroundColor;
             set
             {
                 if (value != null) _pwEntry.ForegroundColor = (Color)value;

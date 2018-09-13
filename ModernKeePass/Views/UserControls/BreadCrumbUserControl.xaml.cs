@@ -15,8 +15,8 @@ namespace ModernKeePass.Views.UserControls
 
         public IEnumerable<IPwEntity> ItemsSource
         {
-            get { return (IEnumerable<IPwEntity>)GetValue(ItemsSourceProperty); }
-            set { SetValue(ItemsSourceProperty, value); }
+            get => (IEnumerable<IPwEntity>)GetValue(ItemsSourceProperty);
+            set => SetValue(ItemsSourceProperty, value);
         }
 
         public static readonly DependencyProperty ItemsSourceProperty =

@@ -12,8 +12,8 @@ namespace ModernKeePass.Actions
     {
         public IPwEntity Entity
         {
-            get { return (IPwEntity)GetValue(EntityProperty); }
-            set { SetValue(EntityProperty, value); }
+            get => (IPwEntity)GetValue(EntityProperty);
+            set => SetValue(EntityProperty, value);
         }
 
         public static readonly DependencyProperty EntityProperty =
@@ -22,8 +22,8 @@ namespace ModernKeePass.Actions
 
         public ICommand Command
         {
-            get { return (ICommand)GetValue(CommandProperty); }
-            set { SetValue(CommandProperty, value); }
+            get => (ICommand)GetValue(CommandProperty);
+            set => SetValue(CommandProperty, value);
         }
 
         public static readonly DependencyProperty CommandProperty =

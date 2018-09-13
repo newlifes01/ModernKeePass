@@ -10,8 +10,8 @@ namespace ModernKeePass.Views.UserControls
     {
         public ICommand SaveCommand
         {
-            get { return (ICommand)GetValue(SaveCommandProperty); }
-            set { SetValue(SaveCommandProperty, value); }
+            get => (ICommand)GetValue(SaveCommandProperty);
+            set => SetValue(SaveCommandProperty, value);
         }
         public static readonly DependencyProperty SaveCommandProperty =
             DependencyProperty.Register(
@@ -22,8 +22,8 @@ namespace ModernKeePass.Views.UserControls
 
         public ICommand EditCommand
         {
-            get { return (ICommand)GetValue(EditCommandProperty); }
-            set { SetValue(EditCommandProperty, value); }
+            get => (ICommand)GetValue(EditCommandProperty);
+            set => SetValue(EditCommandProperty, value);
         }
         public static readonly DependencyProperty EditCommandProperty =
             DependencyProperty.Register(
@@ -34,8 +34,8 @@ namespace ModernKeePass.Views.UserControls
 
         public ICommand DeleteCommand
         {
-            get { return (ICommand)GetValue(DeleteCommandProperty); }
-            set { SetValue(DeleteCommandProperty, value); }
+            get => (ICommand)GetValue(DeleteCommandProperty);
+            set => SetValue(DeleteCommandProperty, value);
         }
         public static readonly DependencyProperty DeleteCommandProperty =
             DependencyProperty.Register(
@@ -46,8 +46,8 @@ namespace ModernKeePass.Views.UserControls
 
         public ICommand RestoreCommand
         {
-            get { return (ICommand)GetValue(RestoreCommandProperty); }
-            set { SetValue(RestoreCommandProperty, value); }
+            get => (ICommand)GetValue(RestoreCommandProperty);
+            set => SetValue(RestoreCommandProperty, value);
         }
         public static readonly DependencyProperty RestoreCommandProperty =
             DependencyProperty.Register(
@@ -58,8 +58,8 @@ namespace ModernKeePass.Views.UserControls
 
         public ICommand SortEntriesCommand
         {
-            get { return (ICommand)GetValue(SortEntriesCommandProperty); }
-            set { SetValue(SortEntriesCommandProperty, value); }
+            get => (ICommand)GetValue(SortEntriesCommandProperty);
+            set => SetValue(SortEntriesCommandProperty, value);
         }
         public static readonly DependencyProperty SortEntriesCommandProperty =
             DependencyProperty.Register(
@@ -70,8 +70,8 @@ namespace ModernKeePass.Views.UserControls
         
         public ICommand SortGroupsCommand
         {
-            get { return (ICommand)GetValue(SortGroupsCommandProperty); }
-            set { SetValue(SortGroupsCommandProperty, value); }
+            get => (ICommand)GetValue(SortGroupsCommandProperty);
+            set => SetValue(SortGroupsCommandProperty, value);
         }
         public static readonly DependencyProperty SortGroupsCommandProperty =
             DependencyProperty.Register(
@@ -82,8 +82,8 @@ namespace ModernKeePass.Views.UserControls
 
         public Visibility RestoreButtonVisibility
         {
-            get { return (Visibility)GetValue(RestoreButtonVisibilityProperty); }
-            set { SetValue(RestoreButtonVisibilityProperty, value); }
+            get => (Visibility)GetValue(RestoreButtonVisibilityProperty);
+            set => SetValue(RestoreButtonVisibilityProperty, value);
         }
         public static readonly DependencyProperty RestoreButtonVisibilityProperty =
             DependencyProperty.Register(
@@ -94,8 +94,8 @@ namespace ModernKeePass.Views.UserControls
 
         public Visibility DeleteButtonVisibility
         {
-            get { return (Visibility)GetValue(DeleteButtonVisibilityProperty); }
-            set { SetValue(DeleteButtonVisibilityProperty, value); }
+            get => (Visibility)GetValue(DeleteButtonVisibilityProperty);
+            set => SetValue(DeleteButtonVisibilityProperty, value);
         }
         public static readonly DependencyProperty DeleteButtonVisibilityProperty =
             DependencyProperty.Register(
@@ -106,8 +106,8 @@ namespace ModernKeePass.Views.UserControls
         
         public Visibility SortButtonVisibility
         {
-            get { return (Visibility)GetValue(SortButtonVisibilityProperty); }
-            set { SetValue(SortButtonVisibilityProperty, value); }
+            get => (Visibility)GetValue(SortButtonVisibilityProperty);
+            set => SetValue(SortButtonVisibilityProperty, value);
         }
         public static readonly DependencyProperty SortButtonVisibilityProperty =
             DependencyProperty.Register(
@@ -118,8 +118,8 @@ namespace ModernKeePass.Views.UserControls
 
         public bool IsDeleteButtonEnabled
         {
-            get { return (bool)GetValue(IsDeleteButtonEnabledProperty); }
-            set { SetValue(IsDeleteButtonEnabledProperty, value); }
+            get => (bool)GetValue(IsDeleteButtonEnabledProperty);
+            set => SetValue(IsDeleteButtonEnabledProperty, value);
         }
         public static readonly DependencyProperty IsDeleteButtonEnabledProperty =
             DependencyProperty.Register(
@@ -130,8 +130,8 @@ namespace ModernKeePass.Views.UserControls
 
         public bool IsEditButtonChecked
         {
-            get { return (bool)GetValue(IsEditButtonCheckedProperty); }
-            set { SetValue(IsEditButtonCheckedProperty, value); }
+            get => (bool)GetValue(IsEditButtonCheckedProperty);
+            set => SetValue(IsEditButtonCheckedProperty, value);
         }
         public static readonly DependencyProperty IsEditButtonCheckedProperty =
             DependencyProperty.Register(

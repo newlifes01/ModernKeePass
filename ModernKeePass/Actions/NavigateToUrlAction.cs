@@ -9,8 +9,8 @@ namespace ModernKeePass.Actions
     {
         public string Url
         {
-            get { return (string)GetValue(UrlProperty); }
-            set { SetValue(UrlProperty, value); }
+            get => (string)GetValue(UrlProperty);
+            set => SetValue(UrlProperty, value);
         }
 
         public static readonly DependencyProperty UrlProperty =

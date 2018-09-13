@@ -23,8 +23,8 @@ namespace ModernKeePass.Views.UserControls
 
         public bool CreateNew
         {
-            get { return (bool)GetValue(CreateNewProperty); }
-            set { SetValue(CreateNewProperty, value); }
+            get => (bool)GetValue(CreateNewProperty);
+            set => SetValue(CreateNewProperty, value);
         }
         public static readonly DependencyProperty CreateNewProperty =
             DependencyProperty.Register(
@@ -35,8 +35,8 @@ namespace ModernKeePass.Views.UserControls
 
         public bool UpdateKey
         {
-            get { return (bool)GetValue(UpdateKeyProperty); }
-            set { SetValue(UpdateKeyProperty, value); }
+            get => (bool)GetValue(UpdateKeyProperty);
+            set => SetValue(UpdateKeyProperty, value);
         }
         public static readonly DependencyProperty UpdateKeyProperty =
             DependencyProperty.Register(
@@ -47,8 +47,8 @@ namespace ModernKeePass.Views.UserControls
 
         public string ButtonLabel
         {
-            get { return (string)GetValue(ButtonLabelProperty); }
-            set { SetValue(ButtonLabelProperty, value); }
+            get => (string)GetValue(ButtonLabelProperty);
+            set => SetValue(ButtonLabelProperty, value);
         }
         public static readonly DependencyProperty ButtonLabelProperty =
             DependencyProperty.Register(
@@ -59,8 +59,8 @@ namespace ModernKeePass.Views.UserControls
 
         public StorageFile DatabaseFile
         {
-            get { return (StorageFile)GetValue(DatabaseFileProperty); }
-            set { SetValue(DatabaseFileProperty, value); }
+            get => (StorageFile)GetValue(DatabaseFileProperty);
+            set => SetValue(DatabaseFileProperty, value);
         }
         public static readonly DependencyProperty DatabaseFileProperty =
             DependencyProperty.Register(

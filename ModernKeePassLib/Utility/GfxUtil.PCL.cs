@@ -1,23 +1,17 @@
-﻿using System.IO;
-using Splat;
+﻿using Windows.UI.Xaml.Controls;
 
 namespace ModernKeePassLib.Utility
 {
     public class GfxUtil
     {
-        public static IBitmap LoadImage(byte[] pb)
+        public static Image LoadImage(byte[] pb)
         {
             return null;
-            //return ScaleImage(pb, null, null);
         }
 
-        public static IBitmap ScaleImage(byte[] pb, int? w, int? h)
+        public static Image ScaleImage(Image m_imgOrg, int? w, int? h, ScaleTransformFlags flags)
         {
             return null;
-            /*using (var ms = new MemoryStream(pb, false))
-            {
-                return BitmapLoader.Current.Load(ms, w, h).Result;
-            }*/
         }
     }
 }

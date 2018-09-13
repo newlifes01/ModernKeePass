@@ -22,7 +22,7 @@ namespace ModernKeePass.ViewModels
 
         public string ImportFormatHelp
         {
-            get { return _importFormatHelp; }
+            get => _importFormatHelp;
             set
             {
                 _importFormatHelp = value;

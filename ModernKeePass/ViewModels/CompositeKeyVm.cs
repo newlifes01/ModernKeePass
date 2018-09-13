@@ -25,7 +25,7 @@ namespace ModernKeePass.ViewModels
 
         public bool HasPassword
         {
-            get { return _hasPassword; }
+            get => _hasPassword;
             set
             {
                 SetProperty(ref _hasPassword, value);
@@ -35,7 +35,7 @@ namespace ModernKeePass.ViewModels
 
         public bool HasKeyFile
         {
-            get { return _hasKeyFile; }
+            get => _hasKeyFile;
             set
             {
                 SetProperty(ref _hasKeyFile, value);
@@ -45,7 +45,7 @@ namespace ModernKeePass.ViewModels
 
         public bool HasUserAccount
         {
-            get { return _hasUserAccount; }
+            get => _hasUserAccount;
             set
             {
                 SetProperty(ref _hasUserAccount, value);
@@ -57,19 +57,19 @@ namespace ModernKeePass.ViewModels
 
         public string Status
         {
-            get { return _status; }
-            set { SetProperty(ref _status, value); }
+            get => _status;
+            set => SetProperty(ref _status, value);
         }
 
         public int StatusType
         {
-            get { return (int)_statusType; }
-            set { SetProperty(ref _statusType, (StatusTypes)value); }
+            get => (int)_statusType;
+            set => SetProperty(ref _statusType, (StatusTypes)value);
         }
 
         public string Password
         {
-            get { return _password; }
+            get => _password;
             set
             {
                 _password = value;
@@ -81,7 +81,7 @@ namespace ModernKeePass.ViewModels
 
         public StorageFile KeyFile
         {
-            get { return _keyFile; }
+            get => _keyFile;
             set
             {
                 _keyFile = value;
@@ -92,8 +92,8 @@ namespace ModernKeePass.ViewModels
 
         public string KeyFileText
         {
-            get { return _keyFileText; }
-            set { SetProperty(ref _keyFileText, value); }
+            get => _keyFileText;
+            set => SetProperty(ref _keyFileText, value);
         }
 
         public GroupVm RootGroup { get; set; }

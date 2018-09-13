@@ -20,10 +20,10 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-#if ModernKeePassLib
-using Image = Splat.IBitmap;
-#else
+#if !ModernKeePassLib
 using System.Drawing;
+#else
+using Windows.UI.Xaml.Controls;
 #endif
 
 using ModernKeePassLib.Utility;
@@ -117,12 +117,8 @@ namespace ModernKeePassLib
 
 			Image img;
 			if(m_dImageCache.TryGetValue(lID, out img)) return img;
-
-#if ModernKeePassLib
-            img = GfxUtil.ScaleImage(m_pbImageDataPng, w, h);
-#else
+            
 			img = GfxUtil.ScaleImage(m_imgOrg, w, h, ScaleTransformFlags.UIIcon);
-#endif
 			m_dImageCache[lID] = img;
 			return img;
 		}

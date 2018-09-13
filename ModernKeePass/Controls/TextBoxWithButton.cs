@@ -10,8 +10,8 @@ namespace ModernKeePass.Controls
 
         public string ButtonSymbol
         {
-            get { return (string)GetValue(ButtonSymbolProperty); }
-            set { SetValue(ButtonSymbolProperty, value); }
+            get => (string)GetValue(ButtonSymbolProperty);
+            set => SetValue(ButtonSymbolProperty, value);
         }
         public static readonly DependencyProperty ButtonSymbolProperty =
             DependencyProperty.Register(
@@ -22,8 +22,8 @@ namespace ModernKeePass.Controls
 
         public string ButtonTooltip
         {
-            get { return (string)GetValue(ButtonTooltipProperty); }
-            set { SetValue(ButtonTooltipProperty, value); }
+            get => (string)GetValue(ButtonTooltipProperty);
+            set => SetValue(ButtonTooltipProperty, value);
         }
         public static readonly DependencyProperty ButtonTooltipProperty =
             DependencyProperty.Register(
@@ -34,8 +34,8 @@ namespace ModernKeePass.Controls
 
         public bool IsButtonEnabled
         {
-            get { return (bool)GetValue(IsButtonEnabledProperty); }
-            set { SetValue(IsButtonEnabledProperty, value); }
+            get => (bool)GetValue(IsButtonEnabledProperty);
+            set => SetValue(IsButtonEnabledProperty, value);
         }
         public static readonly DependencyProperty IsButtonEnabledProperty =
             DependencyProperty.Register(

@@ -60,7 +60,7 @@ namespace ModernKeePass.Common
     public class NavigationHelper : DependencyObject
     {
         private Page Page { get; set; }
-        private Frame Frame { get { return this.Page.Frame; } }
+        private Frame Frame => this.Page.Frame;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="NavigationHelper"/> class.
@@ -132,10 +132,7 @@ namespace ModernKeePass.Common
                 }
                 return _goBackCommand;
             }
-            set
-            {
-                _goBackCommand = value;
-            }
+            set => _goBackCommand = value;
         }
         /// <summary>
         /// <see cref="RelayCommand"/> used for navigating to the most recent item in 

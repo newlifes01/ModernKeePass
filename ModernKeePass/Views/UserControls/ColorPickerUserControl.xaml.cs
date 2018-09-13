@@ -21,8 +21,8 @@ namespace ModernKeePass.Views.UserControls
 
         public SolidColorBrush SelectedColor
         {
-            get { return (SolidColorBrush)GetValue(SelectedColorProperty); }
-            set { SetValue(SelectedColorProperty, value); }
+            get => (SolidColorBrush)GetValue(SelectedColorProperty);
+            set => SetValue(SelectedColorProperty, value);
         }
         public static readonly DependencyProperty SelectedColorProperty =
             DependencyProperty.Register(

@@ -15,8 +15,8 @@ namespace ModernKeePass.Views.UserControls
 
         public Symbol SelectedSymbol
         {
-            get { return (Symbol)GetValue(SelectedSymbolProperty); }
-            set { SetValue(SelectedSymbolProperty, value); }
+            get => (Symbol)GetValue(SelectedSymbolProperty);
+            set => SetValue(SelectedSymbolProperty, value);
         }
         public static readonly DependencyProperty SelectedSymbolProperty =
             DependencyProperty.Register(

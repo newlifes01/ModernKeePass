@@ -19,8 +19,8 @@ namespace ModernKeePass.ViewModels
 
         public ObservableCollection<EntryVm> Entries
         {
-            get { return _entries; }
-            private set { SetProperty(ref _entries, value); }
+            get => _entries;
+            private set => SetProperty(ref _entries, value);
         }
 
         public IEnumerable<EntryVm> SubEntries
@@ -53,7 +53,7 @@ namespace ModernKeePass.ViewModels
         /// </summary>
         public bool IsSelected
         {
-            get { return _database != null && _database.RecycleBinEnabled && _database.RecycleBin?.Id == Id; }
+            get => _database != null && _database.RecycleBinEnabled && _database.RecycleBin?.Id == Id;
             set
             {
                 if (value && _pwGroup != null) _database.RecycleBin = this;
@@ -67,8 +67,8 @@ namespace ModernKeePass.ViewModels
 
         public string Name
         {
-            get { return _pwGroup == null ? string.Empty : _pwGroup.Name; }
-            set { _pwGroup.Name = value; }
+            get => _pwGroup == null ? string.Empty : _pwGroup.Name;
+            set => _pwGroup.Name = value;
         }
 
         public int IconId
@@ -78,12 +78,12 @@ namespace ModernKeePass.ViewModels
                 if (_pwGroup?.IconId != null) return (int) _pwGroup?.IconId;
                 return -1;
             }
-            set { _pwGroup.IconId = (PwIcon)value; }
+            set => _pwGroup.IconId = (PwIcon)value;
         }
         
         public bool IsEditMode
         {
-            get { return _isEditMode; }
+            get => _isEditMode;
             set
             {
                 SetProperty(ref _isEditMode, value);
@@ -94,8 +94,8 @@ namespace ModernKeePass.ViewModels
 
         public bool IsMenuClosed
         {
-            get { return _isMenuClosed; }
-            set { SetProperty(ref _isMenuClosed, value); }
+            get => _isMenuClosed;
+            set => SetProperty(ref _isMenuClosed, value);
         }
 
         public IEnumerable<IPwEntity> BreadCrumb

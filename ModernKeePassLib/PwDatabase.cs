@@ -24,7 +24,7 @@ using System.IO;
 using System.Drawing;
 
 #if ModernKeePassLib
-using Image = Splat.IBitmap;
+using Windows.UI.Xaml.Controls;
 #endif
 
 using ModernKeePassLib.Collections;

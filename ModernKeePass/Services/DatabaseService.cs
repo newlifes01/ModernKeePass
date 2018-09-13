@@ -24,7 +24,7 @@ namespace ModernKeePass.Services
 
         public GroupVm RecycleBin
         {
-            get { return _recycleBin; }
+            get => _recycleBin;
             set
             {
                 _recycleBin = value;
@@ -36,26 +36,26 @@ namespace ModernKeePass.Services
         
         public bool RecycleBinEnabled
         {
-            get { return _pwDatabase.RecycleBinEnabled; }
-            set { _pwDatabase.RecycleBinEnabled = value; }
+            get => _pwDatabase.RecycleBinEnabled;
+            set => _pwDatabase.RecycleBinEnabled = value;
         }
         
         public PwUuid DataCipher
         {
-            get { return _pwDatabase.DataCipherUuid; }
-            set { _pwDatabase.DataCipherUuid = value; }
+            get => _pwDatabase.DataCipherUuid;
+            set => _pwDatabase.DataCipherUuid = value;
         }
 
         public PwCompressionAlgorithm CompressionAlgorithm
         {
-            get { return _pwDatabase.Compression; }
-            set { _pwDatabase.Compression = value; }
+            get => _pwDatabase.Compression;
+            set => _pwDatabase.Compression = value;
         }
 
         public KdfParameters KeyDerivation
         {
-            get { return _pwDatabase.KdfParameters; }
-            set { _pwDatabase.KdfParameters = value; }
+            get => _pwDatabase.KdfParameters;
+            set => _pwDatabase.KdfParameters = value;
         }
 
         public bool IsOpen => _pwDatabase.IsOpen;

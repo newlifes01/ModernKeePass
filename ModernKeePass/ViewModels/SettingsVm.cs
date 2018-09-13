@@ -16,13 +16,13 @@ namespace ModernKeePass.ViewModels
 
         public IOrderedEnumerable<IGrouping<string, ListMenuItemVm>> MenuItems
         {
-            get { return _menuItems; }
-            set { SetProperty(ref _menuItems, value); }
+            get => _menuItems;
+            set => SetProperty(ref _menuItems, value);
         }
 
         public ISelectableModel SelectedItem
         {
-            get { return _selectedItem; }
+            get => _selectedItem;
             set
             {
                 if (_selectedItem == value) return;
