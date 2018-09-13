@@ -5,7 +5,8 @@
     "Microsoft.ApplicationInsights.PersistenceChannel": "1.2.3",
     "Microsoft.ApplicationInsights.WindowsApps": "1.1.1",
     "Microsoft.NETCore.UniversalWindowsPlatform": "6.1.7",
-    "Microsoft.Xaml.Behaviors.Uwp.Managed": "2.0.0"
+    "Microsoft.Xaml.Behaviors.Uwp.Managed": "2.0.0",
+    "ModernKeePassLib": "2.39.2"
   },
   "frameworks": {
     "uap10.0.17134": {}
