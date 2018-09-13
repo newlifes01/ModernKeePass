@@ -242,9 +242,6 @@
     <AppxManifest Include="Package.appxmanifest">
       <SubType>Designer</SubType>
     </AppxManifest>
-    <None Include="packages.config">
-      <SubType>Designer</SubType>
-    </None>
     <None Include="project.json" />
     <PRIResource Include="Strings\fr-FR\Resources.resw" />
     <PRIResource Include="Strings\fr-FR\CodeBehind.resw" />
