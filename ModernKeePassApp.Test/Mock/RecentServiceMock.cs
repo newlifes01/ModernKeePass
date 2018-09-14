@@ -7,6 +7,7 @@ using System.Collections.Generic;
 
 namespace ModernKeePassApp.Test.Mock
 {
+    [Obsolete]
     class RecentServiceMock : IRecentService
     {
         private Dictionary<string, IStorageItem> _recentItems = new Dictionary<string, IStorageItem>();

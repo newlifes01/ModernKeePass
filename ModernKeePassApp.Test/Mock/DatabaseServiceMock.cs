@@ -8,6 +8,7 @@ using Windows.Storage;
 
 namespace ModernKeePassApp.Test.Mock
 {
+    [Obsolete]
     public class DatabaseServiceMock : IDatabaseService
     {
         private bool _isOpen;

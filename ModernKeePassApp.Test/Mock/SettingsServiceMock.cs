@@ -3,6 +3,7 @@ using ModernKeePass.Interfaces;
 
 namespace ModernKeePassApp.Test.Mock
 {
+    [Obsolete]
     public class SettingsServiceMock : ISettingsService
     {
         public T GetSetting<T>(string property, T defaultValue = default(T))
