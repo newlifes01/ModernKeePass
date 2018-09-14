@@ -19,7 +19,7 @@
     </Page.DataContext>
 
     <Grid>
-        <NavigationView MenuItemsSource="{StaticResource MenuItemsSource}">
+        <NavigationView MenuItemsSource="{Binding Source={StaticResource MenuItemsSource}}">
 
         </NavigationView>
     </Grid>

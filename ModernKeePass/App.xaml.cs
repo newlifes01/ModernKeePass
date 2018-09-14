@@ -129,7 +129,7 @@ namespace ModernKeePass
             }
 
             if (e is LaunchActivatedEventArgs lauchActivatedEventArgs && rootFrame.Content == null)
-                rootFrame.Navigate(typeof(MainPage), lauchActivatedEventArgs.Arguments);
+                rootFrame.Navigate(typeof(MainPage10), lauchActivatedEventArgs.Arguments);
 
             // Ensure the current window is active
             Window.Current.Activate();
