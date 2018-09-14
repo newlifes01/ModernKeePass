@@ -11,8 +11,7 @@ namespace ModernKeePass.TemplateSelectors
         
         protected override DataTemplate SelectTemplateCore(object item, DependencyObject container)
         {
-            var isSelectableItem = item as ISelectableModel;
-            return isSelectableItem != null && isSelectableItem.IsSelected ? TrueItem : FalseItem;
+            return item is ISelectableModel isSelectableItem && isSelectableItem.IsSelected ? TrueItem : FalseItem;
         }
     }
 }

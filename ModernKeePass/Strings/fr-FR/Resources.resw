@@ -495,4 +495,28 @@
   <data name="NewImportFormatHelp.Text" xml:space="preserve">
     <value>Le fichier CSV doit être formatté de la façon suivante: Nom du compte;Login;Mot de passe:URL;Commentaires</value>
   </data>
+  <data name="MainMenuItemAbout.Content" xml:space="preserve">
+    <value>A propos</value>
+  </data>
+  <data name="MainMenuItemDonate.Content" xml:space="preserve">
+    <value>Donation</value>
+  </data>
+  <data name="MainMenuItemNew.Content" xml:space="preserve">
+    <value>Nouveau</value>
+  </data>
+  <data name="MainMenuItemOpen.Content" xml:space="preserve">
+    <value>Ouvrir</value>
+  </data>
+  <data name="MainMenuItemRecent.Content" xml:space="preserve">
+    <value>Récents</value>
+  </data>
+  <data name="MainMenuItemSave.Content" xml:space="preserve">
+    <value>Sauvegarder</value>
+  </data>
+  <data name="MainMenuItemSettings.Content" xml:space="preserve">
+    <value>Paramètres</value>
+  </data>
+  <data name="MainPageOpenedDatabasesHeader.Content" xml:space="preserve">
+    <value>Bases de données</value>
+  </data>
 </root>

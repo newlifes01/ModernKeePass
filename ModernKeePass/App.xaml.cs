@@ -4,6 +4,7 @@ using System.Reflection;
 using System.Threading.Tasks;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
+using Windows.ApplicationModel.Core;
 using Windows.Storage;
 using Windows.Storage.Pickers;
 using Windows.UI.Xaml;
@@ -96,21 +97,12 @@ namespace ModernKeePass
 
         private async Task OnLaunchOrActivated(IActivatedEventArgs e)
         {
-#if DEBUG
-            if (System.Diagnostics.Debugger.IsAttached)
-            {
-                //DebugSettings.EnableFrameRateCounter = true;
-            }
-#endif
-
-            var rootFrame = Window.Current.Content as Frame;
-
             // Do not repeat app initialization when the Window already has content,
             // just ensure that the window is active
-            if (rootFrame == null)
+            if (!(Window.Current.Content is Frame rootFrame))
             {
                 // Create a Frame to act as the navigation context and navigate to the first page
-                rootFrame = new Frame {Language = Windows.Globalization.ApplicationLanguages.Languages[0]};
+                rootFrame = new Frame();
                 // Set the default language
 
                 rootFrame.NavigationFailed += OnNavigationFailed;
@@ -129,7 +121,11 @@ namespace ModernKeePass
             }
 
             if (e is LaunchActivatedEventArgs lauchActivatedEventArgs && rootFrame.Content == null)
+            {
+                var coreTitleBar = CoreApplication.GetCurrentView().TitleBar;
+                coreTitleBar.ExtendViewIntoTitleBar = true;
                 rootFrame.Navigate(typeof(MainPage10), lauchActivatedEventArgs.Arguments);
+            }
 
             // Ensure the current window is active
             Window.Current.Activate();
@@ -149,7 +145,7 @@ namespace ModernKeePass
             }
             catch (Exception)
             {
-                currentFrame?.Navigate(typeof(MainPage));
+                currentFrame?.Navigate(typeof(MainPage10));
 #if DEBUG
                 ToastNotificationHelper.ShowGenericToast("App resumed", "Nothing to do, no previous database opened");
 #endif
@@ -199,7 +195,7 @@ namespace ModernKeePass
             base.OnFileActivated(args);
             var rootFrame = new Frame();
             var file = args.Files[0] as StorageFile;
-            rootFrame.Navigate(typeof(MainPage), file);
+            rootFrame.Navigate(typeof(MainPage10), file);
             Window.Current.Content = rootFrame;
             Window.Current.Activate();
         }

@@ -24,8 +24,7 @@ namespace ModernKeePass.Views
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
-            var file = e.Parameter as StorageFile;
-            if (file != null)
+            if (e.Parameter is StorageFile file)
             {
                 Model.OpenFile(file);
             }

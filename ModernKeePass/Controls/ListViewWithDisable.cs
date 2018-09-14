@@ -10,9 +10,8 @@ namespace ModernKeePass.Controls
         {
             base.PrepareContainerForItemOverride(element, item);
 
-            var container = element as ListViewItem;
             var binaryItem = item as IIsEnabled;
-            if (container == null || binaryItem == null) return;
+            if (!(element is ListViewItem container) || binaryItem == null) return;
             container.IsEnabled = binaryItem.IsEnabled;
             container.IsHitTestVisible = binaryItem.IsEnabled;
         }

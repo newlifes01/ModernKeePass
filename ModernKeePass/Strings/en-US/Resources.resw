@@ -492,4 +492,28 @@
   <data name="NewImportFormat.Text" xml:space="preserve">
     <value>Format</value>
   </data>
+  <data name="MainMenuItemAbout.Content" xml:space="preserve">
+    <value>About</value>
+  </data>
+  <data name="MainMenuItemDonate.Content" xml:space="preserve">
+    <value>Donate</value>
+  </data>
+  <data name="MainMenuItemNew.Content" xml:space="preserve">
+    <value>New</value>
+  </data>
+  <data name="MainMenuItemOpen.Content" xml:space="preserve">
+    <value>Open</value>
+  </data>
+  <data name="MainMenuItemRecent.Content" xml:space="preserve">
+    <value>Recent</value>
+  </data>
+  <data name="MainMenuItemSave.Content" xml:space="preserve">
+    <value>Save</value>
+  </data>
+  <data name="MainMenuItemSettings.Content" xml:space="preserve">
+    <value>Settings</value>
+  </data>
+  <data name="MainPageOpenedDatabasesHeader.Content" xml:space="preserve">
+    <value>Databases</value>
+  </data>
 </root>

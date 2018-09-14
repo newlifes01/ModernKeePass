@@ -20,8 +20,7 @@ namespace ModernKeePass.Converters
 
         public object ConvertBack(object value, Type targetType, object parameter, string language)
         {
-            var brush = value as SolidColorBrush;
-            return brush == null ? new Color() : Color.FromArgb(brush.Color.A, brush.Color.R, brush.Color.G, brush.Color.B);
+            return !(value is SolidColorBrush brush) ? new Color() : Color.FromArgb(brush.Color.A, brush.Color.R, brush.Color.G, brush.Color.B);
         }
     }
 }

@@ -47,8 +47,7 @@ namespace ModernKeePass.Controls
         protected override void OnApplyTemplate()
         {
             base.OnApplyTemplate();
-            var actionButton = GetTemplateChild("ActionButton") as Button;
-            if (actionButton != null)
+            if (GetTemplateChild("ActionButton") is Button actionButton)
             {
                 actionButton.Click += (sender, e) => ButtonClick?.Invoke(sender, e);
             }

@@ -7,13 +7,13 @@
     mc:Ignorable="d">
 
     <StackPanel Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <StackPanel Orientation="Horizontal" Margin="0,2,0,10">
+        <StackPanel Orientation="Horizontal" Margin="0,10,0,10">
             <SymbolIcon Symbol="Back" Margin="0,7,40,0" />
-            <TextBlock Style="{StaticResource SubheaderTextBlockStyle}" x:Uid="WelcomeOpen" />
+            <TextBlock Style="{StaticResource SubtitleTextBlockStyle}" x:Uid="WelcomeOpen" />
         </StackPanel>
         <StackPanel Orientation="Horizontal" Margin="0,6,0,10">
             <SymbolIcon Symbol="Back" Margin="0,7,40,0" />
-            <TextBlock Style="{StaticResource SubheaderTextBlockStyle}" x:Uid="WelcomeNew" />
+            <TextBlock Style="{StaticResource SubtitleTextBlockStyle}" x:Uid="WelcomeNew" />
         </StackPanel>
     </StackPanel>
 </Page>

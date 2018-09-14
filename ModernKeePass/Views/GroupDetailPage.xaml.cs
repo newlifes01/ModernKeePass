@@ -47,13 +47,11 @@ namespace ModernKeePass.Views
         {
             NavigationHelper.OnNavigatedTo(e);
 
-            var args = e.Parameter as PasswordEventArgs;
-            if (args != null)
+            if (e.Parameter is PasswordEventArgs args)
                 DataContext = args.RootGroup;
             else
             {
-                var vm = e.Parameter as GroupVm;
-                if (vm != null)
+                if (e.Parameter is GroupVm vm)
                     DataContext = vm;
             }
         }

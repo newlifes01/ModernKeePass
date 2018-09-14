@@ -180,27 +180,6 @@
   <data name="GroupRestored" xml:space="preserve">
     <value>Group returned to its original group</value>
   </data>
-  <data name="MainMenuItemAbout" xml:space="preserve">
-    <value>About</value>
-  </data>
-  <data name="MainMenuItemDonate" xml:space="preserve">
-    <value>Donate</value>
-  </data>
-  <data name="MainMenuItemNew" xml:space="preserve">
-    <value>New</value>
-  </data>
-  <data name="MainMenuItemOpen" xml:space="preserve">
-    <value>Open</value>
-  </data>
-  <data name="MainMenuItemRecent" xml:space="preserve">
-    <value>Recent</value>
-  </data>
-  <data name="MainMenuItemSave" xml:space="preserve">
-    <value>Save</value>
-  </data>
-  <data name="MainMenuItemSettings" xml:space="preserve">
-    <value>Settings</value>
-  </data>
   <data name="SettingsMenuGroupApplication" xml:space="preserve">
     <value>Application</value>
   </data>

@@ -93,7 +93,7 @@
                         </StackPanel>
                         <interactivity:Interaction.Behaviors>
                             <core:EventTriggerBehavior EventName="Click">
-                                <core:NavigateToPageAction TargetPage="ModernKeePass.Views.MainPage" />
+                                <core:NavigateToPageAction TargetPage="ModernKeePass.Views.MainPage10" />
                             </core:EventTriggerBehavior>
                         </interactivity:Interaction.Behaviors>
                     </Button>
