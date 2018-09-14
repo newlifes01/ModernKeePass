@@ -1,7 +1,7 @@
 ﻿using System;
 using Windows.ApplicationModel;
 using Windows.Storage;
-using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ModernKeePass.Services;
 using ModernKeePass.ViewModels;
 using ModernKeePassApp.Test.Mock;

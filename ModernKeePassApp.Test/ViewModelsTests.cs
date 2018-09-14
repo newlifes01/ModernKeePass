@@ -2,7 +2,7 @@
 using System.Linq;
 using Windows.ApplicationModel;
 using Windows.Storage.AccessCache;
-using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ModernKeePass.ViewModels;
 using ModernKeePass.Views;
 using ModernKeePassApp.Test.Mock;
