@@ -62,7 +62,7 @@ namespace ModernKeePass.ViewModels
                     Destination = destinationFrame,
                     Parameter = databaseFile,
                     SymbolIcon = Symbol.Page2,
-                    IsSelected = databaseFile != null && !database.IsOpen
+                    IsSelected = database != null && databaseFile != null && !database.IsOpen
                 },
                 new MainMenuItemVm
                 {

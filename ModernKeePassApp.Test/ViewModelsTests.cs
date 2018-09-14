@@ -3,6 +3,8 @@ using System.Linq;
 using Windows.ApplicationModel;
 using Windows.Storage.AccessCache;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Moq;
+using ModernKeePass.Interfaces;
 using ModernKeePass.ViewModels;
 using ModernKeePass.Views;
 using ModernKeePassApp.Test.Mock;
@@ -13,8 +15,8 @@ namespace ModernKeePassApp.Test
     [TestClass]
     public class ViewModelsTests
     {
-        private readonly RecentServiceMock _recent = new RecentServiceMock();
-        private readonly ResourceServiceMock _resource = new ResourceServiceMock();
+        private readonly IRecentService _recent = Moq.Mock.Of<IRecentService>();
+        private readonly IResourceService _resource = Moq.Mock.Of<IResourceService>(r => r.GetResourceValue(It.IsAny<string>()) == string.Empty);
 
         [TestMethod]
         public void TestAboutVm()
@@ -65,7 +67,7 @@ namespace ModernKeePassApp.Test
                 .GetAwaiter().GetResult();
             var openVm = new OpenVm();
             Assert.IsFalse(openVm.IsFileSelected);
-            openVm.OpenFile(databaseFile, new RecentServiceMock());
+            openVm.OpenFile(databaseFile, _recent);
             Assert.AreEqual("TestDatabase.kdbx", openVm.Name);
         }
 

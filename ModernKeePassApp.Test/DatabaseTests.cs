@@ -2,16 +2,18 @@
 using Windows.ApplicationModel;
 using Windows.Storage;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Moq;
+using ModernKeePass.Interfaces;
 using ModernKeePass.Services;
 using ModernKeePass.ViewModels;
-using ModernKeePassApp.Test.Mock;
 
 namespace ModernKeePassApp.Test
 {
     [TestClass]
     public class DatabaseTests
     {
-        private readonly DatabaseService _database = new DatabaseService(new SettingsServiceMock());
+        private readonly IResourceService _resource = Moq.Mock.Of<IResourceService>(r => r.GetResourceValue(It.IsAny<string>()) == string.Empty);
+        private readonly DatabaseService _database = new DatabaseService(Moq.Mock.Of<ISettingsService>(s => s.GetSetting(It.IsAny<string>(), It.IsAny<bool>()) == default(bool) && s.GetSetting(It.IsAny<string>(), It.IsAny<string>()) == default(string)));
 
         [TestMethod]
         public void TestCreate()
@@ -27,7 +29,7 @@ namespace ModernKeePassApp.Test
         public void TestOpen()
         {
             Assert.IsTrue(_database.IsClosed);
-           var databaseFile = Package.Current.InstalledLocation.GetFileAsync(@"Data\TestDatabase.kdbx").GetAwaiter().GetResult();
+            var databaseFile = Package.Current.InstalledLocation.GetFileAsync(@"Data\TestDatabase.kdbx").GetAwaiter().GetResult();
             OpenOrCreateDatabase(databaseFile, false);
         }
 
@@ -46,7 +48,7 @@ namespace ModernKeePassApp.Test
         {
             Assert.ThrowsException<ArgumentNullException>(
                 () => _database.Open(databaseFile, null, createNew));
-            var compositeKey = new CompositeKeyVm(_database, new ResourceServiceMock())
+            var compositeKey = new CompositeKeyVm(_database, _resource)
             {
                 HasPassword = true,
                 Password = "test"
