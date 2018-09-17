@@ -8,24 +8,22 @@ namespace ModernKeePass.ViewModels
     {
         private readonly IDatabaseService _database;
         private readonly IRecentService _recent;
-        private readonly IStorageFile _databaseFile;
+
+        public IStorageFile File { get; set; }
 
         public bool IsDatabaseOpened => _database != null && _database.IsOpen;
 
-        public bool IsRecentSelected => !IsDatabaseOpened && _recent.EntryCount > 0;
+        public bool HasRecentItems => !IsDatabaseOpened && _recent.EntryCount > 0;
 
         public string OpenedDatabaseName => _database != null ? _database.Name : string.Empty;
 
-        public MainVm10() { }
-
-        internal MainVm10(IStorageFile databaseFile = null) : this(DatabaseService.Instance, RecentService.Instance, databaseFile)
+        public MainVm10() : this(DatabaseService.Instance, RecentService.Instance)
         { }
 
-        public MainVm10(IDatabaseService database, IRecentService recent, IStorageFile databaseFile = null)
+        public MainVm10(IDatabaseService database, IRecentService recent)
         {
             _database = database;
             _recent = recent;
-            _databaseFile = databaseFile;
         }
     }
 }

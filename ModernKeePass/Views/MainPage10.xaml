@@ -5,32 +5,30 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:viewModels="using:ModernKeePass.ViewModels"
-    xmlns:converters="using:ModernKeePass.Converters"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
     <Page.DataContext>
         <viewModels:MainVm10 />
     </Page.DataContext>
-    <Page.Resources>
-        <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
-    </Page.Resources>
 
     <NavigationView 
         x:Name="NavigationView"
         IsSettingsVisible="True"
         Header="ModernKeePass"
         PaneTitle="ModernKeePass"
-        ItemInvoked="NavigationView_OnItemInvoked">
+        ItemInvoked="NavigationView_OnItemInvoked"
+        Loaded="NavigationView_OnLoaded">
         <NavigationView.MenuItems>
-            <NavigationViewItem x:Uid="MainMenuItemOpen" x:Name="Open" Icon="Page2" Tag="open"/>
-            <NavigationViewItem x:Uid="MainMenuItemNew" x:Name="New" Icon="Add" Tag="new"/>
-            <NavigationViewItem x:Uid="MainMenuItemSave" x:Name="Save" Icon="Save" IsEnabled="{Binding IsDatabaseOpened}" IsSelected="{Binding IsDatabaseOpened}" Tag="save"/>
-            <NavigationViewItem x:Uid="MainMenuItemRecent" x:Name="Recent" Icon="Copy" IsSelected="{Binding IsRecentSelected}" Tag="recent"/>
-            <NavigationViewItem x:Uid="MainMenuItemAbout" x:Name="About" Icon="Help" Tag="about"/>
-            <NavigationViewItem x:Uid="MainMenuItemDonate" x:Name="Donate" Icon="Shop" Tag="donate"/>
+            <NavigationViewItem x:Name="Welcome" Tag="welcome" />
+            <NavigationViewItem x:Uid="MainMenuItemOpen" x:Name="Open" Icon="Page2" Tag="open" />
+            <NavigationViewItem x:Uid="MainMenuItemNew" x:Name="New" Icon="Add" Tag="new" />
+            <NavigationViewItem x:Uid="MainMenuItemSave" x:Name="Save" Icon="Save" IsEnabled="{x:Bind ViewModel.IsDatabaseOpened, Mode=OneTime}" Tag="save" />
+            <NavigationViewItem x:Uid="MainMenuItemRecent" x:Name="Recent" Icon="Copy" Tag="recent" />
+            <NavigationViewItem x:Uid="MainMenuItemAbout" x:Name="About" Icon="Help" Tag="about" />
+            <NavigationViewItem x:Uid="MainMenuItemDonate" x:Name="Donate" Icon="Shop" Tag="donate" />
             <NavigationViewItemSeparator/>
-            <NavigationViewItemHeader x:Uid="MainPageOpenedDatabasesHeader" Visibility="{Binding IsDatabaseOpened, Converter={StaticResource BooleanToVisibilityConverter}}"/>
-            <NavigationViewItem x:Name="Database" Content="{Binding OpenedDatabaseName}" Icon="ProtectedDocument" Visibility="{Binding IsDatabaseOpened, Converter={StaticResource BooleanToVisibilityConverter}}" Tag="database"/>
+            <NavigationViewItemHeader x:Uid="MainPageOpenedDatabasesHeader" Visibility="{x:Bind ViewModel.IsDatabaseOpened, Mode=OneTime}"/>
+            <NavigationViewItem x:Name="Database" Content="{x:Bind ViewModel.OpenedDatabaseName, Mode=OneTime}" Icon="ProtectedDocument" Visibility="{x:Bind ViewModel.IsDatabaseOpened, Mode=OneTime}" Tag="database"/>
         </NavigationView.MenuItems>
 
         <Frame x:Name="ContentFrame" Margin="24"/>

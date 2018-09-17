@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Windows.Storage;
+using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 using ModernKeePass.Services;
@@ -11,8 +12,11 @@ namespace ModernKeePass.Views
 {
     public partial class MainPage10
     {
+        private MainVm10 ViewModel => (MainVm10)DataContext;
+
         private readonly IList<(string Tag, Type Page)> _pages = new List<(string Tag, Type Page)>
         {
+            ("welcome", typeof(WelcomePage)),
             ("open", typeof(OpenDatabasePage)),
             ("new", typeof(NewDatabasePage)),
             ("save", typeof(SaveDatabasePage)),
@@ -25,15 +29,12 @@ namespace ModernKeePass.Views
         public MainPage10()
         {
             InitializeComponent();
-            ContentFrame.Navigate(typeof(WelcomePage));
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
-            var file = e.Parameter as StorageFile;
-            DataContext = new MainVm10(file);
-            if (file != null) ContentFrame.Navigate(typeof(OpenDatabasePage), file);
+            ViewModel.File = e.Parameter as StorageFile;
         }
 
         private void NavigationView_OnItemInvoked(NavigationView sender, NavigationViewItemInvokedEventArgs args)
@@ -47,11 +48,11 @@ namespace ModernKeePass.Views
                     .OfType<NavigationViewItem>()
                     .First(i => args.InvokedItem.Equals(i.Content));
 
-                NavView_Navigate(navItem);
+                NavigationView_Navigate(navItem);
             }
         }
 
-        private void NavView_Navigate(NavigationViewItem navItem)
+        private void NavigationView_Navigate(NavigationViewItem navItem, object parameter = null)
         {
             var item = _pages.First(p => p.Tag.Equals(navItem.Tag));
             if (item.Tag == "database")
@@ -61,8 +62,17 @@ namespace ModernKeePass.Views
             else
             {
                 NavigationView.Header = navItem.Content;
-                ContentFrame.Navigate(item.Page);
+                ContentFrame.Navigate(item.Page, parameter);
             }
+        }
+
+        private void NavigationView_OnLoaded(object sender, RoutedEventArgs e)
+        {
+            if (ViewModel.IsDatabaseOpened) NavigationView.SelectedItem = Save;
+            else if (ViewModel.File != null) NavigationView.SelectedItem = Open;
+            else if (ViewModel.HasRecentItems) NavigationView.SelectedItem = Recent;
+            else NavigationView.SelectedItem = Welcome;
+            NavigationView_Navigate((NavigationViewItem) NavigationView.SelectedItem, ViewModel.File);
         }
     }
 }
