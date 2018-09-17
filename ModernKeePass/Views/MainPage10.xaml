@@ -11,26 +11,28 @@
         <viewModels:MainVm10 />
     </Page.DataContext>
 
-    <NavigationView 
-        x:Name="NavigationView"
-        IsSettingsVisible="True"
-        Header="ModernKeePass"
-        PaneTitle="ModernKeePass"
-        ItemInvoked="NavigationView_OnItemInvoked"
-        Loaded="NavigationView_OnLoaded">
-        <NavigationView.MenuItems>
-            <NavigationViewItem x:Name="Welcome" Tag="welcome" />
-            <NavigationViewItem x:Uid="MainMenuItemOpen" x:Name="Open" Icon="Page2" Tag="open" />
-            <NavigationViewItem x:Uid="MainMenuItemNew" x:Name="New" Icon="Add" Tag="new" />
-            <NavigationViewItem x:Uid="MainMenuItemSave" x:Name="Save" Icon="Save" IsEnabled="{x:Bind ViewModel.IsDatabaseOpened, Mode=OneTime}" Tag="save" />
-            <NavigationViewItem x:Uid="MainMenuItemRecent" x:Name="Recent" Icon="Copy" Tag="recent" />
-            <NavigationViewItem x:Uid="MainMenuItemAbout" x:Name="About" Icon="Help" Tag="about" />
-            <NavigationViewItem x:Uid="MainMenuItemDonate" x:Name="Donate" Icon="Shop" Tag="donate" />
-            <NavigationViewItemSeparator/>
-            <NavigationViewItemHeader x:Uid="MainPageOpenedDatabasesHeader" Visibility="{x:Bind ViewModel.IsDatabaseOpened, Mode=OneTime}"/>
-            <NavigationViewItem x:Name="Database" Content="{x:Bind ViewModel.OpenedDatabaseName, Mode=OneTime}" Icon="ProtectedDocument" Visibility="{x:Bind ViewModel.IsDatabaseOpened, Mode=OneTime}" Tag="database"/>
-        </NavigationView.MenuItems>
+    <Grid>
+        <Border x:Name="TitleBar" Height="48" VerticalAlignment="Top" Margin="48,0,0,0" Background="Transparent" />
+        <NavigationView 
+            x:Name="NavigationView"
+            Header="ModernKeePass"
+            PaneTitle="ModernKeePass"
+            ItemInvoked="NavigationView_OnItemInvoked"
+            Loaded="NavigationView_OnLoaded">
+            <NavigationView.MenuItems>
+                <NavigationViewItem x:Name="Welcome" Tag="welcome" Visibility="Collapsed" />
+                <NavigationViewItem x:Uid="MainMenuItemOpen" x:Name="Open" Icon="Page2" Tag="open" />
+                <NavigationViewItem x:Uid="MainMenuItemNew" x:Name="New" Icon="Add" Tag="new" />
+                <NavigationViewItem x:Uid="MainMenuItemSave" x:Name="Save" Icon="Save" IsEnabled="{x:Bind ViewModel.IsDatabaseOpened, Mode=OneTime}" Tag="save" />
+                <NavigationViewItem x:Uid="MainMenuItemRecent" x:Name="Recent" Icon="Copy" Tag="recent" />
+                <NavigationViewItem x:Uid="MainMenuItemAbout" x:Name="About" Icon="Help" Tag="about" />
+                <NavigationViewItem x:Uid="MainMenuItemDonate" x:Name="Donate" Icon="Shop" Tag="donate" />
+                <NavigationViewItemSeparator/>
+                <NavigationViewItemHeader x:Uid="MainPageOpenedDatabasesHeader" Visibility="{x:Bind ViewModel.IsDatabaseOpened, Mode=OneTime}"/>
+                <NavigationViewItem x:Name="Database" Content="{x:Bind ViewModel.OpenedDatabaseName, Mode=OneTime}" Icon="ProtectedDocument" Visibility="{x:Bind ViewModel.IsDatabaseOpened, Mode=OneTime}" Tag="database"/>
+            </NavigationView.MenuItems>
 
-        <Frame x:Name="ContentFrame" Margin="24"/>
-    </NavigationView>
+            <Frame x:Name="ContentFrame" Margin="24"/>
+        </NavigationView>
+    </Grid>
 </Page>

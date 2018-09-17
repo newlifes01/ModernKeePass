@@ -180,26 +180,8 @@
   <data name="GroupRestored" xml:space="preserve">
     <value>Group returned to its original group</value>
   </data>
-  <data name="SettingsMenuGroupApplication" xml:space="preserve">
-    <value>Application</value>
-  </data>
-  <data name="SettingsMenuGroupDatabase" xml:space="preserve">
-    <value>Database</value>
-  </data>
-  <data name="SettingsMenuItemGeneral" xml:space="preserve">
-    <value>General</value>
-  </data>
-  <data name="SettingsMenuItemNew" xml:space="preserve">
-    <value>New</value>
-  </data>
-  <data name="SettingsMenuItemSecurity" xml:space="preserve">
-    <value>Security</value>
-  </data>
   <data name="CompositeKeyErrorUserAccount" xml:space="preserve">
     <value>- user account</value>
-  </data>
-  <data name="SettingsMenuItemSave" xml:space="preserve">
-    <value>Saving</value>
   </data>
   <data name="RecycleBinTitle" xml:space="preserve">
     <value>Recycle Bin</value>

@@ -4,7 +4,6 @@ using System.Reflection;
 using System.Threading.Tasks;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
-using Windows.ApplicationModel.Core;
 using Windows.Storage;
 using Windows.Storage.Pickers;
 using Windows.UI.Xaml;
@@ -122,8 +121,6 @@ namespace ModernKeePass
 
             if (e is LaunchActivatedEventArgs lauchActivatedEventArgs && rootFrame.Content == null)
             {
-                var coreTitleBar = CoreApplication.GetCurrentView().TitleBar;
-                coreTitleBar.ExtendViewIntoTitleBar = true;
                 rootFrame.Navigate(typeof(MainPage10), lauchActivatedEventArgs.Arguments);
             }
 
@@ -194,8 +191,7 @@ namespace ModernKeePass
         {
             base.OnFileActivated(args);
             var rootFrame = new Frame();
-            var file = args.Files[0] as StorageFile;
-            rootFrame.Navigate(typeof(MainPage10), file);
+            rootFrame.Navigate(typeof(MainPage10), args.Files[0] as StorageFile);
             Window.Current.Content = rootFrame;
             Window.Current.Activate();
         }

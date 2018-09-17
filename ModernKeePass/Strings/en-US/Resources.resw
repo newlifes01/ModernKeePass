@@ -357,9 +357,6 @@
   <data name="SettingsSecurityUpdateButton.ButtonLabel" xml:space="preserve">
     <value>Update master key</value>
   </data>
-  <data name="SettingsTitle.Text" xml:space="preserve">
-    <value>Settings</value>
-  </data>
   <data name="SettingsWelcomeDesc.Text" xml:space="preserve">
     <value>Here, you may change the application or the database settings.</value>
   </data>
@@ -515,5 +512,29 @@
   </data>
   <data name="MainPageOpenedDatabasesHeader.Content" xml:space="preserve">
     <value>Databases</value>
+  </data>
+  <data name="SettingsMenu.Header" xml:space="preserve">
+    <value>Settings</value>
+  </data>
+  <data name="SettingsMenu.PaneTitle" xml:space="preserve">
+    <value>Settings</value>
+  </data>
+  <data name="SettingsMenuGroupApplication.Content" xml:space="preserve">
+    <value>Application</value>
+  </data>
+  <data name="SettingsMenuGroupDatabase.Content" xml:space="preserve">
+    <value>Database</value>
+  </data>
+  <data name="SettingsMenuItemGeneral.Content" xml:space="preserve">
+    <value>General</value>
+  </data>
+  <data name="SettingsMenuItemNew.Content" xml:space="preserve">
+    <value>New</value>
+  </data>
+  <data name="SettingsMenuItemSave.Content" xml:space="preserve">
+    <value>Saving</value>
+  </data>
+  <data name="SettingsMenuItemSecurity.Content" xml:space="preserve">
+    <value>Security</value>
   </data>
 </root>

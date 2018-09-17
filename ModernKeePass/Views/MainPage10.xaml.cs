@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Windows.ApplicationModel.Core;
 using Windows.Storage;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -29,6 +30,14 @@ namespace ModernKeePass.Views
         public MainPage10()
         {
             InitializeComponent();
+            SetTitleBar();
+        }
+
+        private void SetTitleBar()
+        {
+            var coreTitleBar = CoreApplication.GetCurrentView().TitleBar;
+            coreTitleBar.ExtendViewIntoTitleBar = true;
+            Window.Current.SetTitleBar(TitleBar);
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
@@ -40,7 +49,7 @@ namespace ModernKeePass.Views
         private void NavigationView_OnItemInvoked(NavigationView sender, NavigationViewItemInvokedEventArgs args)
         {
             if (args.IsSettingsInvoked)
-                Frame.Navigate(typeof(SettingsPage));
+                Frame.Navigate(typeof(SettingsPage10));
             else
             {
                 // Getting the Tag from Content (args.InvokedItem is the content of NavigationViewItem)
@@ -68,11 +77,26 @@ namespace ModernKeePass.Views
 
         private void NavigationView_OnLoaded(object sender, RoutedEventArgs e)
         {
-            if (ViewModel.IsDatabaseOpened) NavigationView.SelectedItem = Save;
-            else if (ViewModel.File != null) NavigationView.SelectedItem = Open;
-            else if (ViewModel.HasRecentItems) NavigationView.SelectedItem = Recent;
-            else NavigationView.SelectedItem = Welcome;
-            NavigationView_Navigate((NavigationViewItem) NavigationView.SelectedItem, ViewModel.File);
+            object parameter = null;
+            if (ViewModel.IsDatabaseOpened)
+            {
+                NavigationView.SelectedItem = Save;
+                parameter = Frame;
+            }
+            else if (ViewModel.File != null)
+            {
+                NavigationView.SelectedItem = Open;
+                parameter = ViewModel.File;
+            }
+            else if (ViewModel.HasRecentItems)
+            {
+                NavigationView.SelectedItem = Recent;
+            }
+            else
+            {
+                NavigationView.SelectedItem = Welcome;
+            }
+                NavigationView_Navigate((NavigationViewItem)NavigationView.SelectedItem, parameter);
         }
     }
 }

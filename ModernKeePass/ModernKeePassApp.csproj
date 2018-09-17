@@ -116,6 +116,7 @@
     <Compile Include="TemplateSelectors\SelectableDataTemplateSelector.cs" />
     <Compile Include="ViewModels\Items\SettingsSaveVm.cs" />
     <Compile Include="ViewModels\MainVm10.cs" />
+    <Compile Include="ViewModels\SettingsVm10.cs" />
     <Compile Include="Views\MainPage10.xaml.cs">
       <DependentUpon>MainPage10.xaml</DependentUpon>
     </Compile>
@@ -145,6 +146,9 @@
     <Compile Include="Views\BasePages\LayoutAwarePageBase.cs" />
     <Compile Include="Views\MainPageFrames\ImportExportPage.xaml.cs">
       <DependentUpon>ImportExportPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\SettingsPage10.xaml.cs">
+      <DependentUpon>SettingsPage10.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\SettingsPageFrames\SettingsDatabasePage.xaml.cs">
       <DependentUpon>SettingsDatabasePage.xaml</DependentUpon>
@@ -267,6 +271,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\MainPageFrames\ImportExportPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\SettingsPage10.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
