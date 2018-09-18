@@ -4,8 +4,9 @@ using System.Linq;
 using Windows.ApplicationModel.Core;
 using Windows.Storage;
 using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
+//using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
+using MUXC = Microsoft.UI.Xaml.Controls;
 using ModernKeePass.Services;
 using ModernKeePass.ViewModels;
 
@@ -46,7 +47,7 @@ namespace ModernKeePass.Views
             ViewModel.File = e.Parameter as StorageFile;
         }
 
-        private void NavigationView_OnItemInvoked(NavigationView sender, NavigationViewItemInvokedEventArgs args)
+        private void NavigationView_OnItemInvoked(MUXC.NavigationView navigationView, MUXC.NavigationViewItemInvokedEventArgs args)
         {
             if (args.IsSettingsInvoked)
                 Frame.Navigate(typeof(SettingsPage10));
@@ -54,14 +55,14 @@ namespace ModernKeePass.Views
             {
                 // Getting the Tag from Content (args.InvokedItem is the content of NavigationViewItem)
                 var navItem = NavigationView.MenuItems
-                    .OfType<NavigationViewItem>()
+                    .OfType<MUXC.NavigationViewItem>()
                     .First(i => args.InvokedItem.Equals(i.Content));
 
                 NavigationView_Navigate(navItem);
             }
         }
 
-        private void NavigationView_Navigate(NavigationViewItem navItem, object parameter = null)
+        private void NavigationView_Navigate(MUXC.NavigationViewItem navItem, object parameter = null)
         {
             var item = _pages.First(p => p.Tag.Equals(navItem.Tag));
             if (item.Tag == "database")
@@ -96,7 +97,7 @@ namespace ModernKeePass.Views
             {
                 NavigationView.SelectedItem = Welcome;
             }
-                NavigationView_Navigate((NavigationViewItem)NavigationView.SelectedItem, parameter);
+                NavigationView_Navigate((MUXC.NavigationViewItem)NavigationView.SelectedItem, parameter);
         }
     }
 }
