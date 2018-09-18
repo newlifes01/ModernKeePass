@@ -19,10 +19,11 @@ namespace ModernKeePassApp.Test
         public void TestCreate()
         {
             Assert.IsTrue(_database.IsClosed);
-            var databaseFile = ApplicationData.Current.TemporaryFolder.CreateFileAsync("NewDatabase.kdbx").GetAwaiter().GetResult();
+            var databaseFile = ApplicationData.Current.TemporaryFolder.CreateFileAsync("NewDatabase.kdbx", CreationCollisionOption.GenerateUniqueName).GetAwaiter().GetResult();
             OpenOrCreateDatabase(databaseFile, true);
             _database.Close();
             Assert.IsTrue(_database.IsClosed);
+            databaseFile.DeleteAsync(StorageDeleteOption.PermanentDelete).GetAwaiter().GetResult();
         }
 
         [TestMethod]
