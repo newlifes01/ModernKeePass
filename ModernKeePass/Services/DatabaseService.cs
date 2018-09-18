@@ -22,6 +22,8 @@ namespace ModernKeePass.Services
 
         public GroupVm RootGroup { get; set; }
 
+        public PwGroup RootGroup10 => _pwDatabase.RootGroup;
+
         public GroupVm RecycleBin
         {
             get => _recycleBin;
@@ -88,12 +90,8 @@ namespace ModernKeePass.Services
                 {
                     throw new ArgumentNullException(nameof(databaseFile));
                 }
-                if (key == null)
-                {
-                    throw new ArgumentNullException(nameof(key));
-                }
-                
-                _compositeKey = key;
+
+                _compositeKey = key ?? throw new ArgumentNullException(nameof(key));
                 var ioConnection = IOConnectionInfo.FromFile(databaseFile);
                 if (createNew)
                 {

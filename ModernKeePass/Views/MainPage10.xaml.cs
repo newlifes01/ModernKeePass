@@ -4,7 +4,6 @@ using System.Linq;
 using Windows.ApplicationModel.Core;
 using Windows.Storage;
 using Windows.UI.Xaml;
-//using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 using MUXC = Microsoft.UI.Xaml.Controls;
 using ModernKeePass.Services;
@@ -25,7 +24,7 @@ namespace ModernKeePass.Views
             ("recent", typeof(RecentDatabasesPage)),
             ("about", typeof(AboutPage)),
             ("donate", typeof(DonatePage)),
-            ("database", typeof(GroupDetailPage))
+            ("database", typeof(GroupsPage))
         };
 
         public MainPage10()
@@ -67,7 +66,7 @@ namespace ModernKeePass.Views
             var item = _pages.First(p => p.Tag.Equals(navItem.Tag));
             if (item.Tag == "database")
             {
-                Frame.Navigate(typeof(GroupDetailPage), DatabaseService.Instance.RootGroup);
+                Frame.Navigate(typeof(GroupsPage), DatabaseService.Instance.RootGroup10);
             }
             else
             {
@@ -97,7 +96,7 @@ namespace ModernKeePass.Views
             {
                 NavigationView.SelectedItem = Welcome;
             }
-                NavigationView_Navigate((MUXC.NavigationViewItem)NavigationView.SelectedItem, parameter);
+            NavigationView_Navigate((MUXC.NavigationViewItem)NavigationView.SelectedItem, parameter);
         }
     }
 }
