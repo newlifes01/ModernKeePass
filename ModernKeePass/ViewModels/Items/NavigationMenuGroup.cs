@@ -36,5 +36,10 @@ namespace ModernKeePass.ViewModels
 
             return result;
         }
+
+        public override string ToString()
+        {
+            return Text;
+        }
     }
 }

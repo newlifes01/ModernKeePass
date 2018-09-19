@@ -448,7 +448,7 @@
         </Style>
     </Page.Resources>
 
-    <Grid>
+    <Grid Margin="0,48,0,0">
         <Grid.RowDefinitions>
             <RowDefinition Height="48" />
             <RowDefinition Height="auto" />
@@ -513,14 +513,11 @@
                     HorizontalAlignment="Left"
                     FontFamily="Segoe UI">
             <AppBarButton Icon="Setting"
-                          Label="Settings"
-                          Foreground="MidnightBlue" />
+                          Label="Settings" />
             <AppBarButton Label="Home"
-                          Icon="Home"
-                          Foreground="MidnightBlue" />
+                          Icon="Home" />
             <AppBarButton Label="Add"
-                          Icon="Add"
-                          Foreground="MidnightBlue" />
+                          Icon="Add" />
         </CommandBar>
         <!-- Hamburger Button -->
         <Button x:Name="HamburgerButton"
@@ -543,7 +540,7 @@
                 <!-- VisualState to be triggered when window width is >=1007 effective pixels -->
                 <VisualState x:Name="Expanded">
                     <VisualState.StateTriggers>
-                        <AdaptiveTrigger MinWindowWidth="1007" />
+                        <AdaptiveTrigger MinWindowWidth="720" />
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
                         <!-- SplitView pane shows as overlay -->
