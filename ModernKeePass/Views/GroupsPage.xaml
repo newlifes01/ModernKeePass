@@ -6,483 +6,130 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:controls="using:Microsoft.UI.Xaml.Controls"
     xmlns:viewModels="using:ModernKeePass.ViewModels"
+    xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
+    xmlns:core="using:Microsoft.Xaml.Interactions.Core"
+    xmlns:converters="using:ModernKeePass.Converters"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <Page.DataContext>
         <viewModels:GroupsVm />
     </Page.DataContext>
+
     <Page.Resources>
-        <DataTemplate x:Key="TreeViewItemDataTemplate">
-            <Grid Height="44">
-                <TextBlock HorizontalAlignment="Left"
-                           Style="{ThemeResource BodyTextBlockStyle}"
-                           Text="{Binding Content}"
-                           VerticalAlignment="Center" />
-            </Grid>
-        </DataTemplate>
-        <Style x:Key="TreeViewItemStyle"
-               TargetType="TreeViewItem">
-            <Setter Property="Padding"
-                    Value="0" />
-            <Setter Property="Background"
-                    Value="{ThemeResource TreeViewItemBackground}" />
-            <Setter Property="BorderBrush"
-                    Value="{ThemeResource TreeViewItemBorderBrush}" />
-            <Setter Property="BorderThickness"
-                    Value="{ThemeResource TreeViewItemBorderThemeThickness}" />
-            <Setter Property="GlyphBrush"
-                    Value="{ThemeResource TreeViewItemForeground}" />
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="TreeViewItem">
-                        <Grid x:Name="ContentPresenterGrid"
-                              Background="{TemplateBinding Background}"
-                              BorderThickness="{TemplateBinding BorderThickness}"
-                              BorderBrush="{TemplateBinding BorderBrush}"
-                              Margin="0,0,0,0">
-                            <VisualStateManager.VisualStateGroups>
-                                <VisualStateGroup x:Name="CommonStates">
-                                    <VisualState x:Name="Normal" />
-                                    <VisualState x:Name="PointerOver">
-                                        <VisualState.Setters>
-                                            <Setter Target="ContentPresenterGrid.(RevealBrush.State)"
-                                                    Value="PointerOver" />
-                                            <Setter Target="ContentPresenterGrid.Background"
-                                                    Value="{ThemeResource TreeViewItemBackgroundPointerOver}" />
-                                            <Setter Target="ContentPresenter.Foreground"
-                                                    Value="{ThemeResource TreeViewItemForegroundPointerOver}" />
-                                            <Setter Target="ContentPresenterGrid.BorderBrush"
-                                                    Value="{ThemeResource TreeViewItemBorderBrushPointerOver}" />
-                                        </VisualState.Setters>
-                                    </VisualState>
-                                    <VisualState x:Name="Pressed">
-                                        <VisualState.Setters>
-                                            <Setter Target="ContentPresenterGrid.(RevealBrush.State)"
-                                                    Value="Pressed" />
-                                            <Setter Target="ContentPresenterGrid.Background"
-                                                    Value="{ThemeResource TreeViewItemBackgroundPressed}" />
-                                            <Setter Target="ContentPresenter.Foreground"
-                                                    Value="{ThemeResource TreeViewItemForegroundPressed}" />
-                                            <Setter Target="ContentPresenterGrid.BorderBrush"
-                                                    Value="{ThemeResource TreeViewItemBorderBrushPressed}" />
-                                        </VisualState.Setters>
-                                    </VisualState>
-                                    <VisualState x:Name="Selected">
-                                        <VisualState.Setters>
-                                            <Setter Target="SelectionGrid.Background"
-                                                    Value="{ThemeResource TreeViewItemBackgroundSelected}" />
-                                            <Setter Target="ContentPresenter.Foreground"
-                                                    Value="{ThemeResource TreeViewItemForegroundSelected}" />
-                                            <Setter Target="ContentPresenterGrid.BorderBrush"
-                                                    Value="{ThemeResource TreeViewItemBorderBrushSelected}" />
-                                        </VisualState.Setters>
-                                    </VisualState>
-                                    <VisualState x:Name="Disabled">
-                                        <VisualState.Setters>
-                                            <Setter Target="ContentPresenterGrid.Background"
-                                                    Value="{ThemeResource TreeViewItemBackgroundDisabled}" />
-                                            <Setter Target="ContentPresenter.Foreground"
-                                                    Value="{ThemeResource TreeViewItemForegroundDisabled}" />
-                                            <Setter Target="ContentPresenterGrid.BorderBrush"
-                                                    Value="{ThemeResource TreeViewItemBorderBrushDisabled}" />
-                                        </VisualState.Setters>
-                                    </VisualState>
-                                    <VisualState x:Name="PointerOverSelected">
-                                        <VisualState.Setters>
-                                            <Setter Target="ContentPresenterGrid.(RevealBrush.State)"
-                                                    Value="PointerOver" />
-                                            <Setter Target="ContentPresenterGrid.Background"
-                                                    Value="{ThemeResource TreeViewItemBackgroundSelectedPointerOver}" />
-                                            <Setter Target="ContentPresenter.Foreground"
-                                                    Value="{ThemeResource TreeViewItemForegroundSelectedPointerOver}" />
-                                            <Setter Target="ContentPresenterGrid.BorderBrush"
-                                                    Value="{ThemeResource TreeViewItemBorderBrushSelectedPointerOver}" />
-                                        </VisualState.Setters>
-                                    </VisualState>
-                                    <VisualState x:Name="PressedSelected">
-                                        <VisualState.Setters>
-                                            <Setter Target="ContentPresenterGrid.(RevealBrush.State)"
-                                                    Value="Pressed" />
-                                            <Setter Target="ContentPresenterGrid.Background"
-                                                    Value="{ThemeResource TreeViewItemBackgroundSelectedPressed}" />
-                                            <Setter Target="ContentPresenter.Foreground"
-                                                    Value="{ThemeResource TreeViewItemForegroundSelectedPressed}" />
-                                            <Setter Target="ContentPresenterGrid.BorderBrush"
-                                                    Value="{ThemeResource TreeViewItemBorderBrushSelectedPressed}" />
-                                        </VisualState.Setters>
-                                    </VisualState>
-                                    <VisualState x:Name="SelectedDisabled">
-                                        <VisualState.Setters>
-                                            <Setter Target="ContentPresenterGrid.Background"
-                                                    Value="{ThemeResource TreeViewItemBackgroundSelectedDisabled}" />
-                                            <Setter Target="ContentPresenter.Foreground"
-                                                    Value="{ThemeResource TreeViewItemForegroundSelectedDisabled}" />
-                                            <Setter Target="ContentPresenterGrid.BorderBrush"
-                                                    Value="{ThemeResource TreeViewItemBorderBrushSelectedDisabled}" />
-                                        </VisualState.Setters>
-                                    </VisualState>
-                                    <VisualState x:Name="ReorderedPlaceholder">
-                                        <Storyboard>
-                                            <FadeOutThemeAnimation TargetName="MultiSelectGrid" />
-                                        </Storyboard>
-                                    </VisualState>
-                                </VisualStateGroup>
-                                <VisualStateGroup x:Name="TreeViewMultiSelectStates">
-                                    <VisualState x:Name="TreeViewMultiSelectDisabled" />
-                                    <VisualState x:Name="TreeViewMultiSelectEnabledUnselected">
-                                        <VisualState.Setters>
-                                            <Setter Target="MultiSelectCheckBox.Visibility"
-                                                    Value="Visible" />
-                                        </VisualState.Setters>
-                                    </VisualState>
-                                    <VisualState x:Name="TreeViewMultiSelectEnabledSelected">
-                                        <VisualState.Setters>
-                                            <Setter Target="MultiSelectCheckBox.Visibility"
-                                                    Value="Visible" />
-                                            <Setter Target="MultiSelectGrid.Background"
-                                                    Value="{ThemeResource TreeViewItemBackgroundSelected}" />
-                                        </VisualState.Setters>
-                                    </VisualState>
-                                </VisualStateGroup>
-                                <VisualStateGroup x:Name="DragStates">
-                                    <VisualState x:Name="NotDragging" />
-                                    <VisualState x:Name="MultipleDraggingPrimary">
-                                        <VisualState.Setters>
-                                            <Setter Target="MultiArrangeOverlayTextBorder.Opacity"
-                                                    Value="1" />
-                                        </VisualState.Setters>
-                                    </VisualState>
-                                </VisualStateGroup>
-                            </VisualStateManager.VisualStateGroups>
-                            <Grid x:Name="MultiSelectGrid">
-                                <Grid.Resources>
-                                    <Style x:Name="TreeViewMultiSelectCheckBox"
-                                           TargetType="CheckBox">
-                                        <Setter Property="Background"
-                                                Value="{ThemeResource CheckBoxBackgroundUnchecked}" />
-                                        <Setter Property="Foreground"
-                                                Value="{ThemeResource CheckBoxForegroundUnchecked}" />
-                                        <Setter Property="BorderBrush"
-                                                Value="{ThemeResource CheckBoxBorderBrushUnchecked}" />
-                                        <Setter Property="HorizontalAlignment"
-                                                Value="Left" />
-                                        <Setter Property="VerticalAlignment"
-                                                Value="Center" />
-                                        <Setter Property="HorizontalContentAlignment"
-                                                Value="Left" />
-                                        <Setter Property="VerticalContentAlignment"
-                                                Value="Top" />
-                                        <Setter Property="FontFamily"
-                                                Value="{ThemeResource ContentControlThemeFontFamily}" />
-                                        <Setter Property="FontSize"
-                                                Value="{ThemeResource ControlContentThemeFontSize}" />
-                                        <Setter Property="MinWidth"
-                                                Value="32" />
-                                        <Setter Property="MinHeight"
-                                                Value="32" />
-                                        <Setter Property="Template">
-                                            <Setter.Value>
-                                                <ControlTemplate TargetType="CheckBox">
-                                                    <Grid x:Name="RootGrid"
-                                                          Background="{TemplateBinding Background}"
-                                                          BorderThickness="{TemplateBinding BorderThickness}"
-                                                          BorderBrush="{TemplateBinding BorderBrush}"
-                                                          Width="32">
-                                                        <VisualStateManager.VisualStateGroups>
-                                                            <VisualStateGroup x:Name="CombinedStates">
-                                                                <VisualState x:Name="UncheckedNormal">
-                                                                    <Storyboard>
-                                                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="CheckGlyph"
-                                                                                                       Storyboard.TargetProperty="Foreground">
-                                                                            <DiscreteObjectKeyFrame KeyTime="0"
-                                                                                                    Value="{ThemeResource CheckBoxCheckGlyphForegroundUnchecked}" />
-                                                                        </ObjectAnimationUsingKeyFrames>
-                                                                    </Storyboard>
-                                                                </VisualState>
-                                                                <VisualState x:Name="UncheckedPointerOver">
-                                                                    <Storyboard>
-                                                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="CheckGlyph"
-                                                                                                       Storyboard.TargetProperty="Foreground">
-                                                                            <DiscreteObjectKeyFrame KeyTime="0"
-                                                                                                    Value="{ThemeResource CheckBoxCheckGlyphForegroundUncheckedPointerOver}" />
-                                                                        </ObjectAnimationUsingKeyFrames>
-                                                                    </Storyboard>
-                                                                </VisualState>
-                                                                <VisualState x:Name="UncheckedPressed">
-                                                                    <Storyboard>
-                                                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="CheckGlyph"
-                                                                                                       Storyboard.TargetProperty="Foreground">
-                                                                            <DiscreteObjectKeyFrame KeyTime="0"
-                                                                                                    Value="{ThemeResource CheckBoxCheckGlyphForegroundUncheckedPressed}" />
-                                                                        </ObjectAnimationUsingKeyFrames>
-                                                                    </Storyboard>
-                                                                </VisualState>
-                                                                <VisualState x:Name="UncheckedDisabled">
-                                                                    <Storyboard>
-                                                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="CheckGlyph"
-                                                                                                       Storyboard.TargetProperty="Foreground">
-                                                                            <DiscreteObjectKeyFrame KeyTime="0"
-                                                                                                    Value="{ThemeResource CheckBoxCheckGlyphForegroundUncheckedDisabled}" />
-                                                                        </ObjectAnimationUsingKeyFrames>
-                                                                    </Storyboard>
-                                                                </VisualState>
-                                                                <VisualState x:Name="CheckedNormal">
-                                                                    <Storyboard>
-                                                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="NormalRectangle"
-                                                                                                       Storyboard.TargetProperty="Fill">
-                                                                            <DiscreteObjectKeyFrame KeyTime="0"
-                                                                                                    Value="{ThemeResource TreeViewItemCheckBoxBackgroundSelected}" />
-                                                                        </ObjectAnimationUsingKeyFrames>
-                                                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="NormalRectangle"
-                                                                                                       Storyboard.TargetProperty="Stroke">
-                                                                            <DiscreteObjectKeyFrame KeyTime="0"
-                                                                                                    Value="{ThemeResource TreeViewItemCheckBoxBorderSelected}" />
-                                                                        </ObjectAnimationUsingKeyFrames>
-                                                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="CheckGlyph"
-                                                                                                       Storyboard.TargetProperty="Foreground">
-                                                                            <DiscreteObjectKeyFrame KeyTime="0"
-                                                                                                    Value="{ThemeResource TreeViewItemCheckGlyphSelected}" />
-                                                                        </ObjectAnimationUsingKeyFrames>
-                                                                        <DoubleAnimation Duration="0"
-                                                                                         Storyboard.TargetName="CheckGlyph"
-                                                                                         Storyboard.TargetProperty="Opacity"
-                                                                                         To="1" />
-                                                                    </Storyboard>
-                                                                </VisualState>
-                                                                <VisualState x:Name="CheckedPointerOver">
-                                                                    <Storyboard>
-                                                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="NormalRectangle"
-                                                                                                       Storyboard.TargetProperty="Fill">
-                                                                            <DiscreteObjectKeyFrame KeyTime="0"
-                                                                                                    Value="{ThemeResource TreeViewItemCheckBoxBackgroundSelected}" />
-                                                                        </ObjectAnimationUsingKeyFrames>
-                                                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="NormalRectangle"
-                                                                                                       Storyboard.TargetProperty="Stroke">
-                                                                            <DiscreteObjectKeyFrame KeyTime="0"
-                                                                                                    Value="{ThemeResource TreeViewItemCheckBoxBorderSelected}" />
-                                                                        </ObjectAnimationUsingKeyFrames>
-                                                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="CheckGlyph"
-                                                                                                       Storyboard.TargetProperty="Foreground">
-                                                                            <DiscreteObjectKeyFrame KeyTime="0"
-                                                                                                    Value="{ThemeResource TreeViewItemCheckGlyphSelected}" />
-                                                                        </ObjectAnimationUsingKeyFrames>
-                                                                        <DoubleAnimation Duration="0"
-                                                                                         Storyboard.TargetName="CheckGlyph"
-                                                                                         Storyboard.TargetProperty="Opacity"
-                                                                                         To="1" />
-                                                                    </Storyboard>
-                                                                </VisualState>
-                                                                <VisualState x:Name="CheckedPressed">
-                                                                    <Storyboard>
-                                                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="NormalRectangle"
-                                                                                                       Storyboard.TargetProperty="Fill">
-                                                                            <DiscreteObjectKeyFrame KeyTime="0"
-                                                                                                    Value="{ThemeResource TreeViewItemCheckBoxBackgroundSelected}" />
-                                                                        </ObjectAnimationUsingKeyFrames>
-                                                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="NormalRectangle"
-                                                                                                       Storyboard.TargetProperty="Stroke">
-                                                                            <DiscreteObjectKeyFrame KeyTime="0"
-                                                                                                    Value="{ThemeResource TreeViewItemCheckBoxBorderSelected}" />
-                                                                        </ObjectAnimationUsingKeyFrames>
-                                                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="CheckGlyph"
-                                                                                                       Storyboard.TargetProperty="Foreground">
-                                                                            <DiscreteObjectKeyFrame KeyTime="0"
-                                                                                                    Value="{ThemeResource TreeViewItemCheckGlyphSelected}" />
-                                                                        </ObjectAnimationUsingKeyFrames>
-                                                                        <DoubleAnimation Duration="0"
-                                                                                         Storyboard.TargetName="NormalRectangle"
-                                                                                         Storyboard.TargetProperty="StrokeThickness"
-                                                                                         To="{ThemeResource CheckBoxCheckedStrokeThickness}" />
-                                                                        <DoubleAnimation Duration="0"
-                                                                                         Storyboard.TargetName="CheckGlyph"
-                                                                                         Storyboard.TargetProperty="Opacity"
-                                                                                         To="1" />
-                                                                    </Storyboard>
-                                                                </VisualState>
-                                                                <VisualState x:Name="CheckedDisabled">
-                                                                    <Storyboard>
-                                                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="NormalRectangle"
-                                                                                                       Storyboard.TargetProperty="Fill">
-                                                                            <DiscreteObjectKeyFrame KeyTime="0"
-                                                                                                    Value="{ThemeResource TreeViewItemCheckBoxBackgroundSelected}" />
-                                                                        </ObjectAnimationUsingKeyFrames>
-                                                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="NormalRectangle"
-                                                                                                       Storyboard.TargetProperty="Stroke">
-                                                                            <DiscreteObjectKeyFrame KeyTime="0"
-                                                                                                    Value="{ThemeResource TreeViewItemCheckBoxBorderSelected}" />
-                                                                        </ObjectAnimationUsingKeyFrames>
-                                                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="CheckGlyph"
-                                                                                                       Storyboard.TargetProperty="Foreground">
-                                                                            <DiscreteObjectKeyFrame KeyTime="0"
-                                                                                                    Value="{ThemeResource TreeViewItemCheckGlyphSelected}" />
-                                                                        </ObjectAnimationUsingKeyFrames>
-                                                                        <DoubleAnimation Duration="0"
-                                                                                         Storyboard.TargetName="CheckGlyph"
-                                                                                         Storyboard.TargetProperty="Opacity"
-                                                                                         To="1" />
-                                                                    </Storyboard>
-                                                                </VisualState>
-                                                            </VisualStateGroup>
-                                                        </VisualStateManager.VisualStateGroups>
-                                                        <Grid Height="32"
-                                                              VerticalAlignment="Stretch">
-                                                            <Rectangle x:Name="NormalRectangle"
-                                                                       Fill="{ThemeResource CheckBoxCheckBackgroundFillUnchecked}"
-                                                                       HorizontalAlignment="Center"
-                                                                       Height="20"
-                                                                       StrokeThickness="{ThemeResource CheckBoxBorderThemeThickness}"
-                                                                       Stroke="{ThemeResource CheckBoxCheckBackgroundStrokeUnchecked}"
-                                                                       UseLayoutRounding="False"
-                                                                       VerticalAlignment="Center"
-                                                                       Width="20" />
-                                                            <FontIcon x:Name="CheckGlyph"
-                                                                      FontFamily="{ThemeResource SymbolThemeFontFamily}"
-                                                                      Foreground="{ThemeResource CheckBoxCheckGlyphForegroundUnchecked}"
-                                                                      FontSize="20"
-                                                                      Glyph="&#xE001;"
-                                                                      Opacity="0" />
-                                                        </Grid>
-                                                    </Grid>
-                                                </ControlTemplate>
-                                            </Setter.Value>
-                                        </Setter>
-                                    </Style>
-                                </Grid.Resources>
-                                <StackPanel HorizontalAlignment="Stretch"
-                                            Margin="{Binding TreeViewItemTemplateSettings.Indentation, RelativeSource={RelativeSource Mode=TemplatedParent}}"
-                                            Orientation="Horizontal"
-                                            VerticalAlignment="Stretch">
-                                    <Grid>
-                                        <CheckBox x:Name="MultiSelectCheckBox"
-                                                  IsTabStop="False"
-                                                  Style="{StaticResource TreeViewMultiSelectCheckBox}"
-                                                  VerticalAlignment="Stretch"
-                                                  Visibility="Collapsed"
-                                                  Width="32" />
-                                        <Border x:Name="MultiArrangeOverlayTextBorder"
-                                                Background="{ThemeResource SystemControlBackgroundAccentBrush}"
-                                                BorderThickness="2"
-                                                BorderBrush="{ThemeResource SystemControlBackgroundChromeWhiteBrush}"
-                                                HorizontalAlignment="Center"
-                                                Height="20"
-                                                IsHitTestVisible="False"
-                                                MinWidth="20"
-                                                Opacity="0"
-                                                VerticalAlignment="Center">
-                                            <TextBlock x:Name="MultiArrangeOverlayText"
-                                                       AutomationProperties.AccessibilityView="Raw"
-                                                       HorizontalAlignment="Center"
-                                                       IsHitTestVisible="False"
-                                                       Style="{ThemeResource CaptionTextBlockStyle}"
-                                                       Text="{Binding TreeViewItemTemplateSettings.DragItemsCount, RelativeSource={RelativeSource Mode=TemplatedParent}}"
-                                                       VerticalAlignment="Center" />
-                                        </Border>
-                                    </Grid>
-                                    <Grid x:Name="ExpandCollapseChevron"
-                                          Background="Transparent"
-                                          Opacity="{TemplateBinding GlyphOpacity}"
-                                          Padding="0,0,12,0"
-                                          Margin="-2 0 0 0"
-                                          Width="Auto">
-                                        <TextBlock FontFamily="{StaticResource SymbolThemeFontFamily}"
-                                                   Foreground="{TemplateBinding GlyphBrush}"
-                                                   FontSize="{TemplateBinding GlyphSize}"
-                                                   Height="12"
-                                                   Text="{TemplateBinding CollapsedGlyph}"
-                                                   VerticalAlignment="Center"
-                                                   Visibility="{Binding TreeViewItemTemplateSettings.CollapsedGlyphVisibility, RelativeSource={RelativeSource Mode=TemplatedParent}}"
-                                                   Width="12" />
-                                        <TextBlock FontFamily="{StaticResource SymbolThemeFontFamily}"
-                                                   Foreground="{TemplateBinding GlyphBrush}"
-                                                   FontSize="{TemplateBinding GlyphSize}"
-                                                   Height="12"
-                                                   Text="{TemplateBinding ExpandedGlyph}"
-                                                   VerticalAlignment="Center"
-                                                   Visibility="{Binding TreeViewItemTemplateSettings.ExpandedGlyphVisibility, RelativeSource={RelativeSource Mode=TemplatedParent}}"
-                                                   Width="12" />
-                                    </Grid>
-                                    <ContentPresenter x:Name="ContentPresenter"
-                                                      ContentTemplate="{TemplateBinding ContentTemplate}"
-                                                      Content="{TemplateBinding Content}"
-                                                      ContentTransitions="{TemplateBinding ContentTransitions}"
-                                                      HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                                      Margin="{TemplateBinding Padding}"
-                                                      VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
-                                </StackPanel>
-                                <!-- Added by XAML Brewer -->
-                                <Grid x:Name="SelectionGrid"
-                                      Width="4"
-                                      Margin="8"
-                                      HorizontalAlignment="Left" />
-                            </Grid>
-                        </Grid>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-        <Style x:Key="TreeViewStyle1"
-               TargetType="TreeView">
-            <Setter Property="IsTabStop"
-                    Value="False" />
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="TreeView">
-                        <TreeViewList x:Name="ListControl"
-                                      AllowDrop="True"
-                                      CanReorderItems="True"
-                                      CanDragItems="True"
-                                      ItemContainerStyle="{StaticResource TreeViewItemStyle}"
-                                      ItemTemplate="{StaticResource TreeViewItemDataTemplate}">
-                            <TreeViewList.ItemContainerTransitions>
-                                <TransitionCollection>
-                                    <ContentThemeTransition />
-                                    <ReorderThemeTransition />
-                                    <EntranceThemeTransition IsStaggeringEnabled="False" />
-                                </TransitionCollection>
-                            </TreeViewList.ItemContainerTransitions>
-                        </TreeViewList>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
+        <converters:IntToSymbolConverter x:Key="IntToSymbolConverter"/>
     </Page.Resources>
 
-    <Grid Margin="0,48,0,0">
+    <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="48" />
-            <RowDefinition Height="auto" />
+            <RowDefinition Height="44" />
+            <RowDefinition Height="{StaticResource MenuGridLength}" />
+            <RowDefinition Height="*" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="280" />
-            <ColumnDefinition Width="auto" />
+            <ColumnDefinition x:Name="LeftColumn" Width="280" />
+            <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
 
-            <!-- SplitView -->
-        <SplitView x:Name="ShellSplitView"
-                   Grid.Row="1"
+        <Border
+            x:Name="BackBorder"
+            Grid.Row="0"
+            Grid.Column="0"
+            BorderThickness="0">
+            <Button IsEnabled="{x:Bind Frame.CanGoBack}" Style="{StaticResource NavigationBackButtonNormalStyle}" Click="BackButton_OnClick" />
+        </Border>
+
+        <Border x:Name="TitleBar" Grid.Row="0" Grid.Column="1" Background="Transparent" />
+
+        <Grid
+            x:Name="HamburgerBorder"
+            Grid.Row="1"
+            Grid.Column="0"
+            BorderThickness="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <!-- Hamburger Button -->
+            <ToggleButton x:Name="HamburgerButton"
+                Margin="0"
+                MinWidth="{StaticResource MenuSize}"
+                Height="{StaticResource MenuSize}"
+                Background="Transparent"
+                VerticalAlignment="Top"
+                HorizontalAlignment="Left"
+                BorderThickness="0"
+                Click="HamburgerButton_OnClick">
+                <StackPanel Orientation="Horizontal">
+                    <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE700;" />
+                    <TextBlock x:Uid="GroupsHeaderLabel" FontFamily="Segoe UI" FontWeight="Bold" VerticalAlignment="Center" />
+                </StackPanel>
+            </ToggleButton>
+            <Button x:Name="AddButton"
+                Grid.Column="1"
+                Margin="0"
+                Width="{StaticResource MenuSize}"
+                Height="{StaticResource MenuSize}"
+                Background="Transparent"
+                VerticalAlignment="Top"
+                BorderThickness="0"
+                FontFamily="Segoe MDL2 Assets"
+                Content="&#xE710;"
+                Click="AddButton_OnClickButton_OnClick" />
+        </Grid>
+
+        <!-- SplitView -->
+        <SplitView x:Name="SplitView"
+                   Grid.Row="2"
                    Grid.Column="0"
                    Grid.ColumnSpan="2"
-                   IsPaneOpen="False"
-                   CompactPaneLength="48"
+                   CompactPaneLength="{StaticResource MenuSize}"
                    OpenPaneLength="280"
-                   DisplayMode="Overlay"
                    FontFamily="Segoe UI">
             <SplitView.Pane>
                 <Grid x:Name="SplitViewPane"
-                      VerticalAlignment="Stretch"
-                      HorizontalAlignment="Stretch"
-                      Padding="0 32 0 0">
+                    Background="{ThemeResource SystemControlChromeHighAcrylicWindowMediumBrush}">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="*" />
                         <RowDefinition Height="auto" />
                     </Grid.RowDefinitions>
                     <!-- Navigation Tree -->
-                    <TreeView x:Name="NavigationTree"
-                              Loading="NavigationTree_OnLoading"
-                              Style="{StaticResource TreeViewStyle1}"
-                              FontFamily="Segoe UI">
-                    </TreeView>
+                    <controls:TreeView x:Name="NavigationTree"
+                        IsTabStop="False"
+                        SelectionMode="Single"
+                        ItemsSource="{x:Bind ViewModel.MainMenu}"
+                        FontFamily="Segoe UI">
+                        <controls:TreeView.ItemTemplate>
+                            <DataTemplate x:DataType="viewModels:NavigationMenuGroup">
+                                <!--<controls:TreeViewItem ItemsSource="{x:Bind Children}">-->
+                                    <StackPanel Orientation="Horizontal">
+                                        <SymbolIcon Symbol="{x:Bind Symbol, Converter={StaticResource IntToSymbolConverter}}" />
+                                        <TextBlock Text="{x:Bind Text}" Margin="10,0,0,0" />
+                                    </StackPanel>
+                                <!--</controls:TreeViewItem>-->
+                            </DataTemplate>
+                        </controls:TreeView.ItemTemplate>
+                    </controls:TreeView>
+                    <CommandBar DefaultLabelPosition="Right"
+                                Grid.Row="1"
+                                Background="Transparent"
+                                HorizontalAlignment="Center"
+                                FontFamily="Segoe UI">
+                        <AppBarButton x:Uid="AppBarHome" Icon="Home">
+                            <interactivity:Interaction.Behaviors>
+                                <core:EventTriggerBehavior EventName="Click">
+                                    <core:NavigateToPageAction TargetPage="ModernKeePass.Views.MainPage10" />
+                                </core:EventTriggerBehavior>
+                            </interactivity:Interaction.Behaviors>
+                        </AppBarButton>
+                        <AppBarButton x:Uid="AppBarSettings" Icon="Setting">
+                            <interactivity:Interaction.Behaviors>
+                                <core:EventTriggerBehavior EventName="Click">
+                                    <core:NavigateToPageAction TargetPage="ModernKeePass.Views.SettingsPage10" />
+                                </core:EventTriggerBehavior>
+                            </interactivity:Interaction.Behaviors>
+                        </AppBarButton>
+                    </CommandBar>
                 </Grid>
             </SplitView.Pane>
             <SplitView.Content>
@@ -507,31 +154,27 @@
 
         <!-- Command Bar -->
         <CommandBar DefaultLabelPosition="Collapsed"
-                    Grid.Row="0"
+                    Grid.Row="1"
                     Grid.Column="1"
                     Background="Transparent"
                     HorizontalAlignment="Left"
                     FontFamily="Segoe UI">
-            <AppBarButton Icon="Setting"
-                          Label="Settings" />
-            <AppBarButton Label="Home"
-                          Icon="Home" />
-            <AppBarButton Label="Add"
-                          Icon="Add" />
+            <AppBarButton Icon="Setting" Label="Settings">
+                <interactivity:Interaction.Behaviors>
+                    <core:EventTriggerBehavior EventName="Click">
+                        <core:NavigateToPageAction TargetPage="ModernKeePass.Views.SettingsPage10" />
+                    </core:EventTriggerBehavior>
+                </interactivity:Interaction.Behaviors>
+            </AppBarButton>
+            <AppBarButton Label="Home" Icon="Home">
+                <interactivity:Interaction.Behaviors>
+                    <core:EventTriggerBehavior EventName="Click">
+                        <core:NavigateToPageAction TargetPage="ModernKeePass.Views.MainPage10" />
+                    </core:EventTriggerBehavior>
+                </interactivity:Interaction.Behaviors>
+            </AppBarButton>
+            <AppBarButton Label="Add" Icon="Add" />
         </CommandBar>
-        <!-- Hamburger Button -->
-        <Button x:Name="HamburgerButton"
-                Grid.Row="0"
-                Grid.Column="0"
-                Margin="0"
-                Width="48"
-                Height="32"
-                Background="Transparent"
-                VerticalAlignment="Top"
-                HorizontalAlignment="Left"
-                BorderThickness="0"
-                FontFamily="Segoe UI">
-        </Button>
 
         <!-- Responsive Visual States -->
         <VisualStateManager.VisualStateGroups>
@@ -543,12 +186,16 @@
                         <AdaptiveTrigger MinWindowWidth="720" />
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
-                        <!-- SplitView pane shows as overlay -->
-                        <!-- Splitview pane will close however :-( -->
-                        <Setter Target="ShellSplitView.DisplayMode"
-                                Value="Inline" />
-                        <Setter Target="ShellSplitView.IsPaneOpen"
+                        <Setter Target="LeftColumn.Width"
+                                Value="280" />
+                        <Setter Target="SplitView.IsPaneOpen"
                                 Value="True" />
+                        <Setter Target="SplitView.DisplayMode"
+                                Value="Inline" />
+                        <Setter Target="BackBorder.Background"
+                                Value="{ThemeResource SystemControlChromeHighAcrylicWindowMediumBrush}" />
+                        <Setter Target="HamburgerBorder.Background"
+                                Value="{ThemeResource SystemControlChromeHighAcrylicWindowMediumBrush}" />
                     </VisualState.Setters>
                 </VisualState>
 
@@ -559,9 +206,9 @@
                         <AdaptiveTrigger MinWindowWidth="641" />
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
-                        <Setter Target="ShellSplitView.DisplayMode"
+                        <Setter Target="SplitView.DisplayMode"
                                 Value="CompactOverlay" />
-                        <Setter Target="ShellSplitView.IsPaneOpen"
+                        <Setter Target="SplitView.IsPaneOpen"
                                 Value="False" />
                     </VisualState.Setters>
                 </VisualState>-->
@@ -572,11 +219,16 @@
                         <AdaptiveTrigger MinWindowWidth="0" />
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
-                        <!-- Collapse the SplitView pane into overlay mode -->
-                        <Setter Target="ShellSplitView.DisplayMode"
-                                Value="Overlay" />
-                        <Setter Target="ShellSplitView.IsPaneOpen"
+                        <Setter Target="LeftColumn.Width"
+                                Value="48" />
+                        <Setter Target="SplitView.IsPaneOpen"
                                 Value="False" />
+                        <Setter Target="SplitView.DisplayMode"
+                                Value="Overlay" />
+                        <Setter Target="BackBorder.Background"
+                                Value="Transparent" />
+                        <Setter Target="HamburgerBorder.Background"
+                                Value="Transparent" />
                     </VisualState.Setters>
                 </VisualState>
             </VisualStateGroup>

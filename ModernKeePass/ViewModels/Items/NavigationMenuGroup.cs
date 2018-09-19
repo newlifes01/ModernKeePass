@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
-using Windows.UI.Xaml.Controls;
+using System.Collections.ObjectModel;
+using Microsoft.UI.Xaml.Controls;
 using ModernKeePassLib;
 
 namespace ModernKeePass.ViewModels
@@ -11,35 +12,16 @@ namespace ModernKeePass.ViewModels
         public string Text => _group.Name;
         public int Symbol => (int) _group.IconId;
         public IEnumerable<PwEntry> Entries => _group.Entries;
-        public IList<NavigationMenuGroup> Children { get; set; } = new List<NavigationMenuGroup>();
+        public ObservableCollection<NavigationMenuGroup> Children { get; set; }
 
         public NavigationMenuGroup(PwGroup group)
         {
             _group = group;
+            Children = new ObservableCollection<NavigationMenuGroup>();
             foreach (var subGroup in group.Groups)
             {
                 Children.Add(new NavigationMenuGroup(subGroup));
             }
-        }
-
-        public TreeViewNode AsTreeViewNode()
-        {
-            var result = new TreeViewNode
-            {
-                Content = this
-            };
-
-            foreach (var subItem in Children)
-            {
-                result.Children.Add(subItem.AsTreeViewNode());
-            }
-
-            return result;
-        }
-
-        public override string ToString()
-        {
-            return Text;
         }
     }
 }

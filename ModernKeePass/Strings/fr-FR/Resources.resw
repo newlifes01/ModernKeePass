@@ -372,12 +372,6 @@
   <data name="WelcomeOpen.Text" xml:space="preserve">
     <value>Pour ouvrir une base de données existante, c'est ici.</value>
   </data>
-  <data name="GroupsLeftListView.ButtonLabel" xml:space="preserve">
-    <value>Nouveau groupe</value>
-  </data>
-  <data name="GroupsLeftListView.HeaderLabel" xml:space="preserve">
-    <value>Groupes</value>
-  </data>
   <data name="HistoryLeftListView.HeaderLabel" xml:space="preserve">
     <value>Historique</value>
   </data>
@@ -539,5 +533,11 @@
   </data>
   <data name="SettingsMenuItemSecurity.Content" xml:space="preserve">
     <value>Sécurité</value>
+  </data>
+  <data name="GroupsAddNew.Text" xml:space="preserve">
+    <value>Nouveau groupe</value>
+  </data>
+  <data name="GroupsHeaderLabel.Text" xml:space="preserve">
+    <value>Groupes</value>
   </data>
 </root>

@@ -1,5 +1,7 @@
-﻿using Windows.UI.Xaml;
+﻿using Windows.UI.Core;
+using Windows.UI.Xaml;
 using Windows.UI.Xaml.Navigation;
+using ModernKeePass.Services;
 using ModernKeePass.ViewModels;
 using ModernKeePassLib;
 
@@ -7,7 +9,7 @@ namespace ModernKeePass.Views
 {
     public partial class GroupsPage
     {
-        private GroupsVm ViewModel => (GroupsVm)DataContext;
+        private GroupsVm ViewModel => (GroupsVm) DataContext;
 
         public GroupsPage()
         {
@@ -16,15 +18,26 @@ namespace ModernKeePass.Views
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            DataContext = new GroupsVm(e.Parameter as PwGroup);
+            if (!(e.Parameter is PwGroup group)) group = DatabaseService.Instance.RootGroup10;
+            DataContext = new GroupsVm(group);
+        }
+        private void HamburgerButton_OnClick(object sender, RoutedEventArgs e)
+        {
+            if (HamburgerButton.IsChecked != null)
+                VisualStateManager.GoToState(this, (bool)HamburgerButton.IsChecked ? "Expanded" : "Minimal", true);
         }
 
-        private void NavigationTree_OnLoading(FrameworkElement sender, object args)
+        private void BackButton_OnClick(object sender, RoutedEventArgs e)
         {
-            foreach (var item in ViewModel.MainMenu)
+            if (Frame.CanGoBack)
             {
-                NavigationTree.RootNodes.Add(item.AsTreeViewNode());
+                Frame.GoBack();
             }
+        }
+
+        private void AddButton_OnClickButton_OnClick(object sender, RoutedEventArgs e)
+        {
+            throw new System.NotImplementedException();
         }
     }
 }

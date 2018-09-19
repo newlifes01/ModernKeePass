@@ -372,12 +372,6 @@
   <data name="WelcomeOpen.Text" xml:space="preserve">
     <value>Have an existing password database? Open it here.</value>
   </data>
-  <data name="GroupsLeftListView.ButtonLabel" xml:space="preserve">
-    <value>New group</value>
-  </data>
-  <data name="GroupsLeftListView.HeaderLabel" xml:space="preserve">
-    <value>Groups</value>
-  </data>
   <data name="HistoryLeftListView.HeaderLabel" xml:space="preserve">
     <value>History</value>
   </data>
@@ -536,5 +530,11 @@
   </data>
   <data name="SettingsMenuItemSecurity.Content" xml:space="preserve">
     <value>Security</value>
+  </data>
+  <data name="GroupsAddNew.Text" xml:space="preserve">
+    <value>New group</value>
+  </data>
+  <data name="GroupsHeaderLabel.Text" xml:space="preserve">
+    <value>Groups</value>
   </data>
 </root>

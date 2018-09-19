@@ -28,7 +28,7 @@
                 <userControls:CompositeKeyUserControl x:Uid="CompositeKeyOpenButton" DatabaseFile="{Binding DatabaseFile}">
                     <interactivity:Interaction.Behaviors>
                         <core:EventTriggerBehavior EventName="ValidationChecked">
-                            <core:NavigateToPageAction TargetPage="ModernKeePass.Views.GroupDetailPage" />
+                            <core:NavigateToPageAction TargetPage="ModernKeePass.Views.GroupsPage" />
                         </core:EventTriggerBehavior>
                     </interactivity:Interaction.Behaviors>
                 </userControls:CompositeKeyUserControl>

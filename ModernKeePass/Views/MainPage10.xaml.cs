@@ -37,7 +37,7 @@ namespace ModernKeePass.Views
         {
             var coreTitleBar = CoreApplication.GetCurrentView().TitleBar;
             coreTitleBar.ExtendViewIntoTitleBar = true;
-            Window.Current.SetTitleBar(TitleBar);
+            //Window.Current.SetTitleBar(TitleBar);
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)

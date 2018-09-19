@@ -49,7 +49,7 @@
                             <interactivity:Interaction.Behaviors>
                                 <core:EventTriggerBehavior EventName="ValidationChecked">
                                     <core:CallMethodAction TargetObject="{Binding}" MethodName="UpdateAccessTime" />
-                                    <core:NavigateToPageAction TargetPage="ModernKeePass.Views.GroupDetailPage" />
+                                    <core:NavigateToPageAction TargetPage="ModernKeePass.Views.GroupsPage" />
                                 </core:EventTriggerBehavior>
                             </interactivity:Interaction.Behaviors>
                         </userControls:CompositeKeyUserControl>

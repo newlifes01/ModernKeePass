@@ -3,8 +3,8 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
     <!-- Common theme values -->
-    <x:Double x:Key="MenuSize">60</x:Double>
-    <GridLength x:Key="MenuGridLength">60</GridLength>
+    <x:Double x:Key="MenuSize">48</x:Double>
+    <GridLength x:Key="MenuGridLength">48</GridLength>
     <!-- Only available for Windows 10 -->
     <SolidColorBrush x:Key="MainColor" Color="{ThemeResource SystemAccentColor}" />
     <SolidColorBrush x:Key="TextColor" Color="{ThemeResource SystemColorHighlightTextColor}" />

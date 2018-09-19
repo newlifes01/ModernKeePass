@@ -83,7 +83,7 @@ namespace ModernKeePass.Views
         private void CompositeKeyUserControl_OnValidationChecked(object sender, PasswordEventArgs e)
         {
             Model.PopulateInitialData(DatabaseService.Instance, new SettingsService(), new ImportService());
-            _mainFrame.Navigate(typeof(GroupDetailPage), DatabaseService.Instance.RootGroup);
+            _mainFrame.Navigate(typeof(GroupsPage), DatabaseService.Instance.RootGroup);
         }
     }
 }
