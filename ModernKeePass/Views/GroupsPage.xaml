@@ -12,10 +12,6 @@
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
-    <Page.DataContext>
-        <viewModels:GroupsVm />
-    </Page.DataContext>
-
     <Page.Resources>
         <converters:IntToSymbolConverter x:Key="IntToSymbolConverter"/>
     </Page.Resources>
@@ -39,7 +35,9 @@
             <Button IsEnabled="{x:Bind Frame.CanGoBack}" Style="{StaticResource NavigationBackButtonNormalStyle}" Click="BackButton_OnClick" />
         </Border>
 
-        <Border x:Name="TitleBar" Grid.Row="0" Grid.Column="1" Background="Transparent" />
+        <Border x:Name="TitleBar" Grid.Row="0" Grid.Column="1" Background="Transparent">
+            <TextBlock Text="{x:Bind ViewModel.Title, Mode=OneWay}" FontFamily="Segoe UI" Margin="30,5,0,0" FontWeight="SemiBold" />
+        </Border>
 
         <Grid
             x:Name="HamburgerBorder"
@@ -51,20 +49,21 @@
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
             <!-- Hamburger Button -->
-            <ToggleButton x:Name="HamburgerButton"
+            <Button x:Name="HamburgerButton"
                 Margin="0"
                 MinWidth="{StaticResource MenuSize}"
                 Height="{StaticResource MenuSize}"
                 Background="Transparent"
                 VerticalAlignment="Top"
-                HorizontalAlignment="Left"
+                HorizontalAlignment="Stretch"
+                HorizontalContentAlignment="Left"
                 BorderThickness="0"
                 Click="HamburgerButton_OnClick">
-                <StackPanel Orientation="Horizontal">
+                <StackPanel Orientation="Horizontal" Margin="8,0,0,0">
                     <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE700;" />
-                    <TextBlock x:Uid="GroupsHeaderLabel" FontFamily="Segoe UI" FontWeight="Bold" VerticalAlignment="Center" />
+                    <TextBlock x:Uid="GroupsHeaderLabel" FontFamily="Segoe UI" FontWeight="Bold" Margin="20,0,0,0"  VerticalAlignment="Center" />
                 </StackPanel>
-            </ToggleButton>
+            </Button>
             <Button x:Name="AddButton"
                 Grid.Column="1"
                 Margin="0"
@@ -87,8 +86,7 @@
                    OpenPaneLength="280"
                    FontFamily="Segoe UI">
             <SplitView.Pane>
-                <Grid x:Name="SplitViewPane"
-                    Background="{ThemeResource SystemControlChromeHighAcrylicWindowMediumBrush}">
+                <Grid x:Name="SplitViewPane">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="*" />
                         <RowDefinition Height="auto" />
@@ -98,13 +96,17 @@
                         IsTabStop="False"
                         SelectionMode="Single"
                         ItemsSource="{x:Bind ViewModel.MainMenu}"
-                        FontFamily="Segoe UI">
+                        FontFamily="Segoe UI"
+                        CanDragItems="{x:Bind ViewModel.IsEditMode, Mode=OneWay}"
+                        CanReorderItems="{x:Bind ViewModel.IsEditMode, Mode=OneWay}"
+                        ItemInvoked="NavigationTree_OnItemInvoked">
                         <controls:TreeView.ItemTemplate>
                             <DataTemplate x:DataType="viewModels:NavigationMenuGroup">
+                                <!-- Wait for SDK Target 1809 -->
                                 <!--<controls:TreeViewItem ItemsSource="{x:Bind Children}">-->
                                     <StackPanel Orientation="Horizontal">
                                         <SymbolIcon Symbol="{x:Bind Symbol, Converter={StaticResource IntToSymbolConverter}}" />
-                                        <TextBlock Text="{x:Bind Text}" Margin="10,0,0,0" />
+                                        <TextBox Text="{x:Bind Text, Mode=TwoWay}" BorderThickness="0" Background="Transparent" Margin="10,0,0,0" />
                                     </StackPanel>
                                 <!--</controls:TreeViewItem>-->
                             </DataTemplate>
@@ -153,27 +155,15 @@
         </SplitView>
 
         <!-- Command Bar -->
-        <CommandBar DefaultLabelPosition="Collapsed"
-                    Grid.Row="1"
-                    Grid.Column="1"
-                    Background="Transparent"
-                    HorizontalAlignment="Left"
-                    FontFamily="Segoe UI">
-            <AppBarButton Icon="Setting" Label="Settings">
-                <interactivity:Interaction.Behaviors>
-                    <core:EventTriggerBehavior EventName="Click">
-                        <core:NavigateToPageAction TargetPage="ModernKeePass.Views.SettingsPage10" />
-                    </core:EventTriggerBehavior>
-                </interactivity:Interaction.Behaviors>
-            </AppBarButton>
-            <AppBarButton Label="Home" Icon="Home">
-                <interactivity:Interaction.Behaviors>
-                    <core:EventTriggerBehavior EventName="Click">
-                        <core:NavigateToPageAction TargetPage="ModernKeePass.Views.MainPage10" />
-                    </core:EventTriggerBehavior>
-                </interactivity:Interaction.Behaviors>
-            </AppBarButton>
-            <AppBarButton Label="Add" Icon="Add" />
+        <CommandBar x:Name="TopCommandBar"
+            DefaultLabelPosition="Right"
+            Grid.Row="1"
+            Grid.Column="1"
+            Background="Transparent"
+            HorizontalAlignment="Left"
+            FontFamily="Segoe UI">
+            <AppBarButton x:Uid="AppBarAddEntry" Icon="Add" />
+            <AppBarToggleButton x:Name="EditButton" x:Uid="AppBarEdit" Icon="Edit" IsChecked="{x:Bind ViewModel.IsEditMode, Mode=TwoWay}" />
         </CommandBar>
 
         <!-- Responsive Visual States -->
@@ -188,10 +178,16 @@
                     <VisualState.Setters>
                         <Setter Target="LeftColumn.Width"
                                 Value="280" />
+                        <Setter Target="AddButton.Visibility"
+                                Value="Visible" />
+                        <Setter Target="TopCommandBar.DefaultLabelPosition"
+                                Value="Right" />
                         <Setter Target="SplitView.IsPaneOpen"
                                 Value="True" />
                         <Setter Target="SplitView.DisplayMode"
                                 Value="Inline" />
+                        <Setter Target="SplitViewPane.Background"
+                                Value="{ThemeResource SystemControlChromeHighAcrylicWindowMediumBrush}" />
                         <Setter Target="BackBorder.Background"
                                 Value="{ThemeResource SystemControlChromeHighAcrylicWindowMediumBrush}" />
                         <Setter Target="HamburgerBorder.Background"
@@ -221,10 +217,16 @@
                     <VisualState.Setters>
                         <Setter Target="LeftColumn.Width"
                                 Value="48" />
+                        <Setter Target="AddButton.Visibility"
+                                Value="Collapsed" />
+                        <Setter Target="TopCommandBar.DefaultLabelPosition"
+                                Value="Collapsed" />
                         <Setter Target="SplitView.IsPaneOpen"
                                 Value="False" />
                         <Setter Target="SplitView.DisplayMode"
                                 Value="Overlay" />
+                        <Setter Target="SplitViewPane.Background"
+                                Value="{ThemeResource SystemControlChromeHighAcrylicElementMediumBrush}" />
                         <Setter Target="BackBorder.Background"
                                 Value="Transparent" />
                         <Setter Target="HamburgerBorder.Background"

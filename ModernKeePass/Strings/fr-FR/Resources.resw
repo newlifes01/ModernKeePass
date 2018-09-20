@@ -540,4 +540,7 @@
   <data name="GroupsHeaderLabel.Text" xml:space="preserve">
     <value>Groupes</value>
   </data>
+  <data name="AppBarAddEntry.Label" xml:space="preserve">
+    <value>Nouvelle entrée</value>
+  </data>
 </root>

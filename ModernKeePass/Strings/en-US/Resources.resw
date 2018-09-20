@@ -537,4 +537,7 @@
   <data name="GroupsHeaderLabel.Text" xml:space="preserve">
     <value>Groups</value>
   </data>
+  <data name="AppBarAddEntry.Label" xml:space="preserve">
+    <value>New entry</value>
+  </data>
 </root>
