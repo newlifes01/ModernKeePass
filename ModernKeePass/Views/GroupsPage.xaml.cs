@@ -1,10 +1,13 @@
-﻿using Windows.UI.Core;
+﻿using Windows.System;
 using Windows.UI.Xaml;
+using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Navigation;
-using Microsoft.UI.Xaml.Controls;
 using ModernKeePass.Services;
 using ModernKeePass.ViewModels;
 using ModernKeePassLib;
+using TreeView = Microsoft.UI.Xaml.Controls.TreeView;
+using TreeViewItemInvokedEventArgs = Microsoft.UI.Xaml.Controls.TreeViewItemInvokedEventArgs;
 
 namespace ModernKeePass.Views
 {
@@ -38,10 +41,36 @@ namespace ModernKeePass.Views
         {
             ViewModel.Title = ((NavigationMenuGroup) args.InvokedItem).Text;
         }
-
-        private void AddButton_OnClickButton_OnClick(object sender, RoutedEventArgs e)
+        
+        private void MenuFlyoutItem_OnClick(object sender, RoutedEventArgs e)
         {
-            ViewModel.AddNewGroup();
+            if (sender is MenuFlyoutItem flyout) ((NavigationMenuGroup)flyout.DataContext).IsEditMode = true;
+        }
+
+        private void GroupNameTextBox_KeyDown(object sender, KeyRoutedEventArgs e)
+        {
+            if (e.Key == VirtualKey.Enter) GroupNameTextBox_OnLostFocus(sender, null);
+        }
+
+        private void GroupNameTextBox_OnLostFocus(object sender, RoutedEventArgs e)
+        {
+            if (sender is TextBox textBox) ((NavigationMenuGroup)textBox.DataContext).IsEditMode = false;
+        }
+
+        private void NewGroupNameTextBox_KeyDown(object sender, KeyRoutedEventArgs e)
+        {
+            if (e.Key == VirtualKey.Enter)
+            {
+                e.Handled = true;
+                NewGroupNameTextBox_OnLostFocus(sender, null);
+            }
+        }
+
+        private void NewGroupNameTextBox_OnLostFocus(object sender, RoutedEventArgs e)
+        {
+            ViewModel.AddNewGroup(((TextBox)sender).Text);
+            AddButton.IsEnabled = true;
+            NewGroupNameTextBox.Visibility = Visibility.Collapsed;
         }
     }
 }

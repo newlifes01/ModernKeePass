@@ -543,4 +543,7 @@
   <data name="AppBarAddEntry.Label" xml:space="preserve">
     <value>Nouvelle entrée</value>
   </data>
+  <data name="TopMenuRenameFlyout.Text" xml:space="preserve">
+    <value>Renommer</value>
+  </data>
 </root>
