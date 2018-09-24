@@ -33,10 +33,12 @@ namespace ModernKeePass.Services
                 _pwDatabase.RecycleBinUuid = _recycleBin?.IdUuid;
             }
         }
+
+        public PwGroup RecyleBinGroup => _pwDatabase.RootGroup.FindGroup(_pwDatabase.RecycleBinUuid, false);
         
         public string Name => _databaseFile?.Name;
         
-        public bool RecycleBinEnabled
+        public bool IsRecycleBinEnabled
         {
             get => _pwDatabase.RecycleBinEnabled;
             set => _pwDatabase.RecycleBinEnabled = value;
@@ -108,7 +110,7 @@ namespace ModernKeePass.Services
                 else _pwDatabase.Open(ioConnection, key, new NullStatusLogger());
 
                 _databaseFile = databaseFile;
-                RootGroup = new GroupVm(_pwDatabase.RootGroup, null, RecycleBinEnabled ? _pwDatabase.RecycleBinUuid : null);
+                RootGroup = new GroupVm(_pwDatabase.RootGroup, null, IsRecycleBinEnabled ? _pwDatabase.RecycleBinUuid : null);
             }
             catch (InvalidCompositeKeyException ex)
             {

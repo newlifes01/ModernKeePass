@@ -46,14 +46,14 @@ namespace ModernKeePass.ViewModels
         
         public bool ShowRestore => IsNotRoot && ParentGroup.IsSelected;
 
-        public bool IsRecycleOnDelete => _database.RecycleBinEnabled && !IsSelected && !ParentGroup.IsSelected;
+        public bool IsRecycleOnDelete => _database.IsRecycleBinEnabled && !IsSelected && !ParentGroup.IsSelected;
         
         /// <summary>
         /// Is the Group the database Recycle Bin?
         /// </summary>
         public bool IsSelected
         {
-            get => _database != null && _database.RecycleBinEnabled && _database.RecycleBin?.Id == Id;
+            get => _database != null && _database.IsRecycleBinEnabled && _database.RecycleBin?.Id == Id;
             set
             {
                 if (value && _pwGroup != null) _database.RecycleBin = this;
@@ -187,9 +187,9 @@ namespace ModernKeePass.ViewModels
 
         public void MarkForDelete(string recycleBinTitle)
         {
-            if (_database.RecycleBinEnabled && _database.RecycleBin?.IdUuid == null)
+            if (_database.IsRecycleBinEnabled && _database.RecycleBin?.IdUuid == null)
                 _database.CreateRecycleBin(recycleBinTitle);
-            Move(_database.RecycleBinEnabled && !IsSelected ? _database.RecycleBin : null);
+            Move(_database.IsRecycleBinEnabled && !IsSelected ? _database.RecycleBin : null);
             ((RelayCommand)UndoDeleteCommand).RaiseCanExecuteChanged();
         }
 
@@ -216,7 +216,7 @@ namespace ModernKeePass.ViewModels
         public void CommitDelete()
         {
             _pwGroup.ParentGroup.Groups.Remove(_pwGroup);
-            if (_database.RecycleBinEnabled && !PreviousGroup.IsSelected) _database.RecycleBin._pwGroup.AddGroup(_pwGroup, true);
+            if (_database.IsRecycleBinEnabled && !PreviousGroup.IsSelected) _database.RecycleBin._pwGroup.AddGroup(_pwGroup, true);
             else _database.AddDeletedItem(IdUuid);
         }
         

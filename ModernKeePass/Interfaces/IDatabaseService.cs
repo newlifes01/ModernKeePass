@@ -9,7 +9,7 @@ namespace ModernKeePass.Interfaces
     public interface IDatabaseService
     {
         string Name { get; }
-        bool RecycleBinEnabled { get; set; }
+        bool IsRecycleBinEnabled { get; set; }
         GroupVm RootGroup { get; set; }
         GroupVm RecycleBin { get; set; }
         PwUuid DataCipher { get; set; }

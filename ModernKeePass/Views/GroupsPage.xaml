@@ -121,9 +121,9 @@
                                         <TextBlock x:Name="GroupName" Text="{x:Bind Text, Mode=OneWay}" Width="200" Margin="10,0,0,0" />
                                         <StackPanel.ContextFlyout>
                                             <MenuFlyout>
-                                                <MenuFlyoutItem x:Uid="TopMenuDeleteFlyout" Icon="Delete" />
+                                                <MenuFlyoutItem x:Uid="TopMenuDeleteFlyout" Icon="Delete" Click="DeleteFlyoutItem_OnClick" />
                                                 <MenuFlyoutSeparator />
-                                                <MenuFlyoutItem x:Uid="TopMenuRenameFlyout" Click="MenuFlyoutItem_OnClick" />
+                                                <MenuFlyoutItem x:Uid="TopMenuRenameFlyout" Click="RenameFlyoutItem_OnClick" />
                                             </MenuFlyout>
                                         </StackPanel.ContextFlyout>
                                     </StackPanel>

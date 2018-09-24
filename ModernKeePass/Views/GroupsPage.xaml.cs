@@ -1,4 +1,5 @@
-﻿using Windows.System;
+﻿using System;
+using Windows.System;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
@@ -42,9 +43,40 @@ namespace ModernKeePass.Views
             ViewModel.Title = ((NavigationMenuGroup) args.InvokedItem).Text;
         }
         
-        private void MenuFlyoutItem_OnClick(object sender, RoutedEventArgs e)
+        private void RenameFlyoutItem_OnClick(object sender, RoutedEventArgs e)
         {
             if (sender is MenuFlyoutItem flyout) ((NavigationMenuGroup)flyout.DataContext).IsEditMode = true;
+        }
+
+        private async void DeleteFlyoutItem_OnClick(object sender, RoutedEventArgs e)
+        {
+            if (sender is MenuFlyoutItem flyout)
+            {
+                var resource = new ResourcesService();
+                var database = DatabaseService.Instance;
+                var item = (NavigationMenuGroup) flyout.DataContext;
+
+                var deleteFileDialog = new ContentDialog
+                {
+                    Title = $"{resource.GetResourceValue("EntityDeleteActionButton")} {item.Text} ?",
+                    Content = database.IsRecycleBinEnabled
+                        ? resource.GetResourceValue("EntryRecyclingConfirmation")
+                        : resource.GetResourceValue("GroupDeletingConfirmation"),
+                    PrimaryButtonText = resource.GetResourceValue("EntityDeleteActionButton"),
+                    CloseButtonText = resource.GetResourceValue("EntityDeleteCancelButton")
+                };
+
+                var result = await deleteFileDialog.ShowAsync();
+
+                // Delete the file if the user clicked the primary button.
+                // Otherwise, do nothing.
+                if (result == ContentDialogResult.Primary)
+                {
+                    item.Parent.Children.Remove(item);
+                    // TODO: refresh treeview
+                    if (database.IsRecycleBinEnabled) database.RecyleBinGroup.AddGroup(item.Group, true);
+                }
+            }
         }
 
         private void GroupNameTextBox_KeyDown(object sender, KeyRoutedEventArgs e)
@@ -72,5 +104,6 @@ namespace ModernKeePass.Views
             AddButton.IsEnabled = true;
             NewGroupNameTextBox.Visibility = Visibility.Collapsed;
         }
+
     }
 }

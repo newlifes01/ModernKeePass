@@ -29,7 +29,7 @@ namespace ModernKeePassApp.Test.Mock
 
         public GroupVm RecycleBin { get; set; }
 
-        public bool RecycleBinEnabled { get; set; }
+        public bool IsRecycleBinEnabled { get; set; }
 
         public GroupVm RootGroup { get; set; }
         

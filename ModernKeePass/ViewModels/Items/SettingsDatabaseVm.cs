@@ -19,10 +19,10 @@ namespace ModernKeePass.ViewModels
 
         public bool HasRecycleBin
         {
-            get => _database.RecycleBinEnabled;
+            get => _database.IsRecycleBinEnabled;
             set
             {
-                _database.RecycleBinEnabled = value;
+                _database.IsRecycleBinEnabled = value;
                 OnPropertyChanged("HasRecycleBin");
             }
         }

@@ -31,7 +31,7 @@ namespace ModernKeePass.ViewModels
         public string CustomChars { get; set; } = string.Empty;
         public PwUuid IdUuid => _pwEntry?.Uuid;
         public string Id => _pwEntry?.Uuid.ToHexString();
-        public bool IsRecycleOnDelete => _database.RecycleBinEnabled && !ParentGroup.IsSelected;
+        public bool IsRecycleOnDelete => _database.IsRecycleBinEnabled && !ParentGroup.IsSelected;
         public IEnumerable<IPwEntity> BreadCrumb => new List<IPwEntity>(ParentGroup.BreadCrumb) {ParentGroup};
         /// <summary>
         /// Determines if the Entry is current or from history
@@ -262,9 +262,9 @@ namespace ModernKeePass.ViewModels
         
         public void MarkForDelete(string recycleBinTitle)
         {
-            if (_database.RecycleBinEnabled && _database.RecycleBin?.IdUuid == null)
+            if (_database.IsRecycleBinEnabled && _database.RecycleBin?.IdUuid == null)
                 _database.CreateRecycleBin(recycleBinTitle);
-            Move(_database.RecycleBinEnabled && !ParentGroup.IsSelected ? _database.RecycleBin : null);
+            Move(_database.IsRecycleBinEnabled && !ParentGroup.IsSelected ? _database.RecycleBin : null);
         }
         
         public void Move(GroupVm destination)
@@ -283,7 +283,7 @@ namespace ModernKeePass.ViewModels
         public void CommitDelete()
         {
             _pwEntry.ParentGroup.Entries.Remove(_pwEntry);
-            if (!_database.RecycleBinEnabled || PreviousGroup.IsSelected) _database.AddDeletedItem(IdUuid);
+            if (!_database.IsRecycleBinEnabled || PreviousGroup.IsSelected) _database.AddDeletedItem(IdUuid);
         }
         
         public PwEntry GetPwEntry()
