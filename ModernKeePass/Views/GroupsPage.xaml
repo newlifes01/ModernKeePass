@@ -9,12 +9,14 @@
     xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
     xmlns:core="using:Microsoft.Xaml.Interactions.Core"
     xmlns:converters="using:ModernKeePass.Converters"
+    xmlns:actions="using:ModernKeePass.Actions"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <Page.Resources>
         <converters:IntToSymbolConverter x:Key="IntToSymbolConverter"/>
         <converters:InverseBooleanToVisibilityConverter x:Key="InverseBooleanToVisibilityConverter"/>
+        <converters:ColorToBrushConverter x:Key="ColorToBrushConverter"/>
     </Page.Resources>
 
     <Grid>
@@ -79,6 +81,7 @@
                     <core:EventTriggerBehavior EventName="Click">
                         <core:ChangePropertyAction TargetObject="{Binding ElementName=NewGroupNameTextBox}" PropertyName="Visibility" Value="Visible"/>
                         <core:ChangePropertyAction TargetObject="{Binding ElementName=AddButton}" PropertyName="IsEnabled" Value="False"/>
+                        <actions:SetupFocusAction TargetObject="{Binding ElementName=NewEntryNameTextBox}" />
                     </core:EventTriggerBehavior>
                 </interactivity:Interaction.Behaviors>
             </Button>
@@ -90,7 +93,7 @@
                    Grid.Column="0"
                    Grid.ColumnSpan="2"
                    CompactPaneLength="{StaticResource MenuSize}"
-                   OpenPaneLength="280"
+                   OpenPaneLength="320"
                    FontFamily="Segoe UI">
             <SplitView.Pane>
                 <Grid x:Name="SplitViewPane">
@@ -105,14 +108,13 @@
                         Visibility="Collapsed"
                         Text="{x:Bind ViewModel.NewGroupName, Mode=TwoWay}"
                         Width="200"
-                        KeyDown="NewGroupNameTextBox_KeyDown"
-                        LostFocus="NewGroupNameTextBox_OnLostFocus" />
+                        KeyUp="NewGroupNameTextBox_KeyDown" />
                     <controls:TreeView x:Name="NavigationTree"
                         Grid.Row="1"
                         ItemsSource="{x:Bind ViewModel.RootItem.Children}"
                         ItemInvoked="NavigationTree_OnItemInvoked">
                         <controls:TreeView.ItemTemplate>
-                            <DataTemplate x:DataType="viewModels:NavigationMenuGroup">
+                            <DataTemplate x:DataType="viewModels:GroupItem">
                                 <!-- Wait for SDK Target 1809 -->
                                 <!--<controls:TreeViewItem ItemsSource="{x:Bind Children}">-->
                                 <Grid>
@@ -122,7 +124,6 @@
                                         <StackPanel.ContextFlyout>
                                             <MenuFlyout>
                                                 <MenuFlyoutItem x:Uid="TopMenuDeleteFlyout" Icon="Delete" Click="DeleteFlyoutItem_OnClick" />
-                                                <MenuFlyoutSeparator />
                                                 <MenuFlyoutItem x:Uid="TopMenuRenameFlyout" Click="RenameFlyoutItem_OnClick" />
                                             </MenuFlyout>
                                         </StackPanel.ContextFlyout>
@@ -181,7 +182,7 @@
         </SplitView>
 
         <!-- Command Bar -->
-        <CommandBar x:Name="TopCommandBar"
+        <!--<CommandBar x:Name="TopCommandBar"
             DefaultLabelPosition="Right"
             Grid.Row="1"
             Grid.Column="1"
@@ -189,7 +190,35 @@
             HorizontalAlignment="Left"
             FontFamily="Segoe UI">
             <AppBarButton x:Uid="AppBarAddEntry" Icon="Add" />
-        </CommandBar>
+        </CommandBar>-->
+        <AutoSuggestBox
+            Grid.Row="1"
+            Grid.Column="1"
+            x:Uid="GroupSearch"
+            Width="350"
+            Margin="20,5,0,5"
+            HorizontalAlignment="Left"
+            QueryIcon="Find"
+            TextMemberPath="Name"
+            TextChanged="AutoSuggestBox_TextChanged"
+            QuerySubmitted="AutoSuggestBox_QuerySubmitted">
+            <AutoSuggestBox.ItemTemplate>
+                <DataTemplate x:DataType="viewModels:EntryItem">
+                    <Grid x:Name="EntryGrid">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <SymbolIcon Grid.Column="0" Symbol="{x:Bind IconId, Converter={StaticResource IntToSymbolConverter}, ConverterParameter=0}" Foreground="{StaticResource SystemControlPageTextBaseHighBrush}" />
+                        <StackPanel Grid.Column="1" VerticalAlignment="Top" Margin="15">
+                            <TextBlock Text="{Binding Name}" TextWrapping="NoWrap" Foreground="{Binding ForegroundColor, ConverterParameter={StaticResource SystemControlPageTextBaseHighBrush}, Converter={StaticResource ColorToBrushConverter}}"/>
+                            <TextBlock Text="{x:Bind Parent.Text}" Foreground="{Binding ForegroundColor, ConverterParameter={StaticResource SystemControlPageTextBaseMediumBrush}, Converter={StaticResource ColorToBrushConverter}}" MaxHeight="60" />
+                        </StackPanel>
+                    </Grid>
+                </DataTemplate>
+            </AutoSuggestBox.ItemTemplate>
+        </AutoSuggestBox>
 
         <!-- Responsive Visual States -->
         <VisualStateManager.VisualStateGroups>
@@ -202,11 +231,9 @@
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
                         <Setter Target="LeftColumn.Width"
-                                Value="280" />
+                                Value="320" />
                         <Setter Target="AddButton.Visibility"
                                 Value="Visible" />
-                        <Setter Target="TopCommandBar.DefaultLabelPosition"
-                                Value="Right" />
                         <Setter Target="SplitView.IsPaneOpen"
                                 Value="True" />
                         <Setter Target="SplitView.DisplayMode"
@@ -243,8 +270,6 @@
                         <Setter Target="LeftColumn.Width"
                                 Value="{StaticResource MenuGridLength}" />
                         <Setter Target="AddButton.Visibility"
-                                Value="Collapsed" />
-                        <Setter Target="TopCommandBar.DefaultLabelPosition"
                                 Value="Collapsed" />
                         <Setter Target="SplitView.IsPaneOpen"
                                 Value="False" />

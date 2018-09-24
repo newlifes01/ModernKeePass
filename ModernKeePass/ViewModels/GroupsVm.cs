@@ -31,7 +31,7 @@ namespace ModernKeePass.ViewModels
             }
         }
 
-        public NavigationMenuGroup RootItem { get; set; }
+        public GroupItem RootItem { get; set; }
 
         public GroupsVm()
         { }
@@ -39,13 +39,13 @@ namespace ModernKeePass.ViewModels
         public GroupsVm(PwGroup group)
         {
             Title = group.Name;
-            RootItem = new NavigationMenuGroup(group, null);
+            RootItem = new GroupItem(group, null);
         }
 
         public void AddNewGroup(string groupName = "")
         {
             var pwGroup = new PwGroup(true, true, groupName, PwIcon.Folder);
-            RootItem.Children.Add(new NavigationMenuGroup(pwGroup, RootItem));
+            RootItem.Children.Add(new GroupItem(pwGroup, RootItem));
         }
         
         public event PropertyChangedEventHandler PropertyChanged;

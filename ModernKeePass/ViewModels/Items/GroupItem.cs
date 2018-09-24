@@ -8,13 +8,13 @@ using ModernKeePassLib;
 
 namespace ModernKeePass.ViewModels
 {
-    public class NavigationMenuGroup: INotifyPropertyChanged
+    public class GroupItem: INotifyPropertyChanged
     {
         private PwGroup _reorderedGroup;
         private bool _isEditMode;
 
         public PwGroup Group { get; }
-        public NavigationMenuGroup Parent { get; }
+        public GroupItem Parent { get; }
 
         public bool IsEditMode
         {
@@ -35,19 +35,41 @@ namespace ModernKeePass.ViewModels
                 OnPropertyChanged();
             }
         }
+        
+        public IEnumerable<EntryItem> SubEntries
+        {
+            get
+            {
+                var subEntries = new List<EntryItem>();
+                subEntries.AddRange(Entries);
+                foreach (var group in Children)
+                {
+                    subEntries.AddRange(group.SubEntries);
+                }
+
+                return subEntries;
+            }
+        }
 
         public int Symbol => (int) Group.IconId;
-        public IEnumerable<PwEntry> Entries => Group.Entries;
-        public ObservableCollection<NavigationMenuGroup> Children { get; set; }
+        public List<EntryItem> Entries { get; }
+        public ObservableCollection<GroupItem> Children { get; set; }
 
-        public NavigationMenuGroup(PwGroup group, NavigationMenuGroup parent)
+        public GroupItem(PwGroup group, GroupItem parent)
         {
             Group = group;
             Parent = parent;
-            Children = new ObservableCollection<NavigationMenuGroup>();
+
+            Entries = new List<EntryItem>();
+            foreach (var entry in group.Entries)
+            {
+                Entries.Add(new EntryItem(entry, this));
+            }
+
+            Children = new ObservableCollection<GroupItem>();
             foreach (var subGroup in group.Groups)
             {
-                Children.Add(new NavigationMenuGroup(subGroup, this));
+                Children.Add(new GroupItem(subGroup, this));
             }
             Children.CollectionChanged += Children_CollectionChanged;
         }
@@ -63,7 +85,7 @@ namespace ModernKeePass.ViewModels
                     Group.Groups.RemoveAt(oldIndex);
                     break;
                 case NotifyCollectionChangedAction.Add:
-                    if (_reorderedGroup == null) Group.AddGroup(((NavigationMenuGroup)e.NewItems[0]).Group, true);
+                    if (_reorderedGroup == null) Group.AddGroup(((GroupItem)e.NewItems[0]).Group, true);
                     else Group.Groups.Insert((uint)e.NewStartingIndex, _reorderedGroup);
                     break;
             }

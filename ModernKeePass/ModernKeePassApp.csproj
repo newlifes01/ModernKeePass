@@ -105,6 +105,8 @@
     <Compile Include="Converters\IntToSymbolConverter.cs" />
     <Compile Include="Exceptions\NavigationException.cs" />
     <Compile Include="Properties\Annotations.cs" />
+    <Compile Include="ViewModels\EntriesVm.cs" />
+    <Compile Include="ViewModels\Items\EntryItem.cs" />
     <Compile Include="ViewModels\GroupsVm.cs" />
     <Compile Include="ImportFormats\CsvImportFormat.cs" />
     <Compile Include="ImportFormats\NullImportFormat.cs" />
@@ -117,10 +119,13 @@
     <Compile Include="Services\ImportService.cs" />
     <Compile Include="Services\SingletonServiceBase.cs" />
     <Compile Include="TemplateSelectors\SelectableDataTemplateSelector.cs" />
-    <Compile Include="ViewModels\Items\NavigationMenuGroup.cs" />
+    <Compile Include="ViewModels\Items\GroupItem.cs" />
     <Compile Include="ViewModels\Items\SettingsSaveVm.cs" />
     <Compile Include="ViewModels\MainVm10.cs" />
     <Compile Include="ViewModels\SettingsVm10.cs" />
+    <Compile Include="Views\EntriesPage.xaml.cs">
+      <DependentUpon>EntriesPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\GroupsPage.xaml.cs">
       <DependentUpon>GroupsPage.xaml</DependentUpon>
     </Compile>
@@ -271,6 +276,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Page>
+    <Page Include="Views\EntriesPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\GroupsPage.xaml">
       <SubType>Designer</SubType>

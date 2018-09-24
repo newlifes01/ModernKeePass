@@ -9,13 +9,13 @@ namespace ModernKeePass.Converters
     {
         public object Convert(object value, Type targetType, object parameter, string language)
         {
-            var color = value is Color ? (Color?) value : Color.Empty;
+            var color = value is Color color1 ? color1 : Color.Empty;
             if (color == Color.Empty && parameter is SolidColorBrush) return (SolidColorBrush) parameter;
             return new SolidColorBrush(Windows.UI.Color.FromArgb(
-                color.Value.A,
-                color.Value.R,
-                color.Value.G,
-                color.Value.B));
+                color.A,
+                color.R,
+                color.G,
+                color.B));
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, string language)

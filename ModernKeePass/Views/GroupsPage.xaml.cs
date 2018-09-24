@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using Windows.System;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -7,6 +8,7 @@ using Windows.UI.Xaml.Navigation;
 using ModernKeePass.Services;
 using ModernKeePass.ViewModels;
 using ModernKeePassLib;
+using GroupItem = ModernKeePass.ViewModels.GroupItem;
 using TreeView = Microsoft.UI.Xaml.Controls.TreeView;
 using TreeViewItemInvokedEventArgs = Microsoft.UI.Xaml.Controls.TreeViewItemInvokedEventArgs;
 
@@ -26,6 +28,7 @@ namespace ModernKeePass.Views
             if (!(e.Parameter is PwGroup group)) group = DatabaseService.Instance.RootGroup10;
             ViewModel = new GroupsVm(group);
         }
+
         private void HamburgerButton_OnClick(object sender, RoutedEventArgs e)
         {
             SplitView.IsPaneOpen = !SplitView.IsPaneOpen;
@@ -38,14 +41,19 @@ namespace ModernKeePass.Views
                 Frame.GoBack();
             }
         }
+
         private void NavigationTree_OnItemInvoked(TreeView sender, TreeViewItemInvokedEventArgs args)
         {
-            ViewModel.Title = ((NavigationMenuGroup) args.InvokedItem).Text;
+            if (args.InvokedItem is GroupItem group)
+            {
+                ViewModel.Title = group.Text;
+                SplitViewFrame.Navigate(typeof(EntriesPage), group);
+            }
         }
         
         private void RenameFlyoutItem_OnClick(object sender, RoutedEventArgs e)
         {
-            if (sender is MenuFlyoutItem flyout) ((NavigationMenuGroup)flyout.DataContext).IsEditMode = true;
+            if (sender is MenuFlyoutItem flyout) ((GroupItem)flyout.DataContext).IsEditMode = true;
         }
 
         private async void DeleteFlyoutItem_OnClick(object sender, RoutedEventArgs e)
@@ -54,13 +62,13 @@ namespace ModernKeePass.Views
             {
                 var resource = new ResourcesService();
                 var database = DatabaseService.Instance;
-                var item = (NavigationMenuGroup) flyout.DataContext;
+                var item = (GroupItem) flyout.DataContext;
 
                 var deleteFileDialog = new ContentDialog
                 {
                     Title = $"{resource.GetResourceValue("EntityDeleteActionButton")} {item.Text} ?",
                     Content = database.IsRecycleBinEnabled
-                        ? resource.GetResourceValue("EntryRecyclingConfirmation")
+                        ? resource.GetResourceValue("GroupRecyclingConfirmation")
                         : resource.GetResourceValue("GroupDeletingConfirmation"),
                     PrimaryButtonText = resource.GetResourceValue("EntityDeleteActionButton"),
                     CloseButtonText = resource.GetResourceValue("EntityDeleteCancelButton")
@@ -86,7 +94,7 @@ namespace ModernKeePass.Views
 
         private void GroupNameTextBox_OnLostFocus(object sender, RoutedEventArgs e)
         {
-            if (sender is TextBox textBox) ((NavigationMenuGroup)textBox.DataContext).IsEditMode = false;
+            if (sender is TextBox textBox) ((GroupItem)textBox.DataContext).IsEditMode = false;
         }
 
         private void NewGroupNameTextBox_KeyDown(object sender, KeyRoutedEventArgs e)
@@ -94,16 +102,38 @@ namespace ModernKeePass.Views
             if (e.Key == VirtualKey.Enter)
             {
                 e.Handled = true;
-                NewGroupNameTextBox_OnLostFocus(sender, null);
+                var text = ((TextBox)sender).Text;
+                if (string.IsNullOrEmpty(text)) return;
+                ViewModel.AddNewGroup(text);
+                AddButton.IsEnabled = true;
+                NewGroupNameTextBox.Visibility = Visibility.Collapsed;
+                NewGroupNameTextBox.Text = string.Empty;
             }
         }
 
-        private void NewGroupNameTextBox_OnLostFocus(object sender, RoutedEventArgs e)
+        private void AutoSuggestBox_TextChanged(AutoSuggestBox sender, AutoSuggestBoxTextChangedEventArgs args)
         {
-            ViewModel.AddNewGroup(((TextBox)sender).Text);
-            AddButton.IsEnabled = true;
-            NewGroupNameTextBox.Visibility = Visibility.Collapsed;
+            // Only get results when it was a user typing,
+            // otherwise assume the value got filled in by TextMemberPath
+            // or the handler for SuggestionChosen.
+            if (args.Reason == AutoSuggestionBoxTextChangeReason.UserInput)
+            {
+                //Set the ItemsSource to be your filtered dataset
+                //sender.ItemsSource = dataset;
+                sender.ItemsSource = ViewModel.RootItem.SubEntries.Where(e => e.Name.IndexOf(sender.Text, StringComparison.OrdinalIgnoreCase) >= 0);
+            }
         }
 
+        private void AutoSuggestBox_QuerySubmitted(AutoSuggestBox sender, AutoSuggestBoxQuerySubmittedEventArgs args)
+        {
+            if (args.ChosenSuggestion != null)
+            {
+                // User selected an item from the suggestion list, take an action on it here.
+            }
+            else
+            {
+                // Use args.QueryText to determine what to do.
+            }
+        }
     }
 }
