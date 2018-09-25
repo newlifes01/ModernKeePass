@@ -67,5 +67,11 @@ namespace ModernKeePass.Views
                 NewEntryNameTextBox.Text = string.Empty;
             }
         }
+        
+        private void ListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var destinationFrame = Window.Current.Bounds.Width < 720.0 ? Frame : ContentFrame;
+            destinationFrame.Navigate(typeof(EntryPage), e.AddedItems[0]);
+        }
     }
 }

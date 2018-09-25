@@ -230,20 +230,13 @@
                         <AdaptiveTrigger MinWindowWidth="720" />
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
-                        <Setter Target="LeftColumn.Width"
-                                Value="320" />
-                        <Setter Target="AddButton.Visibility"
-                                Value="Visible" />
-                        <Setter Target="SplitView.IsPaneOpen"
-                                Value="True" />
-                        <Setter Target="SplitView.DisplayMode"
-                                Value="Inline" />
-                        <Setter Target="SplitViewPane.Background"
-                                Value="{ThemeResource SystemControlChromeHighAcrylicWindowMediumBrush}" />
-                        <Setter Target="BackBorder.Background"
-                                Value="{ThemeResource SystemControlChromeHighAcrylicWindowMediumBrush}" />
-                        <Setter Target="HamburgerBorder.Background"
-                                Value="{ThemeResource SystemControlChromeHighAcrylicWindowMediumBrush}" />
+                        <Setter Target="LeftColumn.Width" Value="320" />
+                        <Setter Target="AddButton.Visibility" Value="Visible" />
+                        <Setter Target="SplitView.IsPaneOpen" Value="True" />
+                        <Setter Target="SplitView.DisplayMode" Value="Inline" />
+                        <Setter Target="SplitViewPane.Background" Value="{ThemeResource SystemControlChromeHighAcrylicWindowMediumBrush}" />
+                        <Setter Target="BackBorder.Background" Value="{ThemeResource SystemControlChromeHighAcrylicWindowMediumBrush}" />
+                        <Setter Target="HamburgerBorder.Background" Value="{ThemeResource SystemControlChromeHighAcrylicWindowMediumBrush}" />
                     </VisualState.Setters>
                 </VisualState>
 
@@ -267,20 +260,13 @@
                         <AdaptiveTrigger MinWindowWidth="0" />
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
-                        <Setter Target="LeftColumn.Width"
-                                Value="{StaticResource MenuGridLength}" />
-                        <Setter Target="AddButton.Visibility"
-                                Value="Collapsed" />
-                        <Setter Target="SplitView.IsPaneOpen"
-                                Value="False" />
-                        <Setter Target="SplitView.DisplayMode"
-                                Value="Overlay" />
-                        <Setter Target="SplitViewPane.Background"
-                                Value="{ThemeResource SystemControlChromeHighAcrylicElementMediumBrush}" />
-                        <Setter Target="BackBorder.Background"
-                                Value="Transparent" />
-                        <Setter Target="HamburgerBorder.Background"
-                                Value="Transparent" />
+                        <Setter Target="LeftColumn.Width" Value="{StaticResource MenuGridLength}" />
+                        <Setter Target="AddButton.Visibility" Value="Collapsed" />
+                        <Setter Target="SplitView.IsPaneOpen" Value="False" />
+                        <Setter Target="SplitView.DisplayMode" Value="Overlay" />
+                        <Setter Target="SplitViewPane.Background" Value="{ThemeResource SystemControlChromeHighAcrylicElementMediumBrush}" />
+                        <Setter Target="BackBorder.Background" Value="Transparent" />
+                        <Setter Target="HamburgerBorder.Background" Value="Transparent" />
                     </VisualState.Setters>
                 </VisualState>
             </VisualStateGroup>

@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Runtime.CompilerServices;
 using ModernKeePass.Annotations;
 using ModernKeePassLib;
+using ModernKeePassLib.Cryptography;
 using ModernKeePassLib.Security;
 
 namespace ModernKeePass.ViewModels
@@ -19,6 +20,8 @@ namespace ModernKeePass.ViewModels
         public bool HasExpired => HasExpirationDate && Entry.ExpiryTime < DateTime.Now;
 
         public bool HasUrl => !string.IsNullOrEmpty(Url);
+
+        public double PasswordComplexityIndicator => QualityEstimation.EstimatePasswordBits(Password?.ToCharArray());
 
         public string Name
         {

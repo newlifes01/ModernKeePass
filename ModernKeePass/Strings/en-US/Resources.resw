@@ -543,4 +543,7 @@
   <data name="TopMenuRenameFlyout.Text" xml:space="preserve">
     <value>Rename</value>
   </data>
+  <data name="EntryIcon.Text" xml:space="preserve">
+    <value>Icon</value>
+  </data>
 </root>

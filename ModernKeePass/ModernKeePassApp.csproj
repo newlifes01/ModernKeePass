@@ -126,6 +126,9 @@
     <Compile Include="Views\EntriesPage.xaml.cs">
       <DependentUpon>EntriesPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\EntryPage.xaml.cs">
+      <DependentUpon>EntryPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\GroupsPage.xaml.cs">
       <DependentUpon>GroupsPage.xaml</DependentUpon>
     </Compile>
@@ -278,6 +281,10 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Page>
     <Page Include="Views\EntriesPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\EntryPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
