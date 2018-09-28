@@ -8,6 +8,7 @@ using ModernKeePass.Services;
 using ModernKeePass.ViewModels;
 using GroupItem = ModernKeePass.ViewModels.GroupItem;
 
+// TODO: check https://github.com/Microsoft/Windows-universal-samples/tree/master/Samples/XamlListView/cs/Samples/MasterDetailSelection
 namespace ModernKeePass.Views
 {
     public partial class EntriesPage
@@ -18,9 +19,11 @@ namespace ModernKeePass.Views
         {
             InitializeComponent();
         }
+
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             if (e.Parameter is GroupItem group) ViewModel = new EntriesVm(group);
+            VisualStateManager.GoToState(this, Unselected.Name, false);
         }
 
         private async void DeleteFlyoutItem_OnClick(object sender, RoutedEventArgs e)
@@ -70,8 +73,13 @@ namespace ModernKeePass.Views
         
         private void ListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            var destinationFrame = Window.Current.Bounds.Width < 720.0 ? Frame : ContentFrame;
+            var destinationFrame = EntrySelectedGroup.CurrentState == SelectedExpanded ? ContentFrame : Frame;
             destinationFrame.Navigate(typeof(EntryPage), e.AddedItems[0]);
+        }
+
+        private void VisualStateGroup_OnCurrentStateChanged(object sender, VisualStateChangedEventArgs e)
+        {
+            //throw new NotImplementedException();
         }
     }
 }

@@ -118,7 +118,49 @@
             </Grid>
         </SplitView.Pane>
         <SplitView.Content>
-            <Frame x:Name="ContentFrame" />
+            <Frame x:Name="ContentFrame" Visibility="Collapsed" />
         </SplitView.Content>
+
+        <!-- Responsive Visual States -->
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup x:Name="EntrySelectedGroup" CurrentStateChanged="VisualStateGroup_OnCurrentStateChanged">
+
+                <!-- VisualState to be triggered when window width is >=720 effective pixels -->
+                <VisualState x:Name="SelectedExpanded">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="720" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="SplitView.IsPaneOpen" Value="True" />
+                        <Setter Target="SplitView.DisplayMode" Value="Inline" />
+                        <Setter Target="ContentFrame.Visibility" Value="Visible" />
+                    </VisualState.Setters>
+                </VisualState>
+
+                <!-- VisualState to be triggered when window width is >=0 and <719 effective pixels -->
+                <VisualState x:Name="SelectedMinimal">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="0" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="SplitView.IsPaneOpen" Value="False" />
+                        <Setter Target="SplitView.DisplayMode" Value="Overlay" />
+                        <Setter Target="ContentFrame.Visibility" Value="Visible" />
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+            <VisualStateGroup x:Name="EntryUnSelectedGroup" CurrentStateChanged="VisualStateGroup_OnCurrentStateChanged">
+
+                <!-- VisualState used when no entries are selected -->
+                <VisualState x:Name="Unselected">
+                    <VisualState.Setters>
+                        <Setter Target="SplitView.IsPaneOpen" Value="True" />
+                        <Setter Target="SplitView.DisplayMode" Value="Inline" />
+                        <Setter Target="ContentFrame.Visibility" Value="Collapsed" />
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
+
     </SplitView>
 </Page>
