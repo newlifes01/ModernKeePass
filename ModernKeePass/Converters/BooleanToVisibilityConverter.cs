@@ -4,6 +4,7 @@ using Windows.UI.Xaml.Data;
 
 namespace ModernKeePass.Converters
 {
+    [Obsolete]
     public class BooleanToVisibilityConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, string language)

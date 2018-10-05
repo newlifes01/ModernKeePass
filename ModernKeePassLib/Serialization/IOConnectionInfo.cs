@@ -314,17 +314,8 @@ namespace ModernKeePassLib.Serialization
 			return (m_strUrl.Length == 0);
 		}
 
-		public static IOConnectionInfo FromPath(string strPath)
-		{
-			IOConnectionInfo ioc = new IOConnectionInfo();
-
-			ioc.Path = strPath;
-			ioc.CredSaveMode = IOCredSaveMode.NoSave;
-
-			return ioc;
-		}
-
-		public static IOConnectionInfo FromFile(StorageFile file)
+#if ModernKeePassLib
+        public static IOConnectionInfo FromFile(StorageFile file)
 		{
 			IOConnectionInfo ioc = new IOConnectionInfo();
 
@@ -334,6 +325,18 @@ namespace ModernKeePassLib.Serialization
 
 			return ioc;
 		}
+#else
+        public static IOConnectionInfo FromPath(string strPath)
+		{
+			IOConnectionInfo ioc = new IOConnectionInfo();
+
+			ioc.Path = strPath;
+			ioc.CredSaveMode = IOCredSaveMode.NoSave;
+
+			return ioc;
+		}
+#endif
+
 
 	    public StorageFile StorageFile { get; set; }
 

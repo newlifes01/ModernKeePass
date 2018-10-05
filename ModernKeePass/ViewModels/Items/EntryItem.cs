@@ -1,11 +1,11 @@
 ﻿using System;
 using System.ComponentModel;
-using System.Drawing;
 using System.Runtime.CompilerServices;
 using ModernKeePass.Annotations;
 using ModernKeePassLib;
 using ModernKeePassLib.Cryptography;
 using ModernKeePassLib.Security;
+using Windows.UI;
 
 namespace ModernKeePass.ViewModels
 {
@@ -108,21 +108,23 @@ namespace ModernKeePass.ViewModels
             }
         }
 
-        public Color? BackgroundColor
+        public Color BackgroundColor
         {
-            get => Entry?.BackgroundColor;
+            get => Color.FromArgb(Entry.BackgroundColor.A, Entry.BackgroundColor.R, Entry.BackgroundColor.G, Entry.BackgroundColor.B);
             set
             {
-                if (value != null) Entry.BackgroundColor = (Color)value;
+                Entry.BackgroundColor = System.Drawing.Color.FromArgb(value.A, value.R, value.G, value.B);
+                OnPropertyChanged();
             }
         }
 
-        public Color? ForegroundColor
+        public Color ForegroundColor
         {
-            get => Entry?.ForegroundColor;
+            get => Color.FromArgb(Entry.ForegroundColor.A, Entry.ForegroundColor.R, Entry.ForegroundColor.G, Entry.ForegroundColor.B);
             set
             {
-                if (value != null) Entry.ForegroundColor = (Color)value;
+                Entry.ForegroundColor = System.Drawing.Color.FromArgb(value.A, value.R, value.G, value.B);
+                OnPropertyChanged();
             }
         }
 

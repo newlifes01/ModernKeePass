@@ -73,8 +73,7 @@ namespace ModernKeePassLib.Keys
 	    {
 	        Construct(IOConnectionInfo.FromFile(strKeyFile), false);
 	    }
-#endif
-
+#else
 		public KcpKeyFile(string strKeyFile)
 		{
 			Construct(IOConnectionInfo.FromPath(strKeyFile), false);
@@ -84,6 +83,7 @@ namespace ModernKeePassLib.Keys
 		{
 			Construct(IOConnectionInfo.FromPath(strKeyFile), bThrowIfDbFile);
 		}
+#endif
 
 		public KcpKeyFile(IOConnectionInfo iocKeyFile)
 		{

@@ -23,7 +23,6 @@ namespace ModernKeePass.Views
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             if (e.Parameter is GroupItem group) ViewModel = new EntriesVm(group);
-            VisualStateManager.GoToState(this, Unselected.Name, false);
         }
 
         private async void DeleteFlyoutItem_OnClick(object sender, RoutedEventArgs e)
@@ -62,24 +61,15 @@ namespace ModernKeePass.Views
             if (e.Key == VirtualKey.Enter)
             {
                 e.Handled = true;
-                var text = ((TextBox) sender).Text;
+                var text = NewEntryNameTextBox.Text;
                 if (string.IsNullOrEmpty(text)) return;
                 ViewModel.AddNewEntry(text);
-                AddEntryButton.IsEnabled = true;
-                NewEntryNameTextBox.Visibility = Visibility.Collapsed;
-                NewEntryNameTextBox.Text = string.Empty;
+                AddEntryButton.IsChecked = false;
             }
-        }
-        
-        private void ListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            var destinationFrame = EntrySelectedGroup.CurrentState == SelectedExpanded ? ContentFrame : Frame;
-            destinationFrame.Navigate(typeof(EntryPage), e.AddedItems[0]);
-        }
-
-        private void VisualStateGroup_OnCurrentStateChanged(object sender, VisualStateChangedEventArgs e)
-        {
-            //throw new NotImplementedException();
+            else if (e.Key == VirtualKey.Escape)
+            {
+                AddEntryButton.IsChecked = false;
+            }
         }
     }
 }

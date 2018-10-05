@@ -1,15 +1,29 @@
 ﻿using System.Collections.ObjectModel;
 using System.Collections.Specialized;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
+using ModernKeePass.Annotations;
 using ModernKeePassLib;
 
 namespace ModernKeePass.ViewModels
 {
-    public class EntriesVm
+    public class EntriesVm : INotifyPropertyChanged
     {
         private readonly GroupItem _group;
         private PwEntry _reorderedEntry;
+        private EntryItem _selectedEntry;
 
         public ObservableCollection<EntryItem> Entries { get; set; }
+
+        public EntryItem SelectedEntry
+        {
+            get => _selectedEntry;
+            set
+            {
+                _selectedEntry = value;
+                OnPropertyChanged();
+            }
+        }
 
         public EntriesVm(GroupItem parentGroup)
         {
@@ -42,6 +56,15 @@ namespace ModernKeePass.ViewModels
         {
             var entry = new EntryItem(new PwEntry(true, true), _group) {Name = text};
             Entries.Add(entry);
+            SelectedEntry = entry;
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        [NotifyPropertyChangedInvocator]
+        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

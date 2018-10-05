@@ -26,9 +26,10 @@ using System.IO;
 using System.Security;
 using System.Text;
 using System.Xml;
-
 #if !ModernKeePassLib && !KeePassUAP
 using System.Security.Cryptography;
+#else
+using Windows.Storage;
 #endif
 
 #if !KeePassLibSD
@@ -54,17 +55,26 @@ namespace ModernKeePassLib.Serialization
 	/// </summary>
 	public sealed partial class KdbxFile
 	{
-		/// <summary>
-		/// Load a KDBX file.
-		/// </summary>
-		/// <param name="strFilePath">File to load.</param>
-		/// <param name="fmt">Format.</param>
-		/// <param name="slLogger">Status logger (optional).</param>
-		public void Load(string strFilePath, KdbxFormat fmt, IStatusLogger slLogger)
+#if ModernKeePassLib
+        public void Load(StorageFile file, KdbxFormat fmt, IStatusLogger slLogger)
+	    {
+	        IOConnectionInfo ioc = IOConnectionInfo.FromFile(file);
+	        Load(IOConnection.OpenRead(ioc), fmt, slLogger);
+	    }
+
+#else
+        /// <summary>
+        /// Load a KDBX file.
+        /// </summary>
+        /// <param name="strFilePath">File to load.</param>
+        /// <param name="fmt">Format.</param>
+        /// <param name="slLogger">Status logger (optional).</param>
+        public void Load(string strFilePath, KdbxFormat fmt, IStatusLogger slLogger)
 		{
 			IOConnectionInfo ioc = IOConnectionInfo.FromPath(strFilePath);
 			Load(IOConnection.OpenRead(ioc), fmt, slLogger);
 		}
+#endif
 
 		/// <summary>
 		/// Load a KDBX file from a stream.

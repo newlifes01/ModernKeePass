@@ -549,4 +549,13 @@
   <data name="EntryIcon.Text" xml:space="preserve">
     <value>Icône</value>
   </data>
+  <data name="EntryPivotItemAdditional.Header" xml:space="preserve">
+    <value>Additionel</value>
+  </data>
+  <data name="EntryPivotItemHistory.Header" xml:space="preserve">
+    <value>Historique</value>
+  </data>
+  <data name="EntryPivotItemMain.Header" xml:space="preserve">
+    <value>Principal</value>
+  </data>
 </root>

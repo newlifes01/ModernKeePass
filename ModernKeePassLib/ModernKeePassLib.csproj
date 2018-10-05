@@ -3,14 +3,14 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Version>2.39.3</Version>
+    <Version>2.39.4</Version>
     <Authors>Geoffroy Bonneville</Authors>
     <PackageLicenseUrl>https://www.gnu.org/licenses/gpl-3.0.en.html</PackageLicenseUrl>
     <PackageProjectUrl>https://github.com/wismna/ModernKeePass</PackageProjectUrl>
     <Description>Portable KeePass Password Management Library that targets .Net Standard and WinRT. Allows reading, editing and writing to KeePass 2.x databases.</Description>
     <Company>wismna</Company>
     <Product>ModernKeePassLib</Product>
-    <PackageReleaseNotes>Upgraded to .Net Standard 2 to reflect the fact that Win8.1 store support is shutting down.</PackageReleaseNotes>
+    <PackageReleaseNotes>Removed useless constructors that can result in exceptions</PackageReleaseNotes>
     <PackageTags>KeePass KeePassLib Portable PCL NetStandard ModernKeePass</PackageTags>
     <Copyright>Copyright © 2018 Geoffroy Bonneville</Copyright>
   </PropertyGroup>
