@@ -131,7 +131,7 @@
       <Version>6.1.9</Version>
     </PackageReference>
     <PackageReference Include="ModernKeePassLib">
-      <Version>2.39.3</Version>
+      <Version>2.40.0</Version>
     </PackageReference>
     <PackageReference Include="Moq">
       <Version>4.10.1</Version>
