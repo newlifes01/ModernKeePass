@@ -1,5 +1,5 @@
-﻿using ModernKeePassLib.Cryptography.Hash;
-using ModernKeePassLib.Utility;
+﻿using ModernKeePassLib.Utility;
+using System.Security.Cryptography;
 using Xunit;
 
 namespace ModernKeePassLib.Test.Cryptography.Hash

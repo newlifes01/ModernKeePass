@@ -23,11 +23,9 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
 using System.IO;
-#if ModernKeePassLib
-using ModernKeePassLib.Cryptography.Hash;
-using Windows.Security.Cryptography;
-#else
 using System.Security.Cryptography;
+#if !KeePassUAP && !ModernKeePassLib
+using System.Drawing;
 using System.Windows.Forms;
 #endif
 
@@ -45,9 +43,7 @@ namespace ModernKeePassLib.Cryptography
 	{
 		private byte[] m_pbEntropyPool = new byte[64];
 		private ulong m_uCounter;
-#if !ModernKeePassLib
 		private RNGCryptoServiceProvider m_rng = new RNGCryptoServiceProvider();
-#endif
 		private ulong m_uGeneratedBytesCount = 0;
 
 		private static readonly object g_oSyncRoot = new object();
@@ -296,11 +292,7 @@ namespace ModernKeePassLib.Cryptography
 		private byte[] GetCspData()
 		{
 			byte[] pbCspRandom = new byte[32];
-#if ModernKeePassLib
-            CryptographicBuffer.CopyToByteArray(CryptographicBuffer.GenerateRandom(32), out pbCspRandom);
-#else
 			m_rng.GetBytes(pbCspRandom);
-#endif
 			return pbCspRandom;
 		}
 

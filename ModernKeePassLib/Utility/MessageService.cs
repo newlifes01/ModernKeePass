@@ -35,7 +35,7 @@ namespace ModernKeePassLib.Utility
 	public sealed class MessageServiceEventArgs : EventArgs
 	{
 #if !ModernKeePassLib
-        private string m_strTitle = string.Empty;
+		private string m_strTitle = string.Empty;
 		private string m_strText = string.Empty;
 		private MessageBoxButtons m_msgButtons = MessageBoxButtons.OK;
 		private MessageBoxIcon m_msgIcon = MessageBoxIcon.None;
@@ -56,11 +56,11 @@ namespace ModernKeePassLib.Utility
 			m_msgIcon = msgIcon;
 		}
 #endif
-    }
+	}
 
 	public static class MessageService
 	{
-        private static volatile uint m_uCurrentMessageCount = 0;
+		private static volatile uint m_uCurrentMessageCount = 0;
 
 #if !ModernKeePassLib
 #if !KeePassLibSD
@@ -77,7 +77,7 @@ namespace ModernKeePassLib.Utility
 #endif
 		private const MessageBoxIcon m_mbiQuestion = MessageBoxIcon.Question;
 #endif
-        public static string NewLine
+		public static string NewLine
 		{
 #if !KeePassLibSD
 			get { return Environment.NewLine; }
@@ -113,7 +113,7 @@ namespace ModernKeePassLib.Utility
 		{
 			if(vLines == null) return string.Empty;
 
-			string strNewPara = Environment.NewLine;
+			string strNewPara = MessageService.NewParagraph;
 
 			StringBuilder sbText = new StringBuilder();
 			bool bSeparator = false;
@@ -149,7 +149,7 @@ namespace ModernKeePassLib.Utility
 					strAppend = sb.ToString();
 				}
 #endif
-                else if (strObj != null)
+				else if(strObj != null)
 					strAppend = strObj;
 				else
 					strAppend = obj.ToString();
@@ -177,7 +177,7 @@ namespace ModernKeePassLib.Utility
 #endif
 
 #if !ModernKeePassLib
-        internal static DialogResult SafeShowMessageBox(string strText, string strTitle,
+		internal static DialogResult SafeShowMessageBox(string strText, string strTitle,
 			MessageBoxButtons mb, MessageBoxIcon mi, MessageBoxDefaultButton mdb)
 		{
 #if (KeePassLibSD || KeePassRT)
@@ -283,11 +283,11 @@ namespace ModernKeePassLib.Utility
 		{
 			++m_uCurrentMessageCount;
 
-			string strTitle = PwDefs.ShortProductName + @" - " + KLRes.FatalError;
-			string strText = KLRes.FatalErrorText + Environment.NewLine +
-				KLRes.ErrorInClipboard + Environment.NewLine +
+			string strTitle = PwDefs.ShortProductName + " - " + KLRes.FatalError;
+			string strText = KLRes.FatalErrorText + MessageService.NewParagraph +
+				KLRes.ErrorInClipboard + MessageService.NewParagraph +
 				// Please send it to the KeePass developers.
-				// KLRes.ErrorFeedbackRequest + Environment.NewLine +
+				// KLRes.ErrorFeedbackRequest + MessageService.NewParagraph +
 				ObjectsToMessage(vLines);
 
 			try
@@ -408,19 +408,19 @@ namespace ModernKeePassLib.Utility
 		}
 #endif // !KeePassUAP
 
-        internal static string GetLoadWarningMessage(string strFilePath,
+		internal static string GetLoadWarningMessage(string strFilePath,
 			Exception ex, bool bFullException)
 		{
 			string str = string.Empty;
 
 			if(!string.IsNullOrEmpty(strFilePath))
-				str += strFilePath + Environment.NewLine;
+				str += strFilePath + MessageService.NewParagraph;
 
 			str += KLRes.FileLoadFailed;
 
 			if((ex != null) && !string.IsNullOrEmpty(ex.Message))
 			{
-				str += Environment.NewLine;
+				str += MessageService.NewParagraph;
 				if(!bFullException) str += ex.Message;
 				else str += ObjectsToMessage(new object[] { ex }, true);
 			}
@@ -433,15 +433,15 @@ namespace ModernKeePassLib.Utility
 		{
 			string str = string.Empty;
 			if(!string.IsNullOrEmpty(strFilePath))
-				str += strFilePath + Environment.NewLine;
+				str += strFilePath + MessageService.NewParagraph;
 
 			str += KLRes.FileSaveFailed;
 
 			if((ex != null) && !string.IsNullOrEmpty(ex.Message))
-				str += Environment.NewLine + ex.Message;
+				str += MessageService.NewParagraph + ex.Message;
 
 			if(bCorruptionWarning)
-				str += Environment.NewLine + KLRes.FileSaveCorruptionWarning;
+				str += MessageService.NewParagraph + KLRes.FileSaveCorruptionWarning;
 
 			return str;
 		}

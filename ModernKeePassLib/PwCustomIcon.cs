@@ -117,7 +117,7 @@ namespace ModernKeePassLib
 
 			Image img;
 			if(m_dImageCache.TryGetValue(lID, out img)) return img;
-            
+
 			img = GfxUtil.ScaleImage(m_imgOrg, w, h, ScaleTransformFlags.UIIcon);
 			m_dImageCache[lID] = img;
 			return img;

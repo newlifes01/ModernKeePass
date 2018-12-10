@@ -3,14 +3,15 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Version>2.39.4</Version>
+    <Version>2.40.0</Version>
     <Authors>Geoffroy Bonneville</Authors>
     <PackageLicenseUrl>https://www.gnu.org/licenses/gpl-3.0.en.html</PackageLicenseUrl>
     <PackageProjectUrl>https://github.com/wismna/ModernKeePass</PackageProjectUrl>
     <Description>Portable KeePass Password Management Library that targets .Net Standard and WinRT. Allows reading, editing and writing to KeePass 2.x databases.</Description>
     <Company>wismna</Company>
     <Product>ModernKeePassLib</Product>
-    <PackageReleaseNotes>Removed useless constructors that can result in exceptions</PackageReleaseNotes>
+    <PackageReleaseNotes>Updated to version 2.40
+Replaced custom implementations (crypto, XML...) with Net Standard 2 ones</PackageReleaseNotes>
     <PackageTags>KeePass KeePassLib Portable PCL NetStandard ModernKeePass</PackageTags>
     <Copyright>Copyright © 2018 Geoffroy Bonneville</Copyright>
   </PropertyGroup>
@@ -24,6 +25,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Cryptography\Hash\HashAlgorithm.cs" />
+    <Compile Remove="Cryptography\Hash\HMAC.cs" />
+    <Compile Remove="Cryptography\Hash\HMACSHA1.cs" />
+    <Compile Remove="Cryptography\Hash\HMACSHA256.cs" />
+    <Compile Remove="Cryptography\Hash\SHA256Managed.cs" />
+    <Compile Remove="Cryptography\Hash\SHA512Managed.cs" />
     <Compile Remove="Native\ClipboardU.cs" />
     <Compile Remove="Native\NativeLib.cs" />
     <Compile Remove="Native\NativeMethods.cs" />
@@ -54,7 +61,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Portable.BouncyCastle" Version="1.8.3" />
+    <PackageReference Include="Portable.BouncyCastle" Version="1.8.4" />
     <PackageReference Include="System.Runtime.WindowsRuntime" Version="4.3.0" />
   </ItemGroup>
 

@@ -6,6 +6,8 @@ using ModernKeePassLib.Utility;
 using Org.BouncyCastle.Crypto.Engines;
 using Org.BouncyCastle.Crypto.Parameters;
 using Xunit;
+using System.Security.Cryptography;
+using ModernKeePassLib.Cryptography;
 
 namespace ModernKeePassLib.Test.Cryptography.Cipher
 {
@@ -28,7 +30,7 @@ namespace ModernKeePassLib.Test.Cryptography.Cipher
         [Fact]
         public void TestEncryptStream()
         {
-            using (var outStream = new MemoryStream(new byte[16]))
+            /*using (var outStream = new MemoryStream(new byte[16]))
             {
                 var aes = new StandardAesEngine();
                 using (var inStream = aes.EncryptStream(outStream, _pbTestKey, _pbIv))
@@ -39,7 +41,23 @@ namespace ModernKeePassLib.Test.Cryptography.Cipher
                     var outBytes = new BinaryReaderEx(outStream, Encoding.UTF8, string.Empty).ReadBytes(16);
                     Assert.True(MemUtil.ArraysEqual(outBytes, _pbReferenceCt));
                 }
+            }*/
+            SymmetricAlgorithm a = CryptoUtil.CreateAes();
+            if (a.BlockSize != 128) // AES block size
+            {
+                //Debug.Assert(false);
+                a.BlockSize = 128;
             }
+
+            a.IV = _pbIv;
+            a.KeySize = 256;
+            a.Key = _pbTestKey;
+            a.Mode = CipherMode.ECB;
+            ICryptoTransform iCrypt = a.CreateEncryptor();
+
+            iCrypt.TransformBlock(_pbTestData, 0, 16, _pbTestData, 0);
+
+            Assert.True(MemUtil.ArraysEqual(_pbTestData, _pbReferenceCt));
         }
 
         [Fact]

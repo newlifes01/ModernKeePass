@@ -189,7 +189,7 @@ namespace ModernKeePassLib.Utility
 	/// </summary>
 	public static class StrUtil
 	{
-		public const StringComparison CaseIgnoreCmp = StringComparison.OrdinalIgnoreCase;
+		public static readonly StringComparison CaseIgnoreCmp = StringComparison.OrdinalIgnoreCase;
 
 		public static StringComparer CaseIgnoreComparer
 		{
@@ -705,19 +705,19 @@ namespace ModernKeePassLib.Utility
 #endif
 		}
 
-		public static string CompactString3Dots(string strText, int nMaxChars)
+		public static string CompactString3Dots(string strText, int cchMax)
 		{
 			Debug.Assert(strText != null);
 			if(strText == null) throw new ArgumentNullException("strText");
-			Debug.Assert(nMaxChars >= 0);
-			if(nMaxChars < 0) throw new ArgumentOutOfRangeException("nMaxChars");
+			Debug.Assert(cchMax >= 0);
+			if(cchMax < 0) throw new ArgumentOutOfRangeException("cchMax");
 
-			if(nMaxChars == 0) return string.Empty;
-			if(strText.Length <= nMaxChars) return strText;
+			if(strText.Length <= cchMax) return strText;
 
-			if(nMaxChars <= 3) return strText.Substring(0, nMaxChars);
+			if(cchMax == 0) return string.Empty;
+			if(cchMax <= 3) return new string('.', cchMax);
 
-			return strText.Substring(0, nMaxChars - 3) + "...";
+			return strText.Substring(0, cchMax - 3) + "...";
 		}
 
 		public static string GetStringBetween(string strText, int nStartIndex,
@@ -1813,6 +1813,21 @@ namespace ModernKeePassLib.Utility
 			// Replacing null characters by spaces is the
 			// behavior of Notepad (on Windows 10)
 			return str.Replace('\0', ' ');
+		}
+
+		// https://sourceforge.net/p/keepass/discussion/329220/thread/f98dece5/
+		internal static string EnsureLtrPath(string strPath)
+		{
+			if(strPath == null) { Debug.Assert(false); return string.Empty; }
+
+			string str = strPath;
+
+			// U+200E = left-to-right mark
+			str = str.Replace("\\", "\\\u200E");
+			str = str.Replace("/", "/\u200E");
+			str = str.Replace("\u200E\u200E", "\u200E"); // Remove duplicates
+
+			return str;
 		}
 	}
 }

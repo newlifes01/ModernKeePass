@@ -26,9 +26,12 @@ using System.Security;
 using System.Text;
 using System.Xml;
 
+#if !KeePassUAP
+using System.Security.Cryptography;
+#endif
+
 #if ModernKeePassLib
 using Windows.Storage;
-using ModernKeePassLib.Cryptography.Hash;
 #endif
 
 using ModernKeePassLib.Collections;
@@ -473,9 +476,7 @@ namespace ModernKeePassLib.Serialization
 				// Unnecessary exception from CryptoStream with
 				// RijndaelManagedTransform when a stream hasn't been
 				// read completely (e.g. incorrect master key)
-#if !ModernKeePassLib
 				catch(CryptographicException) { }
-#endif
 				catch(Exception) { Debug.Assert(false); }
 			}
 

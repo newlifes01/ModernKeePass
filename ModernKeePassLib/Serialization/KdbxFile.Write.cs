@@ -26,7 +26,7 @@ using System.Security;
 using System.Text;
 using System.Xml;
 
-#if !ModernKeePassLib && !KeePassUAP
+#if !KeePassUAP
 using System.Drawing;
 using System.Security.Cryptography;
 #endif
@@ -118,8 +118,8 @@ namespace ModernKeePassLib.Serialization
 				PwUuid puKdf = m_pwDatabase.KdfParameters.KdfUuid;
 				KdfEngine kdf = KdfPool.Get(puKdf);
 				if(kdf == null)
-					throw new Exception(KLRes.UnknownKdf + Environment.NewLine +
-						// KLRes.FileNewVerOrPlgReq + Environment.NewLine +
+					throw new Exception(KLRes.UnknownKdf + MessageService.NewParagraph +
+						// KLRes.FileNewVerOrPlgReq + MessageService.NewParagraph +
 						"UUID: " + puKdf.ToHexString() + ".");
 				kdf.Randomize(m_pwDatabase.KdfParameters);
 
@@ -204,7 +204,7 @@ namespace ModernKeePassLib.Serialization
 					throw new ArgumentOutOfRangeException("fmt");
 				}
 
-				m_xmlWriter = XmlUtilEx.CreateXmlWriter(sXml, m_uFileVersion >= FileVersion32_4);
+				m_xmlWriter = XmlUtilEx.CreateXmlWriter(sXml);
 
 				WriteDocument(pgRoot);
 
@@ -420,8 +420,10 @@ namespace ModernKeePassLib.Serialization
 
 				++uCurEntry;
 				if(m_slLogger != null)
+				{
 					if(!m_slLogger.SetProgress((100 * uCurEntry) / uNumEntries))
 						return false;
+				}
 
 				return true;
 			};

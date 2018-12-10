@@ -26,7 +26,7 @@ using System.Runtime.InteropServices;
 using System.Security;
 using System.Text;
 
-#if ModernKeePassLib || KeePassUAP
+#if KeePassUAP
 using Org.BouncyCastle.Crypto;
 using Org.BouncyCastle.Crypto.Engines;
 using Org.BouncyCastle.Crypto.Parameters;
@@ -48,7 +48,6 @@ namespace ModernKeePassLib.Cryptography
 	/// <summary>
 	/// Class containing self-test methods.
 	/// </summary>
-	// TODO: move all this into the Unit Tests project
 	public static class SelfTest
 	{
 		/// <summary>
@@ -103,7 +102,7 @@ namespace ModernKeePassLib.Cryptography
 
 		internal static void TestFipsComplianceProblems()
 		{
-#if !ModernKeePassLib
+#if !KeePassUAP
 			try { using(RijndaelManaged r = new RijndaelManaged()) { } }
 			catch(Exception exAes)
 			{
@@ -134,7 +133,7 @@ namespace ModernKeePassLib.Cryptography
 			for(i = 0; i < 16; ++i) pbTestData[i] = 0;
 			pbTestData[0] = 0x04;
 
-#if ModernKeePassLib || KeePassUAP
+#if KeePassUAP
 			AesEngine r = new AesEngine();
 			r.Init(true, new KeyParameter(pbTestKey));
 			if(r.GetBlockSize() != pbTestData.Length)
@@ -520,7 +519,7 @@ namespace ModernKeePassLib.Cryptography
 			// (test vector for Argon2d 1.3); also on
 			// https://tools.ietf.org/html/draft-irtf-cfrg-argon2-00
 
-			var p = kdf.GetDefaultParameters();
+			KdfParameters p = kdf.GetDefaultParameters();
 			kdf.Randomize(p);
 
 			Debug.Assert(p.GetUInt32(Argon2Kdf.ParamVersion, 0) == 0x13U);
@@ -736,7 +735,7 @@ namespace ModernKeePassLib.Cryptography
 			pbMan = CryptoUtil.HashSha256(pbMan);
 
 			AesKdf kdf = new AesKdf();
-			var p = kdf.GetDefaultParameters();
+			KdfParameters p = kdf.GetDefaultParameters();
 			p.SetUInt64(AesKdf.ParamRounds, uRounds);
 			p.SetByteArray(AesKdf.ParamSeed, pbSeed);
 			byte[] pbKdf = kdf.Transform(pbKey, p);
@@ -748,7 +747,7 @@ namespace ModernKeePassLib.Cryptography
 
 		private static void TestNativeKeyTransform(Random r)
 		{
-#if !ModernKeePassLib && DEBUG
+#if DEBUG
 			byte[] pbOrgKey = CryptoRandom.Instance.GetRandomBytes(32);
 			byte[] pbSeed = CryptoRandom.Instance.GetRandomBytes(32);
 			ulong uRounds = (ulong)r.Next(1, 0x3FFF);
@@ -760,13 +759,16 @@ namespace ModernKeePassLib.Cryptography
 
 			byte[] pbNative = new byte[32];
 			Array.Copy(pbOrgKey, pbNative, 32);
+
+#if !ModernKeePassLib
 			if(!NativeLib.TransformKey256(pbNative, pbSeed, uRounds))
 				return; // Native library not available ("success")
+#endif
 
 			if(!MemUtil.ArraysEqual(pbManaged, pbNative))
 				throw new SecurityException("AES-KDF-2");
 #endif
-		}
+        }
 
 		private static void TestMemUtil(Random r)
 		{

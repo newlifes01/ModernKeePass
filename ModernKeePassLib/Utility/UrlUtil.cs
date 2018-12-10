@@ -365,8 +365,8 @@ namespace ModernKeePassLib.Utility
 			{
 				const int nMaxPath = NativeMethods.MAX_PATH * 2;
 				StringBuilder sb = new StringBuilder(nMaxPath + 2);
-				if(NativeMethods.PathRelativePathTo(sb, strBaseFile, 0,
-					strTargetFile, 0) == false)
+				if(!NativeMethods.PathRelativePathTo(sb, strBaseFile, 0,
+					strTargetFile, 0))
 					return strTargetFile;
 
 				string str = sb.ToString();

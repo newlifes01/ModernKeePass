@@ -20,11 +20,12 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Reflection;
 using System.Text;
-#if ModernKeePassLib
-using ModernKeePassLib.Cryptography.Hash;
-#elif !KeePassUAP
+/*#if ModernKeePassLib
+using ModernKeePassLib.Cryptography.Hash;*/
+#if !KeePassUAP
 using System.Security.Cryptography;
 #endif
 
@@ -105,6 +106,22 @@ namespace ModernKeePassLib.Cryptography
 			return pbHash;
 		}
 
+		internal static byte[] HashSha256(string strFilePath)
+		{
+			byte[] pbHash = null;
+
+			using(FileStream fs = new FileStream(strFilePath, FileMode.Open,
+				FileAccess.Read, FileShare.Read))
+			{
+				using(SHA256Managed h = new SHA256Managed())
+				{
+					pbHash = h.ComputeHash(fs);
+				}
+			}
+
+			return pbHash;
+		}
+
 		/// <summary>
 		/// Create a cryptographic key of length <paramref name="cbOut" />
 		/// (in bytes) from <paramref name="pbIn" />.
@@ -165,9 +182,8 @@ namespace ModernKeePassLib.Cryptography
 			return pbRet;
 		}
 
-#if !ModernKeePassLib
 		private static bool? g_obAesCsp = null;
-		internal static SymmetricAlgorithm CreateAes()
+		public static SymmetricAlgorithm CreateAes()
 		{
 			if(g_obAesCsp.HasValue)
 				return (g_obAesCsp.Value ? CreateAesCsp() : new RijndaelManaged());
@@ -200,7 +216,7 @@ namespace ModernKeePassLib.Cryptography
 
 			return null;
 		}
-#endif
+
 		public static byte[] ProtectData(byte[] pb, byte[] pbOptEntropy,
 			DataProtectionScope s)
 		{

@@ -24,7 +24,6 @@ using System.IO;
 using System.Text;
 using System.Xml;
 using System.Xml.Serialization;
-using XmlDocument = Windows.Data.Xml.Dom.XmlDocument;
 
 namespace ModernKeePassLib.Utility
 {
@@ -34,12 +33,10 @@ namespace ModernKeePassLib.Utility
 		{
 			XmlDocument d = new XmlDocument();
 
-            // .NET 4.5.2 and newer do not resolve external XML resources
-            // by default; for older .NET versions, we explicitly
-            // prevent resolving
-#if !ModernKeePassLib
-            d.XmlResolver = null; // Default in old .NET: XmlUrlResolver object
-#endif
+			// .NET 4.5.2 and newer do not resolve external XML resources
+			// by default; for older .NET versions, we explicitly
+			// prevent resolving
+			d.XmlResolver = null; // Default in old .NET: XmlUrlResolver object
 
 			return d;
 		}
@@ -53,17 +50,17 @@ namespace ModernKeePassLib.Utility
 			xrs.IgnoreProcessingInstructions = true;
 			xrs.IgnoreWhitespace = true;
 
-#if KeePassUAP || ModernKeePassLib
+#if KeePassUAP
 			xrs.DtdProcessing = DtdProcessing.Prohibit;
 #else
 			// Also see PrepMonoDev.sh script
 			xrs.ProhibitDtd = true; // Obsolete in .NET 4, but still there
 			// xrs.DtdProcessing = DtdProcessing.Prohibit; // .NET 4 only
+#endif
 
 			xrs.ValidationType = ValidationType.None;
 			xrs.XmlResolver = null;
-#endif
-            
+
 			return xrs;
 		}
 
@@ -74,28 +71,24 @@ namespace ModernKeePassLib.Utility
 			return XmlReader.Create(s, CreateXmlReaderSettings());
 		}
 
-		public static XmlWriterSettings CreateXmlWriterSettings(bool isVersionGreaterThan4 = false)
+		public static XmlWriterSettings CreateXmlWriterSettings()
 		{
 			XmlWriterSettings xws = new XmlWriterSettings();
 
-			xws.CloseOutput = isVersionGreaterThan4;
+			xws.CloseOutput = false;
 			xws.Encoding = StrUtil.Utf8;
 			xws.Indent = true;
 			xws.IndentChars = "\t";
 			xws.NewLineOnAttributes = false;
-#if ModernKeePassLib
-      // This is needed for Argon2Kdf write
-      xws.Async = true;
-#endif
 
 			return xws;
 		}
 
-		public static XmlWriter CreateXmlWriter(Stream s, bool isVersionGreaterThan4 = false)
+		public static XmlWriter CreateXmlWriter(Stream s)
 		{
 			if(s == null) { Debug.Assert(false); throw new ArgumentNullException("s"); }
 
-			return XmlWriter.Create(s, CreateXmlWriterSettings(isVersionGreaterThan4));
+			return XmlWriter.Create(s, CreateXmlWriterSettings());
 		}
 
 		public static void Serialize<T>(Stream s, T t)

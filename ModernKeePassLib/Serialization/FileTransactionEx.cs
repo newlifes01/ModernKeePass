@@ -46,11 +46,10 @@ namespace ModernKeePassLib.Serialization
 		private IOConnectionInfo m_iocTxfMidFallback = null; // Null <=> TxF not used
 
 		private bool m_bMadeUnhidden = false;
-
 		private List<IOConnectionInfo> m_lToDelete = new List<IOConnectionInfo>();
 
 		private const string StrTempSuffix = ".tmp";
-		private const string StrTxfTempPrefix = PwDefs.ShortProductName + "_TxF_";
+		private static readonly string StrTxfTempPrefix = PwDefs.ShortProductName + "_TxF_";
 		private const string StrTxfTempSuffix = ".tmp";
 
 		private static Dictionary<string, bool> g_dEnabled =
@@ -81,7 +80,7 @@ namespace ModernKeePassLib.Serialization
 			string strPath = m_iocBase.Path;
 
 #if !ModernKeePassLib
-            if(m_iocBase.IsLocalFile())
+			if(m_iocBase.IsLocalFile())
 			{
 				try
 				{
@@ -232,7 +231,7 @@ namespace ModernKeePassLib.Serialization
 #if ModernKeePassLib
 				    otCreation = m_iocBase.StorageFile.DateCreated.UtcDateTime;
 #else
-                    otCreation = File.GetCreationTimeUtc(m_iocBase.Path);
+					otCreation = File.GetCreationTimeUtc(m_iocBase.Path);
 #endif
 #if !ModernKeePassLib
 					// May throw with Mono
@@ -255,13 +254,13 @@ namespace ModernKeePassLib.Serialization
 
 			try
 			{
-                // If File.GetCreationTimeUtc fails, it may return a
-                // date with year 1601, and Unix times start in 1970,
-                // so testing for 1971 should ensure validity;
-                // https://msdn.microsoft.com/en-us/library/system.io.file.getcreationtimeutc.aspx
+				// If File.GetCreationTimeUtc fails, it may return a
+				// date with year 1601, and Unix times start in 1970,
+				// so testing for 1971 should ensure validity;
+				// https://msdn.microsoft.com/en-us/library/system.io.file.getcreationtimeutc.aspx
 #if !ModernKeePassLib
 				if(otCreation.HasValue && (otCreation.Value.Year >= 1971))
-                    File.SetCreationTimeUtc(m_iocBase.Path, otCreation.Value);
+					File.SetCreationTimeUtc(m_iocBase.Path, otCreation.Value);
 #endif
 
 #if !ModernKeePassLib
@@ -285,8 +284,8 @@ namespace ModernKeePassLib.Serialization
 					File.SetAccessControl(m_iocBase.Path, sec);
 				}
 #endif
-            }
-            catch (Exception) { Debug.Assert(false); }
+			}
+			catch(Exception) { Debug.Assert(false); }
 
 			if(bMadeUnhidden) UrlUtil.HideFile(m_iocBase.Path, true);
 		}
@@ -308,7 +307,7 @@ namespace ModernKeePassLib.Serialization
 #if ModernKeePassLib
 		    return true;
 #else
-            try
+			try
 			{
 				string strRoot = (new string(chDriveLetter, 1)) + ":\\";
 
@@ -327,6 +326,7 @@ namespace ModernKeePassLib.Serialization
 				return ((uFlags & NativeMethods.FILE_SUPPORTS_TRANSACTIONS) != 0);
 			}
 			catch(Exception) { Debug.Assert(false); }
+
 			return false;
 #endif
 		}
@@ -356,28 +356,28 @@ namespace ModernKeePassLib.Serialization
                     .GetResult();
 			    m_iocTemp = IOConnectionInfo.FromFile(tempFile);
 #else
-                m_iocTemp = IOConnectionInfo.FromPath(strTemp);
+				m_iocTemp = IOConnectionInfo.FromPath(strTemp);
 #endif
 
-                m_lToDelete.Add(m_iocTemp);
+				m_lToDelete.Add(m_iocTemp);
 			}
 			catch(Exception) { Debug.Assert(false); m_iocTxfMidFallback = null; }
 		}
 
-        private bool TxfMove()
+		private bool TxfMove()
 		{
 			if(m_iocTxfMidFallback == null) return false;
 
 			if(TxfMoveWithTx()) return true;
 
-            // Move the temporary file onto the base file's drive first,
-            // such that it cannot happen that both the base file and
-            // the temporary file are deleted/corrupted
+			// Move the temporary file onto the base file's drive first,
+			// such that it cannot happen that both the base file and
+			// the temporary file are deleted/corrupted
 #if ModernKeePassLib
 		    m_iocTemp.StorageFile = ApplicationData.Current.TemporaryFolder.CreateFileAsync(m_iocTemp.Path).GetAwaiter()
 		        .GetResult();
 #else
-            const uint f = (NativeMethods.MOVEFILE_COPY_ALLOWED |
+			const uint f = (NativeMethods.MOVEFILE_COPY_ALLOWED |
 				NativeMethods.MOVEFILE_REPLACE_EXISTING);
 			bool b = NativeMethods.MoveFileEx(m_iocTemp.Path, m_iocTxfMidFallback.Path, f);
 			if(b) b = NativeMethods.MoveFileEx(m_iocTxfMidFallback.Path, m_iocBase.Path, f);
@@ -394,7 +394,7 @@ namespace ModernKeePassLib.Serialization
 #if ModernKeePassLib
 		    return true;
 #else
-            IntPtr hTx = new IntPtr((int)NativeMethods.INVALID_HANDLE_VALUE);
+ 			IntPtr hTx = new IntPtr((int)NativeMethods.INVALID_HANDLE_VALUE);
 			Debug.Assert(hTx.ToInt64() == NativeMethods.INVALID_HANDLE_VALUE);
 			try
 			{
@@ -438,9 +438,10 @@ namespace ModernKeePassLib.Serialization
 					catch(Exception) { Debug.Assert(false); }
 				}
 			}
+
 			return false;
 #endif
-        }
+		}
 
 		internal static void ClearOld()
 		{
@@ -450,8 +451,8 @@ namespace ModernKeePassLib.Serialization
 			    ApplicationData.Current.TemporaryFolder.GetFileAsync(UrlUtil.GetTempPath()).GetAwaiter()
 			        .GetResult().DeleteAsync().GetAwaiter().GetResult();
 #else
-// See also TxfPrepare method
-                DirectoryInfo di = new DirectoryInfo(UrlUtil.GetTempPath());
+				// See also TxfPrepare method
+				DirectoryInfo di = new DirectoryInfo(UrlUtil.GetTempPath());
 				List<FileInfo> l = UrlUtil.GetFileInfos(di, StrTxfTempPrefix +
 					"*" + StrTxfTempSuffix, SearchOption.TopDirectoryOnly);
 

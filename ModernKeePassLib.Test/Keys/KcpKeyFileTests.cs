@@ -21,23 +21,21 @@ namespace ModernKeePassLib.Test.Keys
             "\t<Key>\r\n" +
             "\t\t<Data>";
 
-        private const string ExpectedFileEnd = "\t</Key>\r\n" +
-                                       "</KeyFile>";
+        private const string ExpectedFileEnd = "</Data>\r\n\t</Key>\r\n</KeyFile>";
 
-        // TODO: this should work in .net core 3
         [Fact]
         public void TestConstruct()
         {
             var expectedKeyData = new byte[]
             {
-                0xC1, 0xB1, 0x12, 0x77, 0x23, 0xB8, 0x99, 0xB8,
-                0xB9, 0x3B, 0x1B, 0xFF, 0x6C, 0xBE, 0xA1, 0x5B,
-                0x8B, 0x99, 0xAC, 0xBD, 0x99, 0x51, 0x85, 0x95,
-                0x31, 0xAA, 0x14, 0x3D, 0x95, 0xBF, 0x63, 0xFF
+                0x95, 0x94, 0xdc, 0xb9, 0x91, 0xc6, 0x65, 0xa0,
+                0x81, 0xf6, 0x6f, 0xca, 0x07, 0x1a, 0x30, 0xd1,
+                0x1d, 0x65, 0xcf, 0x8d, 0x9c, 0x60, 0xfb, 0xe6,
+                0x45, 0xfc, 0xc8, 0x92, 0xbd, 0xeb, 0xaf, 0xc3
             };
 
             var folder = StorageFolder.GetFolderFromPathAsync(Path.GetTempPath()).GetAwaiter().GetResult();
-            var file =  folder.CreateFileAsync(TestCreateFile).GetAwaiter().GetResult();
+            var file = folder.CreateFileAsync(TestCreateFile, CreationCollisionOption.ReplaceExisting).GetAwaiter().GetResult();
             using (var fs = file.OpenStreamForWriteAsync().GetAwaiter().GetResult())
             {
                 using (var sw = new StreamWriter(fs))
@@ -60,12 +58,11 @@ namespace ModernKeePassLib.Test.Keys
             }
         }
 
-        // TODO: this should work in .net core 3
         [Fact]
         public void TestCreate()
         {
             var folder = StorageFolder.GetFolderFromPathAsync(Path.GetTempPath()).GetAwaiter().GetResult();
-            var file = folder.CreateFileAsync(TestCreateFile).GetAwaiter().GetResult();
+            var file = folder.CreateFileAsync(TestCreateFile, CreationCollisionOption.ReplaceExisting).GetAwaiter().GetResult();
             KcpKeyFile.Create(file, null);
             try
             {

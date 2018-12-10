@@ -22,7 +22,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Text;
 
-#if ModernKeePassLib || KeePassUAP
+#if KeePassUAP
 using Org.BouncyCastle.Crypto;
 using Org.BouncyCastle.Crypto.Engines;
 using Org.BouncyCastle.Crypto.Parameters;
@@ -42,8 +42,8 @@ namespace ModernKeePassLib.Cryptography.KeyDerivation
 			0xC9, 0xD9, 0xF3, 0x9A, 0x62, 0x8A, 0x44, 0x60,
 			0xBF, 0x74, 0x0D, 0x08, 0xC1, 0x8A, 0x4F, 0xEA });
 
-		public const string ParamRounds = "R"; // UInt64
-		public const string ParamSeed = "S"; // Byte[32]
+		public static readonly string ParamRounds = "R"; // UInt64
+		public static readonly string ParamSeed = "S"; // Byte[32]
 
 		private const ulong BenchStep = 3001;
 
@@ -141,7 +141,7 @@ namespace ModernKeePassLib.Cryptography.KeyDerivation
 		public static bool TransformKeyManaged(byte[] pbNewKey32, byte[] pbKeySeed32,
 			ulong uNumRounds)
 		{
-#if ModernKeePassLib || KeePassUAP
+#if KeePassUAP
 			KeyParameter kp = new KeyParameter(pbKeySeed32);
 			AesEngine aes = new AesEngine();
 			aes.Init(true, kp);
@@ -214,7 +214,7 @@ namespace ModernKeePassLib.Cryptography.KeyDerivation
 				pbNewKey[i] = (byte)i;
 			}
 
-#if ModernKeePassLib || KeePassUAP
+#if KeePassUAP
 			KeyParameter kp = new KeyParameter(pbKey);
 			AesEngine aes = new AesEngine();
 			aes.Init(true, kp);
@@ -254,7 +254,7 @@ namespace ModernKeePassLib.Cryptography.KeyDerivation
 			{
 				for(ulong j = 0; j < BenchStep; ++j)
 				{
-#if ModernKeePassLib || KeePassUAP
+#if KeePassUAP
 					aes.ProcessBlock(pbNewKey, 0, pbNewKey, 0);
 					aes.ProcessBlock(pbNewKey, 16, pbNewKey, 16);
 #else

@@ -50,16 +50,16 @@ namespace ModernKeePassLib.Serialization
 			if(!string.IsNullOrEmpty(strBaseFile))
 			{
 				sb.Append(strBaseFile);
-				sb.Append(Environment.NewLine + Environment.NewLine);
+				sb.Append(MessageService.NewParagraph);
 			}
 
 			sb.Append(KLRes.FileLockedWrite);
-			sb.Append(Environment.NewLine);
+			sb.Append(MessageService.NewLine);
 
 			if(!string.IsNullOrEmpty(strUser)) sb.Append(strUser);
 			else sb.Append("?");
 
-			sb.Append(Environment.NewLine + Environment.NewLine);
+			sb.Append(MessageService.NewParagraph);
 			sb.Append(KLRes.TryAgainSecs);
 
 			m_strMsg = sb.ToString();
@@ -181,12 +181,12 @@ namespace ModernKeePassLib.Serialization
 					sb.AppendLine(lfi.Machine);
 					sb.AppendLine(lfi.Domain);
 #else
-					sb.Append(LockFileHeader + Environment.NewLine);
-					sb.Append(lfi.ID + Environment.NewLine);
-					sb.Append(strTime + Environment.NewLine);
-					sb.Append(lfi.UserName + Environment.NewLine);
-					sb.Append(lfi.Machine + Environment.NewLine);
-					sb.Append(lfi.Domain + Environment.NewLine);
+					sb.Append(LockFileHeader + MessageService.NewLine);
+					sb.Append(lfi.ID + MessageService.NewLine);
+					sb.Append(strTime + MessageService.NewLine);
+					sb.Append(lfi.UserName + MessageService.NewLine);
+					sb.Append(lfi.Machine + MessageService.NewLine);
+					sb.Append(lfi.Domain + MessageService.NewLine);
 #endif
 
 					byte[] pbFile = StrUtil.Utf8.GetBytes(sb.ToString());
