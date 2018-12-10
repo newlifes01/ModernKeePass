@@ -9,12 +9,13 @@ using Windows.Storage.Pickers;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
-using Microsoft.HockeyApp;
 using ModernKeePass.Common;
 using ModernKeePass.Exceptions;
 using ModernKeePass.Services;
 using ModernKeePass.Views;
 using UnhandledExceptionEventArgs = Windows.UI.Xaml.UnhandledExceptionEventArgs;
+using Microsoft.AppCenter;
+using Microsoft.AppCenter.Analytics;
 
 // The Blank Application template is documented at http://go.microsoft.com/fwlink/?LinkId=234227
 
@@ -31,11 +32,8 @@ namespace ModernKeePass
         /// </summary>
         public App()
         {
-#if DEBUG
-            HockeyClient.Current.Configure("2fe83672887b4910b9de93a4398d0f8f");
-#else
-			HockeyClient.Current.Configure("9eb5fbb79b484fbd8daf04635e975c84");
-#endif
+            AppCenter.Start("79d23520-a486-4f63-af81-8d90bf4e1bea", typeof(Analytics));
+
             InitializeComponent();
             Suspending += OnSuspending;
             Resuming += OnResuming;
