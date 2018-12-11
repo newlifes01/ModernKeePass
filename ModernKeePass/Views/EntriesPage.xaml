@@ -29,7 +29,7 @@
         SelectedItem="{x:Bind ViewModel.SelectedEntry, Mode=TwoWay}">
         <controls:MasterDetailsView.ItemTemplate>
             <DataTemplate x:DataType="viewModels:EntryItem">
-                <Grid x:Name="EntryGrid" HorizontalAlignment="Stretch">
+                <Grid x:Name="EntryGrid" HorizontalAlignment="Stretch" Background="{Binding BackgroundColor, ConverterParameter={StaticResource SystemControlPageBackgroundTransparentBrush}, Converter={StaticResource ColorToBrushConverter}, Mode=OneWay}">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto"/>
                         <ColumnDefinition Width="*"/>
@@ -100,7 +100,7 @@
         </controls:MasterDetailsView.MasterHeader>
         <controls:MasterDetailsView.DetailsTemplate>
             <DataTemplate x:DataType="viewModels:EntryItem">
-                <!--<Frame x:Name="ContentFrame" SourcePageType="pages:EntryPage" />-->
+                <!--<Frame x:Name="ContentFrame" SourcePageType="pages:EntryPage" Navigating="ContentFrame_Navigating" />-->
 
                 <Pivot>
                     <Pivot.TitleTemplate>
@@ -218,7 +218,6 @@
                                 <TextBlock x:Uid="EntryIcon" />
                                 <userControls:SymbolPickerUserControl 
                                     SelectedSymbol="{Binding IconId, Converter={StaticResource IntToSymbolConverter}, ConverterParameter=0, Mode=TwoWay}" />
-                                <!-- TODO: Replace with hyperlink buttons and content dialogs, as binding color directly results in stack overflows -->
                                 <TextBlock x:Uid="EntryBackgroundColor" Margin="0,0,10,0" />
                                 <ColorPicker 
                                     HorizontalAlignment="Left" 
@@ -226,7 +225,7 @@
                                     IsColorPreviewVisible="False" 
                                     IsColorChannelTextInputVisible="False" 
                                     IsHexInputVisible="False" 
-                                    Color="{x:Bind BackgroundColor, Mode=TwoWay}" />
+                                    LostFocus="ColorPickerBackground_LostFocus" />
                                 <TextBlock x:Uid="EntryForegroundColor" Margin="0,0,10,0" />
                                 <ColorPicker 
                                     HorizontalAlignment="Left" 
@@ -234,11 +233,13 @@
                                     IsColorPreviewVisible="False" 
                                     IsColorChannelTextInputVisible="False" 
                                     IsHexInputVisible="False" 
-                                    Color="{x:Bind ForegroundColor, Mode=TwoWay}" />
+                                    LostFocus="ColorPickerForeground_LostFocus" />
                             </StackPanel>
                         </ScrollViewer>
                     </PivotItem>
-                    <PivotItem x:Uid="EntryPivotItemHistory" />
+                    <PivotItem x:Uid="EntryPivotItemHistory">
+                        <ListView ItemsSource="{x:Bind History}" SelectionChanged="HistoryListView_SelectionChanged" />
+                    </PivotItem>
                 </Pivot>
             </DataTemplate>
         </controls:MasterDetailsView.DetailsTemplate>

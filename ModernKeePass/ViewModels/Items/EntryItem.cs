@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using ModernKeePass.Annotations;
@@ -128,6 +129,21 @@ namespace ModernKeePass.ViewModels
             }
         }
 
+        public IEnumerable<EntryItem> History
+        {
+            get
+            {
+                var history = new Stack<EntryItem>();
+                foreach (var historyEntry in Entry.History)
+                {
+                    history.Push(new EntryItem(historyEntry, Parent));
+                }
+                history.Push(this);
+
+                return history;
+            }
+        }
+
         public EntryItem(PwEntry entry, GroupItem parentGroup)
         {
             Entry = entry;
@@ -153,8 +169,13 @@ namespace ModernKeePass.ViewModels
             Entry?.Strings.Set(key, newValue);
         }
 
-        public event PropertyChangedEventHandler PropertyChanged;
+        public override string ToString()
+        {
+            return Entry.LastModificationTime.ToString("g");
+        }
 
+        public event PropertyChangedEventHandler PropertyChanged;
+               
         [NotifyPropertyChangedInvocator]
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {

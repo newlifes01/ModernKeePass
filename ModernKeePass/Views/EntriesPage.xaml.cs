@@ -71,5 +71,19 @@ namespace ModernKeePass.Views
                 AddEntryButton.IsChecked = false;
             }
         }
+
+        private void ColorPickerBackground_LostFocus(object sender, RoutedEventArgs e)
+        {
+            if (sender is ColorPicker colorPicker) (colorPicker.DataContext as EntryItem).BackgroundColor = colorPicker.Color;
+        }
+        private void ColorPickerForeground_LostFocus(object sender, RoutedEventArgs e)
+        {
+            if (sender is ColorPicker colorPicker) (colorPicker.DataContext as EntryItem).ForegroundColor = colorPicker.Color;
+        }
+
+        private void HistoryListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            ViewModel.SelectedEntry = e.AddedItems[0] as EntryItem;
+        }
     }
 }
