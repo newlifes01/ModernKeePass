@@ -23,10 +23,11 @@
     </Page.Resources>
 
     <controls:MasterDetailsView
+        x:Name="MasterDetailList"
         Style="{StaticResource ReorderMasterDetailsView}"
         ItemsSource="{x:Bind ViewModel.Entries, Mode=OneWay}"
         CompactModeThresholdWidth="720"
-        SelectedItem="{x:Bind ViewModel.SelectedEntry, Mode=TwoWay}">
+        SelectedItem="{x:Bind ViewModel.SelectedEntry, Mode=OneWay}">
         <controls:MasterDetailsView.ItemTemplate>
             <DataTemplate x:DataType="viewModels:EntryItem">
                 <Grid x:Name="EntryGrid" HorizontalAlignment="Stretch" Background="{Binding BackgroundColor, ConverterParameter={StaticResource SystemControlPageBackgroundTransparentBrush}, Converter={StaticResource ColorToBrushConverter}, Mode=OneWay}">
@@ -105,9 +106,11 @@
                 <Pivot>
                     <Pivot.TitleTemplate>
                         <DataTemplate x:DataType="viewModels:EntryItem">
-                            <Grid>
-                                <TextBlock Text="{x:Bind Name}" Style="{ThemeResource TitleTextBlockStyle}" />
-                            </Grid>
+                            <StackPanel Orientation="Horizontal" DataContext="{Binding SelectedItem, Mode=OneWay, ElementName=MasterDetailList}">
+                                <TextBlock Text="{Binding Name}" Style="{ThemeResource TitleTextBlockStyle}" />
+                                <TextBlock x:Uid="EntryHistoryComboBox" Style="{StaticResource BodyTextBlockStyle}" />
+                                <ComboBox ItemsSource="{Binding History}" SelectionChanged="ComboBox_SelectionChanged" />
+                            </StackPanel>
                         </DataTemplate>
                     </Pivot.TitleTemplate>
                     <PivotItem x:Uid="EntryPivotItemMain" Margin="0">
@@ -213,6 +216,8 @@
                         </Grid>
                     </PivotItem>
                     <PivotItem x:Uid="EntryPivotItemAdditional">
+                    </PivotItem>
+                    <PivotItem x:Uid="EntryPivotItemSettings">
                         <ScrollViewer>
                             <StackPanel Orientation="Vertical">
                                 <TextBlock x:Uid="EntryIcon" />
@@ -236,9 +241,6 @@
                                     LostFocus="ColorPickerForeground_LostFocus" />
                             </StackPanel>
                         </ScrollViewer>
-                    </PivotItem>
-                    <PivotItem x:Uid="EntryPivotItemHistory">
-                        <ListView ItemsSource="{x:Bind History}" SelectionChanged="HistoryListView_SelectionChanged" />
                     </PivotItem>
                 </Pivot>
             </DataTemplate>

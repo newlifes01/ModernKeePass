@@ -552,10 +552,13 @@
   <data name="EntryPivotItemAdditional.Header" xml:space="preserve">
     <value>Additionel</value>
   </data>
-  <data name="EntryPivotItemHistory.Header" xml:space="preserve">
-    <value>Historique</value>
+  <data name="EntryPivotItemSettings.Header" xml:space="preserve">
+    <value>Paramètres</value>
   </data>
   <data name="EntryPivotItemMain.Header" xml:space="preserve">
     <value>Principal</value>
+  </data>
+  <data name="EntryHistoryComboBox.Text" xml:space="preserve">
+    <value>Historique</value>
   </data>
 </root>

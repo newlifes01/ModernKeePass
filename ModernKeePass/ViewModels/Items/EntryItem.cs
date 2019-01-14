@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using ModernKeePass.Annotations;
 using ModernKeePassLib;
@@ -158,10 +159,7 @@ namespace ModernKeePass.ViewModels
             _isDirty = true;
         }
 
-        private string GetEntryValue(string key)
-        {
-            return Entry?.Strings.GetSafe(key).ReadString();
-        }
+        private string GetEntryValue(string key) => Entry?.Strings.GetSafe(key).ReadString();
 
         private void SetEntryValue(string key, ProtectedString newValue)
         {
@@ -169,17 +167,11 @@ namespace ModernKeePass.ViewModels
             Entry?.Strings.Set(key, newValue);
         }
 
-        public override string ToString()
-        {
-            return Entry.LastModificationTime.ToString("g");
-        }
+        public override string ToString() => Entry.LastModificationTime.ToString("g");
 
         public event PropertyChangedEventHandler PropertyChanged;
-               
+
         [NotifyPropertyChangedInvocator]
-        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
+        protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null) => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
     }
 }

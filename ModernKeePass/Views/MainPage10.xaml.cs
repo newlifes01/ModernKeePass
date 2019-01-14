@@ -37,7 +37,10 @@ namespace ModernKeePass.Views
         {
             var coreTitleBar = CoreApplication.GetCurrentView().TitleBar;
             coreTitleBar.ExtendViewIntoTitleBar = true;
-            //Window.Current.SetTitleBar(TitleBar);
+
+            // Set XAML element as a draggable region.
+            AppTitleBar.Height = coreTitleBar.Height;
+            Window.Current.SetTitleBar(AppTitleBar);
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)

@@ -34,7 +34,9 @@
             x:Name="BackBorder"
             Grid.Row="0"
             Grid.Column="0"
-            BorderThickness="0">
+            BorderThickness="0"
+            Background="Transparent"
+            Canvas.ZIndex="100">
             <Button IsEnabled="{x:Bind Frame.CanGoBack}" Style="{StaticResource NavigationBackButtonNormalStyle}" Click="BackButton_OnClick" />
         </Border>
 

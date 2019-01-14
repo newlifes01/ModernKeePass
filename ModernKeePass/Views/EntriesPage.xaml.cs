@@ -15,10 +15,7 @@ namespace ModernKeePass.Views
     {
         public EntriesVm ViewModel { get; set; }
 
-        public EntriesPage()
-        {
-            InitializeComponent();
-        }
+        public EntriesPage() => InitializeComponent();
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
@@ -81,7 +78,7 @@ namespace ModernKeePass.Views
             if (sender is ColorPicker colorPicker) (colorPicker.DataContext as EntryItem).ForegroundColor = colorPicker.Color;
         }
 
-        private void HistoryListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             ViewModel.SelectedEntry = e.AddedItems[0] as EntryItem;
         }
