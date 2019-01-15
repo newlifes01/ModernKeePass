@@ -28,9 +28,15 @@
         ItemsSource="{x:Bind ViewModel.Entries, Mode=OneWay}"
         CompactModeThresholdWidth="720"
         SelectedItem="{x:Bind ViewModel.SelectedEntry, Mode=OneWay}">
+        <controls:MasterDetailsView.ItemContainerStyle>
+            <Style TargetType="ListViewItem">
+                <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                <Setter Property="Padding" Value="0" />
+            </Style>
+        </controls:MasterDetailsView.ItemContainerStyle>
         <controls:MasterDetailsView.ItemTemplate>
             <DataTemplate x:DataType="viewModels:EntryItem">
-                <Grid x:Name="EntryGrid" HorizontalAlignment="Stretch" Background="{Binding BackgroundColor, ConverterParameter={StaticResource SystemControlPageBackgroundTransparentBrush}, Converter={StaticResource ColorToBrushConverter}, Mode=OneWay}">
+                <Grid x:Name="EntryGrid" Padding="12,0,12,0" Background="{Binding BackgroundColor, ConverterParameter={StaticResource SystemControlPageBackgroundTransparentBrush}, Converter={StaticResource ColorToBrushConverter}, Mode=OneWay}">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto"/>
                         <ColumnDefinition Width="*"/>
