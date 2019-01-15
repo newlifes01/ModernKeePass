@@ -4,6 +4,7 @@ using System.Linq;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using ModernKeePass.ViewModels;
+using Windows.ApplicationModel.Core;
 
 namespace ModernKeePass.Views
 {
@@ -23,6 +24,14 @@ namespace ModernKeePass.Views
         public SettingsPage10()
         {
             InitializeComponent();
+            SetTitleBar();
+        }
+
+        private void SetTitleBar()
+        {
+            var coreTitleBar = CoreApplication.GetCurrentView().TitleBar;
+            coreTitleBar.ExtendViewIntoTitleBar = true;
+            Window.Current.SetTitleBar(AppTitleBar);
         }
 
         private void NavigationView_OnItemInvoked(NavigationView sender, NavigationViewItemInvokedEventArgs args)

@@ -21,7 +21,7 @@
 
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="44" />
+            <RowDefinition Height="Auto" />
             <RowDefinition Height="{StaticResource MenuGridLength}" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
@@ -30,19 +30,60 @@
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
 
-        <Border
-            x:Name="BackBorder"
-            Grid.Row="0"
-            Grid.Column="0"
-            BorderThickness="0"
-            Background="Transparent"
-            Canvas.ZIndex="100">
-            <Button IsEnabled="{x:Bind Frame.CanGoBack}" Style="{StaticResource NavigationBackButtonNormalStyle}" Click="BackButton_OnClick" />
-        </Border>
+        <Grid x:Name="AppTitleBar" Background="Transparent" Grid.ColumnSpan="2">
+            <!-- Width of the padding columns is set in LayoutMetricsChanged handler. -->
+            <!-- Using padding columns instead of Margin ensures that the background
+             paints the area under the caption control buttons (for transparent buttons). -->
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition x:Name="LeftPaddingColumn" Width="0" />
+                <ColumnDefinition />
+                <ColumnDefinition x:Name="RightPaddingColumn" Width="0" />
+            </Grid.ColumnDefinitions>
+            <Border x:Name="BackBorder" Grid.Column="1" BorderThickness="0" Width="320" HorizontalAlignment="Left" />
+            <Border x:Name="TitleBar" Grid.Row="0" Grid.Column="1" Margin="350,0,0,0">
+                <TextBlock Text="{x:Bind ViewModel.Title, Mode=OneWay}" FontFamily="Segoe UI" Margin="0,10,0,0" FontWeight="SemiBold" />
+            </Border>
+        </Grid>
 
-        <Border x:Name="TitleBar" Grid.Row="0" Grid.Column="1" Background="Transparent">
-            <TextBlock Text="{x:Bind ViewModel.Title, Mode=OneWay}" FontFamily="Segoe UI" Margin="30,5,0,0" FontWeight="SemiBold" />
-        </Border>
+        <!-- Set after the Title Bar, so has higher Z Order -->
+        <Button IsEnabled="{x:Bind Frame.CanGoBack}" Style="{StaticResource NavigationBackButtonNormalStyle}" Click="BackButton_OnClick" />
+
+        <!-- Set after the Title Bar, so has higher Z Order -->
+        <AutoSuggestBox
+            Grid.Row="0"
+            Grid.Column="1"
+            x:Name="AutoSuggestBox"
+            x:Uid="GroupSearch"
+            Width="200"
+            HorizontalAlignment="Right"
+            VerticalContentAlignment="Center"
+            QueryIcon="Find"
+            TextMemberPath="Name"
+            TextChanged="AutoSuggestBox_TextChanged"
+            QuerySubmitted="AutoSuggestBox_QuerySubmitted">
+            <AutoSuggestBox.ItemContainerStyle>
+                <Style TargetType="ListViewItem">
+                    <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                    <Setter Property="Padding" Value="0" />
+                </Style>
+            </AutoSuggestBox.ItemContainerStyle>
+            <AutoSuggestBox.ItemTemplate>
+                <DataTemplate x:DataType="viewModels:EntryItem">
+                    <Grid x:Name="EntryGrid" Padding="12,0,12,0" Background="{Binding BackgroundColor, ConverterParameter={StaticResource SystemControlPageBackgroundTransparentBrush}, Converter={StaticResource ColorToBrushConverter}, Mode=OneWay}">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <SymbolIcon Grid.Column="0" Symbol="{x:Bind IconId, Converter={StaticResource IntToSymbolConverter}, ConverterParameter=0}" Foreground="{StaticResource SystemControlPageTextBaseHighBrush}" />
+                        <StackPanel Grid.Column="1" VerticalAlignment="Top" Margin="15">
+                            <TextBlock Text="{Binding Name}" TextWrapping="NoWrap" Foreground="{Binding ForegroundColor, ConverterParameter={StaticResource SystemControlPageTextBaseHighBrush}, Converter={StaticResource ColorToBrushConverter}}"/>
+                            <TextBlock Text="{x:Bind Parent.Text}" Foreground="{Binding ForegroundColor, ConverterParameter={StaticResource SystemControlPageTextBaseMediumBrush}, Converter={StaticResource ColorToBrushConverter}}" MaxHeight="60" />
+                        </StackPanel>
+                    </Grid>
+                </DataTemplate>
+            </AutoSuggestBox.ItemTemplate>
+        </AutoSuggestBox>
 
         <Grid
             x:Name="HamburgerBorder"
@@ -193,34 +234,6 @@
             FontFamily="Segoe UI">
             <AppBarButton x:Uid="AppBarAddEntry" Icon="Add" />
         </CommandBar>-->
-        <AutoSuggestBox
-            Grid.Row="1"
-            Grid.Column="1"
-            x:Uid="GroupSearch"
-            Width="350"
-            Margin="20,5,0,5"
-            HorizontalAlignment="Left"
-            QueryIcon="Find"
-            TextMemberPath="Name"
-            TextChanged="AutoSuggestBox_TextChanged"
-            QuerySubmitted="AutoSuggestBox_QuerySubmitted">
-            <AutoSuggestBox.ItemTemplate>
-                <DataTemplate x:DataType="viewModels:EntryItem">
-                    <Grid x:Name="EntryGrid">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto"/>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="Auto"/>
-                        </Grid.ColumnDefinitions>
-                        <SymbolIcon Grid.Column="0" Symbol="{x:Bind IconId, Converter={StaticResource IntToSymbolConverter}, ConverterParameter=0}" Foreground="{StaticResource SystemControlPageTextBaseHighBrush}" />
-                        <StackPanel Grid.Column="1" VerticalAlignment="Top" Margin="15">
-                            <TextBlock Text="{Binding Name}" TextWrapping="NoWrap" Foreground="{Binding ForegroundColor, ConverterParameter={StaticResource SystemControlPageTextBaseHighBrush}, Converter={StaticResource ColorToBrushConverter}}"/>
-                            <TextBlock Text="{x:Bind Parent.Text}" Foreground="{Binding ForegroundColor, ConverterParameter={StaticResource SystemControlPageTextBaseMediumBrush}, Converter={StaticResource ColorToBrushConverter}}" MaxHeight="60" />
-                        </StackPanel>
-                    </Grid>
-                </DataTemplate>
-            </AutoSuggestBox.ItemTemplate>
-        </AutoSuggestBox>
 
         <!-- Responsive Visual States -->
         <VisualStateManager.VisualStateGroups>
@@ -233,6 +246,7 @@
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
                         <Setter Target="LeftColumn.Width" Value="320" />
+                        <Setter Target="TitleBar.Margin" Value="350,0,0,0" />
                         <Setter Target="AddButton.Visibility" Value="Visible" />
                         <Setter Target="SplitView.IsPaneOpen" Value="True" />
                         <Setter Target="SplitView.DisplayMode" Value="Inline" />
@@ -263,6 +277,7 @@
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
                         <Setter Target="LeftColumn.Width" Value="{StaticResource MenuGridLength}" />
+                        <Setter Target="TitleBar.Margin" Value="50,0,0,0" />
                         <Setter Target="AddButton.Visibility" Value="Collapsed" />
                         <Setter Target="SplitView.IsPaneOpen" Value="False" />
                         <Setter Target="SplitView.DisplayMode" Value="Overlay" />

@@ -11,6 +11,7 @@ using ModernKeePassLib;
 using GroupItem = ModernKeePass.ViewModels.GroupItem;
 using TreeView = Microsoft.UI.Xaml.Controls.TreeView;
 using TreeViewItemInvokedEventArgs = Microsoft.UI.Xaml.Controls.TreeViewItemInvokedEventArgs;
+using Windows.ApplicationModel.Core;
 
 namespace ModernKeePass.Views
 {
@@ -21,7 +22,40 @@ namespace ModernKeePass.Views
         public GroupsPage()
         {
             InitializeComponent();
+            SetTitleBar();
         }
+
+        private void SetTitleBar()
+        {
+            var coreTitleBar = CoreApplication.GetCurrentView().TitleBar;
+            coreTitleBar.LayoutMetricsChanged += CoreTitleBar_LayoutMetricsChanged;
+            coreTitleBar.IsVisibleChanged += CoreTitleBar_IsVisibleChanged;
+            coreTitleBar.ExtendViewIntoTitleBar = true;
+            UpdateTitleBarLayout(coreTitleBar);
+
+            // Set XAML element as a draggable region.
+            Window.Current.SetTitleBar(AppTitleBar);
+        }
+
+        private void CoreTitleBar_IsVisibleChanged(CoreApplicationViewTitleBar sender, object args) => 
+            AppTitleBar.Visibility = sender.IsVisible ? Visibility.Visible : Visibility.Collapsed;
+
+        private void CoreTitleBar_LayoutMetricsChanged(CoreApplicationViewTitleBar coreTitleBar, object args) => UpdateTitleBarLayout(coreTitleBar);
+
+        private void UpdateTitleBarLayout(CoreApplicationViewTitleBar coreTitleBar)
+        {
+            // Get the size of the caption controls area and back button 
+            // (returned in logical pixels), and move your content around as necessary.
+            LeftPaddingColumn.Width = new GridLength(coreTitleBar.SystemOverlayLeftInset);
+            RightPaddingColumn.Width = new GridLength(coreTitleBar.SystemOverlayRightInset);
+            //BackBorder.Margin = new Thickness(0, 0, coreTitleBar.SystemOverlayLeftInset, 0);
+            AutoSuggestBox.Margin = new Thickness(0, 5, coreTitleBar.SystemOverlayRightInset, 5);
+
+            // Update title bar control size as needed to account for system size changes.
+            //AppTitleBar.Height = coreTitleBar.Height;
+            AppTitleBar.Height = 44;
+        }
+
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {

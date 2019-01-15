@@ -13,17 +13,7 @@
     </Page.DataContext>
 
     <Grid>
-        <Grid x:Name="AppTitleBar" VerticalAlignment="Top">
-            <!-- Width of the padding columns is set in LayoutMetricsChanged handler. -->
-            <!-- Using padding columns instead of Margin ensures that the background
-             paints the area under the caption control buttons (for transparent buttons). -->
-            <Grid.ColumnDefinitions >
-                <ColumnDefinition x:Name="LeftPaddingColumn" Width="{StaticResource MenuGridLength}" />
-                <ColumnDefinition/>
-                <ColumnDefinition x:Name="RightPaddingColumn" Width="*"/>
-            </Grid.ColumnDefinitions>
-            <Border Grid.Column="1" Height="{StaticResource MenuSize}" Background="Transparent" />
-        </Grid>
+        <Grid x:Name="AppTitleBar" Background="Transparent" />
         <controls:NavigationView 
             x:Name="NavigationView"
             IsBackButtonVisible="Collapsed"
