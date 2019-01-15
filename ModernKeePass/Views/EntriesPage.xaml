@@ -107,15 +107,13 @@
         </controls:MasterDetailsView.MasterHeader>
         <controls:MasterDetailsView.DetailsTemplate>
             <DataTemplate x:DataType="viewModels:EntryItem">
-                <!--<Frame x:Name="ContentFrame" SourcePageType="pages:EntryPage" Navigating="ContentFrame_Navigating" />-->
+                <!--<Frame x:Name="ContentFrame" SourcePageType="pages:EntryPage" />-->
 
                 <Pivot>
                     <Pivot.TitleTemplate>
                         <DataTemplate x:DataType="viewModels:EntryItem">
-                            <StackPanel Orientation="Horizontal" DataContext="{Binding SelectedItem, Mode=OneWay, ElementName=MasterDetailList}">
+                            <StackPanel Orientation="Horizontal">
                                 <TextBlock Text="{Binding Name}" Style="{ThemeResource TitleTextBlockStyle}" />
-                                <TextBlock x:Uid="EntryHistoryComboBox" Style="{StaticResource BodyTextBlockStyle}" />
-                                <ComboBox ItemsSource="{Binding History}" SelectionChanged="ComboBox_SelectionChanged" />
                             </StackPanel>
                         </DataTemplate>
                     </Pivot.TitleTemplate>
@@ -222,6 +220,18 @@
                         </Grid>
                     </PivotItem>
                     <PivotItem x:Uid="EntryPivotItemAdditional">
+                        <ItemsControl ItemsSource="{x:Bind AdditionalFields}">
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Vertical">
+                                        <TextBlock Text="{Binding}" />
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </PivotItem>
+                    <PivotItem x:Uid="EntryPivotItemHistory">
+                        <ListView ItemsSource="{x:Bind History}" SelectionChanged="HistoryListView_SelectionChanged" />
                     </PivotItem>
                     <PivotItem x:Uid="EntryPivotItemSettings">
                         <ScrollViewer>

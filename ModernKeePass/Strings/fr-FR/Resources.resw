@@ -561,4 +561,7 @@
   <data name="EntryHistoryComboBox.Text" xml:space="preserve">
     <value>Historique</value>
   </data>
+  <data name="EntryPivotItemHistory.Header" xml:space="preserve">
+    <value>Historique</value>
+  </data>
 </root>

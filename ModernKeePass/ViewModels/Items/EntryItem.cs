@@ -144,6 +144,13 @@ namespace ModernKeePass.ViewModels
                 return history;
             }
         }
+        public IEnumerable<string> AdditionalFields
+        {
+            get
+            {
+                return Entry.Strings.Select(c => c.Key).Except(PwDefs.GetStandardFields());
+            }
+        }
 
         public EntryItem(PwEntry entry, GroupItem parentGroup)
         {

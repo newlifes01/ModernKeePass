@@ -78,9 +78,9 @@ namespace ModernKeePass.Views
             if (sender is ColorPicker colorPicker) (colorPicker.DataContext as EntryItem).ForegroundColor = colorPicker.Color;
         }
 
-        private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void HistoryListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            ViewModel.SelectedEntry = e.AddedItems[0] as EntryItem;
+            
         }
     }
 }
